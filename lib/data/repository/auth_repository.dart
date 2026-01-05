@@ -6,4 +6,8 @@ class AuthRepository {
   Future<void> signInUser(String email, String password) async {
     await _userAuth.signInWithEmailAndPassword(email, password);
   }
+
+  Future<void> resetPassword(String email) async {
+    return await _userAuth.resetPassword(email);
+  }
 }
