@@ -1,5 +1,6 @@
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -18,7 +19,12 @@ class SplashPage extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      onEnd: () {},
+      onEnd: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginPage()),
+        );
+      },
     );
   }
 }
