@@ -14,15 +14,21 @@ class ForgotPasswordPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Forgot Password?',
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 10),
               Text(
                 'Enter your email address and we will send you a link to reset your password',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelMedium,
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                ),
               ),
               const SizedBox(height: 50),
               const ForgotPasswordEmailTextField(),
