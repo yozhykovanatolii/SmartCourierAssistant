@@ -7,10 +7,6 @@ class ResetPasswordException {
 
   factory ResetPasswordException.convertFromCode(String code) {
     switch (code) {
-      case 'user-not-found':
-        return ResetPasswordException(
-          'User are not found',
-        );
       case 'invalid-email':
         return ResetPasswordException(
           'The email address is not valid.',
@@ -19,6 +15,8 @@ class ResetPasswordException {
         return ResetPasswordException(
           'Too many requests. Please try again later.',
         );
+      case 'network-request-failed':
+        return ResetPasswordException('Network error.');
       default:
         return ResetPasswordException();
     }

@@ -20,7 +20,7 @@ class ForgotPasswordPage extends StatelessWidget {
             UiHelper.showSnackBar(
               context: context,
               message:
-                  'The operation was completed successfully. Check your email.',
+                  'If an account with this email exists, you will receive a password reset email.',
             );
             Navigator.push(
               context,
