@@ -4,10 +4,10 @@ import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 
-class ResetPasswordCubit extends Cubit<ResetPasswordState> {
+class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final AuthRepository _authRepository = AuthRepository();
 
-  ResetPasswordCubit() : super(ResetPasswordState.initial());
+  ForgotPasswordCubit() : super(ForgotPasswordState.initial());
 
   void changeUserEmail(String email) {
     emit(state.copyWith(email: email));
