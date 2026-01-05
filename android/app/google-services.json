@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "934114202056",
+    "project_id": "smartcourierassistant",
+    "storage_bucket": "smartcourierassistant.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934114202056:android:79fa0b69e184ff8dd530fd",
+        "android_client_info": {
+          "package_name": "com.example.smart_courier_assistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934114202056-bo1uqh0p5tqm4q3ia2qr32q13nvjlu9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd2Q81K24BNR5uFWdOfyWo7ndEdgD6ks0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934114202056-bo1uqh0p5tqm4q3ia2qr32q13nvjlu9t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "934114202056-jiduaatjjfjdqvm7ku3ub70kf8dr3p38.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartCourierAssistant"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
