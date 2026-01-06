@@ -5,20 +5,16 @@ class UserModel {
   final String fullName;
   final String email;
   final String password;
-  final String about;
   final String phoneNumber;
   final String avatar;
-  final List<String> favouriteListingsId;
 
   UserModel({
     required this.id,
     required this.fullName,
     required this.email,
     required this.password,
-    required this.about,
     required this.phoneNumber,
     required this.avatar,
-    required this.favouriteListingsId,
   });
 
   UserModel copyWith({
@@ -26,20 +22,16 @@ class UserModel {
     String? fullName,
     String? email,
     String? password,
-    String? about,
     String? phoneNumber,
     String? avatar,
-    List<String>? favouriteListingsId,
   }) {
     return UserModel(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       password: password ?? this.password,
-      about: about ?? this.about,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       avatar: avatar ?? this.avatar,
-      favouriteListingsId: favouriteListingsId ?? this.favouriteListingsId,
     );
   }
 
@@ -50,10 +42,20 @@ class UserModel {
       'email': email,
       'password': password,
       'phoneNumber': phoneNumber,
-      'about': about,
       'avatar': avatar,
-      'favouriteListingsId': favouriteListingsId,
     };
+  }
+
+  factory UserModel.initial() {
+    return UserModel(
+      id: '',
+      fullName: '',
+      email: '',
+      password: '',
+      phoneNumber: '',
+      avatar:
+          'https://xwgraskemxbhjtgqrjxn.supabase.co/storage/v1/object/public/images/uploads/1758373217886',
+    );
   }
 
   factory UserModel.fromFirestore(
@@ -67,13 +69,7 @@ class UserModel {
       email: data?['email'] as String,
       password: data?['password'] as String,
       phoneNumber: data?['phoneNumber'] as String,
-      about: data?['about'] as String,
       avatar: data?['avatar'] as String,
-      favouriteListingsId:
-          (data?['favouriteListingsId'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
     );
   }
 }

@@ -1,8 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/exception/auth/register_exception.dart';
+import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
+import 'package:smart_courier_assistant/data/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
+  final UserRepository _userRepository = UserRepository();
+  final AuthRepository _authRepository = AuthRepository();
+
   RegisterCubit() : super(RegisterState.initial());
 
   void setRegisterFullName(String fullName) {
@@ -29,5 +35,35 @@ class RegisterCubit extends Cubit<RegisterState> {
       return;
     }
     emit(state.copyWith(formStatus: FormStatus.loading));
+    try {
+      final isUserExist = await _userRepository.checkIfUserExistByEmail(
+        state.email,
+      );
+      if (isUserExist) {
+        emit(
+          state.copyWith(
+            formStatus: FormStatus.failure,
+            errorMessage: 'This email is busy, please choose another one.',
+          ),
+        );
+        return;
+      }
+      await _authRepository.signUpUser(
+        state.email,
+        state.password,
+        state.fullName,
+        state.phoneNumber,
+      );
+      emit(state.copyWith(formStatus: FormStatus.success));
+    } on RegisterException catch (exception) {
+      emit(
+        state.copyWith(
+          formStatus: FormStatus.failure,
+          errorMessage: exception.message,
+        ),
+      );
+    } finally {
+      emit(state.copyWith(formStatus: FormStatus.initial));
+    }
   }
 }
