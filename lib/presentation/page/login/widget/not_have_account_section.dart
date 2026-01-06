@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/presentation/page/register/register_page.dart';
 
 class NotHaveAccountSection extends StatelessWidget {
   const NotHaveAccountSection({super.key});
@@ -26,7 +27,13 @@ class NotHaveAccountSection extends StatelessWidget {
               decorationThickness: 2,
               color: Colors.blue,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {},
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const RegisterPage()),
+                );
+              },
           ),
         ],
       ),
