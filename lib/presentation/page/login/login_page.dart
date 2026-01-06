@@ -8,6 +8,7 @@ import 'package:smart_courier_assistant/presentation/page/login/widget/login_ema
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_password_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/not_have_account_section.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/sign_in_button.dart';
+import 'package:smart_courier_assistant/presentation/page/login/widget/sign_in_google_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -15,22 +16,43 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
-          if (state.formStatus == FormStatus.failure) {
-            UiHelper.showSnackBar(
-              context: context,
-              message: state.errorMessage,
-              isErrorSnackBar: true,
-            );
-          }
-          if (state.formStatus == FormStatus.success) {
-            UiHelper.showSnackBar(
-              context: context,
-              message: 'Success authorization',
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state.googleLoginStatus == FormStatus.failure) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: state.errorMessage,
+                  isErrorSnackBar: true,
+                );
+              }
+              if (state.googleLoginStatus == FormStatus.success) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: 'Success authorization with Google',
+                );
+              }
+            },
+          ),
+          BlocListener<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state.formStatus == FormStatus.failure) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: state.errorMessage,
+                  isErrorSnackBar: true,
+                );
+              }
+              if (state.formStatus == FormStatus.success) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: 'Success authorization',
+                );
+              }
+            },
+          ),
+        ],
         child: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 30),
           child: Center(
@@ -62,6 +84,8 @@ class LoginPage extends StatelessWidget {
                   const ForgotPasswordTextButton(),
                   const SizedBox(height: 30),
                   const SignInButton(),
+                  const SizedBox(height: 10),
+                  const SignInGoogleButton(),
                   const SizedBox(height: 20),
                   const NotHaveAccountSection(),
                 ],

@@ -6,12 +6,14 @@ class LoginState {
   final String email;
   final String password;
   final FormStatus formStatus;
+  final FormStatus googleLoginStatus;
   final String errorMessage;
 
   LoginState({
     required this.email,
     required this.password,
     required this.formStatus,
+    required this.googleLoginStatus,
     required this.errorMessage,
   });
 
@@ -20,6 +22,7 @@ class LoginState {
       email: '',
       password: '',
       formStatus: FormStatus.initial,
+      googleLoginStatus: FormStatus.initial,
       errorMessage: '',
     );
   }
@@ -28,12 +31,14 @@ class LoginState {
     String? email,
     String? password,
     FormStatus? formStatus,
+    FormStatus? googleLoginStatus,
     String? errorMessage,
   }) {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
       formStatus: formStatus ?? this.formStatus,
+      googleLoginStatus: googleLoginStatus ?? this.googleLoginStatus,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

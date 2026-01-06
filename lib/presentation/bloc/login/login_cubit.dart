@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/login_exception.dart';
+import 'package:smart_courier_assistant/core/exception/auth/login_with_google_exception.dart';
 import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 
@@ -31,6 +32,23 @@ class LoginCubit extends Cubit<LoginState> {
       );
     } finally {
       emit(state.copyWith(formStatus: FormStatus.initial));
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    emit(state.copyWith(googleLoginStatus: FormStatus.loading));
+    try {
+      await _authRepository.signInWithGoogle();
+      emit(state.copyWith(googleLoginStatus: FormStatus.success));
+    } on LoginWithGoogleException catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.message,
+          googleLoginStatus: FormStatus.failure,
+        ),
+      );
+    } finally {
+      emit(state.copyWith(googleLoginStatus: FormStatus.initial));
     }
   }
 }

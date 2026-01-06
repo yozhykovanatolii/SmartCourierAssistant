@@ -51,7 +51,7 @@ class UserModel {
       id: '',
       fullName: '',
       email: '',
-      password: '',
+      password: '57abcdefB#',
       phoneNumber: '',
       avatar:
           'https://xwgraskemxbhjtgqrjxn.supabase.co/storage/v1/object/public/images/uploads/1758373217886',

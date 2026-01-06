@@ -34,4 +34,20 @@ class AuthRepository {
     );
     await _userFirestore.saveUser(userModel);
   }
+
+  Future<void> signInWithGoogle() async {
+    final user = await _userAuth.signInWithGoogle();
+    final isUserExist = await _userFirestore.isUserExist(user!.uid);
+    UserModel userModel = UserModel.initial();
+    if (!isUserExist) {
+      userModel = userModel.copyWith(
+        id: user.uid,
+        fullName: user.displayName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        avatar: user.photoURL,
+      );
+      await _userFirestore.saveUser(userModel);
+    }
+  }
 }
