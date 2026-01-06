@@ -15,7 +15,7 @@ class SplashPage extends StatelessWidget {
         style: TextStyle(
           fontFamily: 'Pacifico',
           color: Colors.white,
-          fontSize: 35,
+          fontSize: 30,
           fontWeight: FontWeight.w600,
         ),
       ),
