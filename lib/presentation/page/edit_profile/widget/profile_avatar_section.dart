@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
 
-class EditProfileUserAvatarSection extends StatelessWidget {
-  const EditProfileUserAvatarSection({super.key});
+class ProfileAvatarSection extends StatelessWidget {
+  const ProfileAvatarSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +27,18 @@ class _EditProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    final userAvatarUrl = context.select(
+      (EditProfileCubit bloc) => bloc.state.userAvatar,
+    );
+    return SizedBox(
       height: 120,
       width: 120,
       child: CircleAvatar(
-        backgroundImage: AssetImage(
-          'assets/images/test.jpg',
-        ),
+        backgroundImage: userAvatarUrl.isEmpty
+            ? const AssetImage(
+                'assets/images/test.jpg',
+              )
+            : NetworkImage(userAvatarUrl),
       ),
     );
   }
@@ -44,13 +50,13 @@ class _EditAvatarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton.filled(
-      onPressed: () {},
+      onPressed: () {
+        context.read<EditProfileCubit>().editUserAvatar();
+      },
       style: const ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Colors.blue),
       ),
-      icon: const Icon(
-        Iconsax.edit_copy,
-      ),
+      icon: const Icon(Icons.camera),
     );
   }
 }

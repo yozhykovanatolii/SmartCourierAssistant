@@ -33,8 +33,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         AppUserChanged(user),
       ),
       onError: (error) {
-        final exception = error as UserNotFoundException;
-        add(AppUserUnauthenticated(exception.errorMessage));
+        if (error is UserNotFoundException) {
+          add(AppUserUnauthenticated(error.errorMessage));
+        } else {
+          add(
+            AppUserUnauthenticated(
+              'Unknown authentication error',
+            ),
+          );
+        }
       },
     );
   }

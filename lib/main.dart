@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
+import 'package:smart_courier_assistant/presentation/bloc/app/app_event.dart';
+import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
@@ -24,6 +27,10 @@ void main() async {
         BlocProvider(create: (_) => LoginCubit()),
         BlocProvider(create: (_) => ForgotPasswordCubit()),
         BlocProvider(create: (_) => RegisterCubit()),
+        BlocProvider(create: (_) => EditProfileCubit()),
+        BlocProvider(
+          create: (_) => AppBloc()..add(AppUserSubscriptionRequested()),
+        ),
       ],
       child: const SmartCourierAssistantApp(),
     ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
+import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/forgot_password_text_button.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_email_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_password_text_field.dart';
@@ -33,6 +34,10 @@ class LoginPage extends StatelessWidget {
                   message: 'Success authorization with Google',
                 );
               }
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const EditProfilePage()),
+              );
             },
           ),
           BlocListener<LoginCubit, LoginState>(
@@ -48,6 +53,10 @@ class LoginPage extends StatelessWidget {
                 UiHelper.showSnackBar(
                   context: context,
                   message: 'Success authorization',
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const EditProfilePage()),
                 );
               }
             },
