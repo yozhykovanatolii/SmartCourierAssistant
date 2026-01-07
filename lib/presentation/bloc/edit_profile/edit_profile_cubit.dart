@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/permission_denied_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
 import 'package:smart_courier_assistant/data/model/user_model.dart';
@@ -61,5 +62,26 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   Future<void> updateProfile() async {
     emit(state.copyWith(formStatus: FormStatus.loading));
+    try {
+      await userRepository.updateUserData(
+        state.userAvatar,
+        state.fullName,
+        state.phoneNumber,
+      );
+      emit(state.copyWith(formStatus: FormStatus.success));
+    } on UserNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.errorMessage,
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(
+          errorMessage: '',
+          formStatus: FormStatus.initial,
+        ),
+      );
+    }
   }
 }

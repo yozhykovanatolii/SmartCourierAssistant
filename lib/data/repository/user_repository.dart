@@ -20,6 +20,24 @@ class UserRepository {
     return userImageUrl;
   }
 
+  Future<void> updateUserData(
+    String userAvatar,
+    String fullName,
+    String phoneNumber,
+  ) async {
+    final userID = _userAuth.userId;
+    UserModel user = await _userFirestore.getUserModelById(userID);
+    user = user.copyWith(
+      id: user.id,
+      email: user.email,
+      password: user.password,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      avatar: userAvatar,
+    );
+    await _userFirestore.saveUser(user);
+  }
+
   Stream<UserModel> getUserModelCurrentData() {
     final userStream = _userAuth.user;
     return userStream.asyncMap((user) async {

@@ -30,7 +30,7 @@ class EditProfileButton extends StatelessWidget {
         alignment: AlignmentGeometry.bottomCenter,
         child: CommonButton(
           width: MediaQuery.of(context).size.width,
-          onPressed: () {},
+          onPressed: () => context.read<EditProfileCubit>().updateProfile(),
           color: const Color(0xFF007DFC),
           child: child,
         ),
