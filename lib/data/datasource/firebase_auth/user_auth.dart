@@ -4,6 +4,7 @@ import 'package:smart_courier_assistant/core/exception/auth/login_exception.dart
 import 'package:smart_courier_assistant/core/exception/auth/login_with_google_exception.dart';
 import 'package:smart_courier_assistant/core/exception/auth/register_exception.dart';
 import 'package:smart_courier_assistant/core/exception/auth/reset_password_exception.dart';
+import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 
 class UserAuth {
   final _firebaseAuth = FirebaseAuth.instance;
@@ -75,4 +76,12 @@ class UserAuth {
       throw ResetPasswordException();
     }
   }
+
+  String get userId {
+    final currentUser = _firebaseAuth.currentUser;
+    if (currentUser == null) throw UserNotFoundException('User didn\'t find');
+    return currentUser.uid;
+  }
+
+  Stream<User?> get user => _firebaseAuth.authStateChanges();
 }
