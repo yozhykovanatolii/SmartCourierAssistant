@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/datasource/firebase_auth/user_auth.dart';
 import 'package:smart_courier_assistant/data/datasource/firestore/user_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/storage/supabase_storage.dart';
 import 'package:smart_courier_assistant/data/model/user_model.dart';
+import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
 
 class UserRepository {
   final UserAuth _userAuth = UserAuth();
@@ -16,7 +15,9 @@ class UserRepository {
   }
 
   Future<String> getUserImage() async {
-    return 'Image';
+    final userImageFile = await CameraPickerService.pickImageFileFromGallery();
+    final userImageUrl = await _supabaseStorage.saveImage(userImageFile);
+    return userImageUrl;
   }
 
   Stream<UserModel> getUserModelCurrentData() {
