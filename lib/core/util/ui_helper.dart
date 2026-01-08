@@ -21,4 +21,14 @@ class UiHelper {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+  static void showModalSheet(BuildContext context, Widget widget) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      context: context,
+      builder: (_) => widget,
+    );
+  }
 }
