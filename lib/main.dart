@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/theme/app_theme.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_event.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
@@ -46,9 +47,13 @@ class SmartCourierAssistantApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    final isDarkMode = context.select(
+      (SettingsCubit cubit) => cubit.state.isDarkMode,
+    );
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      theme: isDarkMode ? AppTheme.darkMode : AppTheme.lightMode,
+      home: const SplashPage(),
     );
   }
 }
