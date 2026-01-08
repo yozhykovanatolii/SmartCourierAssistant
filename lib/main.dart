@@ -7,6 +7,7 @@ import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_prof
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
+import 'package:smart_courier_assistant/presentation/bloc/settings/settings_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/splash/splash_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
@@ -30,6 +31,9 @@ void main() async {
         BlocProvider(create: (_) => EditProfileCubit()),
         BlocProvider(
           create: (_) => AppBloc()..add(AppUserSubscriptionRequested()),
+        ),
+        BlocProvider(
+          create: (_) => SettingsCubit()..fetchSettings(),
         ),
       ],
       child: const SmartCourierAssistantApp(),
