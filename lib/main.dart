@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/theme/app_theme.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_event.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
@@ -50,9 +52,20 @@ class SmartCourierAssistantApp extends StatelessWidget {
     final isDarkMode = context.select(
       (SettingsCubit cubit) => cubit.state.isDarkMode,
     );
+    final languageCode = context.select(
+      (SettingsCubit cubit) => cubit.state.languageCode,
+    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: isDarkMode ? AppTheme.darkMode : AppTheme.lightMode,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      locale: Locale(languageCode),
       home: const SplashPage(),
     );
   }

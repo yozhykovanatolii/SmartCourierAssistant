@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/forgot_password/forgot_password_page.dart';
 
 class ForgotPasswordTextButton extends StatelessWidget {
@@ -15,9 +16,9 @@ class ForgotPasswordTextButton extends StatelessWidget {
             MaterialPageRoute(builder: (_) => const ForgotPasswordPage()),
           );
         },
-        child: const Text(
-          'Forgot Password?',
-          style: TextStyle(
+        child: Text(
+          S.of(context).forgotPassword,
+          style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
             decoration: TextDecoration.underline,

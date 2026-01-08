@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
@@ -29,7 +30,7 @@ class RegisterPage extends StatelessWidget {
           if (state.formStatus == FormStatus.success) {
             UiHelper.showSnackBar(
               context: context,
-              message: 'Success registration',
+              message: S.of(context).successRegistration,
             );
             Navigator.push(
               context,
@@ -44,16 +45,16 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'Create Account',
-                    style: TextStyle(
+                  Text(
+                    S.of(context).createAccount,
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Fill information about yourself below',
+                    S.of(context).fillInformationAboutYourselfBelow,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.grey[600],

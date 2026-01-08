@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_text_field.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
 
@@ -15,7 +16,7 @@ class RegisterFullNameTextField extends StatelessWidget {
         return CommonTextField(
           onChanged: (fullName) =>
               context.read<RegisterCubit>().setRegisterFullName(fullName),
-          hintText: 'Enter your full name',
+          hintText: S.of(context).enterYourFullName,
           errorText: fullNameError,
         );
       },

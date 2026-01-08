@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_text_field.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
 
@@ -15,7 +16,7 @@ class RegisterPasswordTextField extends StatelessWidget {
         return CommonTextField(
           onChanged: (password) =>
               context.read<RegisterCubit>().setRegisterPassword(password),
-          hintText: 'Enter your password',
+          hintText: S.of(context).enterYourPassword,
           obscureText: true,
           errorText: passwordError,
         );

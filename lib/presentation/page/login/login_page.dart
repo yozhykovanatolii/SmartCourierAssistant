@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
@@ -52,7 +53,7 @@ class LoginPage extends StatelessWidget {
               if (state.formStatus == FormStatus.success) {
                 UiHelper.showSnackBar(
                   context: context,
-                  message: 'Success authorization',
+                  message: S.of(context).successAuthorization,
                 );
                 Navigator.push(
                   context,
@@ -69,16 +70,16 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'Sign In',
-                    style: TextStyle(
+                  Text(
+                    S.of(context).signIn,
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Hi! Welcome back, you\'ve been missed',
+                    S.of(context).welcomeBack,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.grey[600],

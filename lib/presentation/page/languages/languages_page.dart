@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/languages/widget/language_list_tile.dart';
 
 class LanguagesPage extends StatelessWidget {
@@ -22,7 +23,7 @@ class LanguagesPage extends StatelessWidget {
           children: [
             const SizedBox(height: 5),
             Text(
-              'Languages',
+              S.of(context).languages,
               style: TextStyle(
                 fontSize: MediaQuery.textScalerOf(context).scale(24),
                 fontWeight: FontWeight.bold,
@@ -30,7 +31,7 @@ class LanguagesPage extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Select the language that is most convenient for you to use the application in.',
+              S.of(context).selectTheLanguageThatIsMostConvenientForYouTo,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.grey[600],

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/register/register_page.dart';
 
 class NotHaveAccountSection extends StatelessWidget {
@@ -9,7 +10,7 @@ class NotHaveAccountSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: 'Don\'t have an account?',
+        text: S.of(context).dontHaveAnAccount,
         style: TextStyle(
           fontSize: 15,
           color: Colors.grey[500],
@@ -19,7 +20,7 @@ class NotHaveAccountSection extends StatelessWidget {
             child: SizedBox(width: 5),
           ),
           TextSpan(
-            text: 'Sign Up',
+            text: S.of(context).signUp,
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,

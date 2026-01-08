@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_event.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
@@ -49,7 +50,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit profile'),
+        title: Text(
+          S.of(context).editProfile,
+        ),
         centerTitle: true,
       ),
       body: MultiBlocListener(
@@ -75,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               if (state.formStatus == FormStatus.success) {
                 UiHelper.showSnackBar(
                   context: context,
-                  message: 'Success updating profile',
+                  message: S.of(context).successUpdatingProfile,
                 );
                 context.read<AppBloc>().add(AppUserSubscriptionRequested());
               }
@@ -96,9 +99,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             children: [
               const ProfileAvatarSection(),
               const SizedBox(height: 20),
-              const Text(
-                'Full name',
-                style: TextStyle(
+              Text(
+                S.of(context).fullName,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
@@ -108,9 +111,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 controller: _fullNameController,
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Phone number',
-                style: TextStyle(
+              Text(
+                S.of(context).phoneNumber,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),

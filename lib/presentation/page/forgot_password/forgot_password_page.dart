@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
@@ -19,8 +20,9 @@ class ForgotPasswordPage extends StatelessWidget {
           if (state.formStatus == FormStatus.success) {
             UiHelper.showSnackBar(
               context: context,
-              message:
-                  'If an account with this email exists, you will receive a password reset email.',
+              message: S
+                  .of(context)
+                  .ifAnAccountWithThisEmailExistsYouWillReceive,
             );
             Navigator.push(
               context,
@@ -41,16 +43,16 @@ class ForgotPasswordPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
+                Text(
+                  S.of(context).forgotPassword,
+                  style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Enter your email address and we will send you a link to reset your password',
+                  S.of(context).enterYourEmailAddressAndWeWillSendYouA,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.grey[600],
