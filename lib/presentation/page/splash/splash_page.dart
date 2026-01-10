@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
 import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
-import 'package:smart_courier_assistant/presentation/page/settings/settings_page.dart';
+import 'package:smart_courier_assistant/presentation/page/profile/profile_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -28,7 +28,7 @@ class SplashPage extends StatelessWidget {
         if (state is UserAuthenticatedState) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const SettingsPage()),
+            MaterialPageRoute(builder: (_) => const ProfilePage()),
           );
         }
         if (state is UserUnauthenticatedState) {
