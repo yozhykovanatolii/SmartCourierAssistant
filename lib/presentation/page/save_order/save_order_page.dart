@@ -13,7 +13,7 @@ class SaveOrderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      margin: const EdgeInsets.only(top: 200),
+      margin: const EdgeInsets.only(top: 103),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(
@@ -73,8 +73,12 @@ class SaveOrderPage extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             const CategoryListChoiceSection(),
-            const SizedBox(height: 40),
-            const OrderSaveButton(),
+            const Expanded(
+              child: Align(
+                alignment: AlignmentGeometry.bottomCenter,
+                child: OrderSaveButton(),
+              ),
+            ),
           ],
         ),
       ),
