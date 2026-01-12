@@ -1,8 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
+import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class SaveOrderCubit extends Cubit<SaveOrderState> {
+  final OrderRepository _orderRepository = OrderRepository();
+
   SaveOrderCubit() : super(SaveOrderState.initial());
 
   void setOrderAddress(String address) {
@@ -23,7 +27,30 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
     emit(state.copyWith(category: category));
   }
 
-  void saveOrder() {
+  Future<void> saveOrder() async {
     emit(state.copyWith(formStatus: FormStatus.loading));
+    try {
+      await _orderRepository.saveOrder(
+        state.clientFullName,
+        state.clientPhoneNumber,
+        state.address,
+        state.category,
+      );
+      emit(state.copyWith(formStatus: FormStatus.success));
+    } on UserNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.errorMessage,
+          formStatus: FormStatus.success,
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(
+          errorMessage: '',
+          formStatus: FormStatus.initial,
+        ),
+      );
+    }
   }
 }

@@ -73,6 +73,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       emit(
         state.copyWith(
           errorMessage: exception.errorMessage,
+          formStatus: FormStatus.success,
         ),
       );
     } finally {
