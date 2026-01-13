@@ -9,6 +9,10 @@ class OrderFirestore {
     await docReference.set(userModel);
   }
 
+  Future<void> deleteOrder(String orderId) async {
+    await _firestore.collection('orders').doc(orderId).delete();
+  }
+
   DocumentReference<OrderModel> _getUserDocumentReference(String id) {
     return _firestore
         .collection('orders')

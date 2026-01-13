@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_button.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
+import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class OrderSaveButton extends StatelessWidget {
-  const OrderSaveButton({super.key});
+  final OrderModel? orderModel;
+
+  const OrderSaveButton({
+    super.key,
+    this.orderModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class OrderSaveButton extends StatelessWidget {
               );
         final onPressed = buttonStatus == ButtonStatus.disabled
             ? null
-            : () => context.read<SaveOrderCubit>().saveOrder();
+            : () => context.read<SaveOrderCubit>().saveOrder(orderModel);
         return CommonButton(
           width: MediaQuery.of(context).size.width,
           onPressed: onPressed,

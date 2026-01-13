@@ -10,11 +10,13 @@ class OrderRepository {
     String clientFullName,
     String clientPhoneNumber,
     String address,
-    String category,
-  ) async {
+    String category, {
+    OrderModel? currentOrder,
+  }) async {
     final userID = _userAuth.userId;
     OrderModel orderModel = OrderModel.initial();
     orderModel = orderModel.copyWith(
+      id: currentOrder?.id,
       courierId: userID,
       clientFullName: clientFullName,
       clientPhoneNumber: clientPhoneNumber,
@@ -22,5 +24,9 @@ class OrderRepository {
       category: category,
     );
     await _orderFirestore.saveOrder(orderModel);
+  }
+
+  Future<void> deleteOrder(String orderId) async {
+    await _orderFirestore.deleteOrder(orderId);
   }
 }

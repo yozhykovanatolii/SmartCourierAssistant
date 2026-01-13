@@ -33,13 +33,7 @@ class HeaderSection extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Iconsax.trash,
-            color: Colors.red,
-          ),
-        ),
+        const SizedBox(width: 48),
       ],
     );
   }

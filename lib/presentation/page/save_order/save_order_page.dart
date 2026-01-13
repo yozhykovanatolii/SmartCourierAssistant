@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
@@ -11,8 +12,46 @@ import 'package:smart_courier_assistant/presentation/page/save_order/widget/clie
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/header_section.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/order_save_button.dart';
 
-class SaveOrderPage extends StatelessWidget {
-  const SaveOrderPage({super.key});
+class SaveOrderPage extends StatefulWidget {
+  final OrderModel? orderModel;
+
+  const SaveOrderPage({
+    super.key,
+    this.orderModel,
+  });
+
+  @override
+  State<SaveOrderPage> createState() => _SaveOrderPageState();
+}
+
+class _SaveOrderPageState extends State<SaveOrderPage> {
+  late final SaveOrderCubit cubit;
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _clientFullNameController =
+      TextEditingController();
+  final TextEditingController _clientPhoneNumberController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    cubit = context.read<SaveOrderCubit>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cubit.editOrder(widget.orderModel);
+      _addressController.text = widget.orderModel?.address ?? '';
+      _clientFullNameController.text = widget.orderModel?.clientFullName ?? '';
+      _clientPhoneNumberController.text =
+          widget.orderModel?.clientPhoneNumber ?? '';
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    _clientFullNameController.dispose();
+    _clientPhoneNumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +75,9 @@ class SaveOrderPage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.only(top: 103),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.vertical(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(
             top: Radius.circular(30),
           ),
         ),
@@ -95,10 +134,12 @@ class SaveOrderPage extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               const CategoryListChoiceSection(),
-              const Expanded(
+              Expanded(
                 child: Align(
                   alignment: AlignmentGeometry.bottomCenter,
-                  child: OrderSaveButton(),
+                  child: OrderSaveButton(
+                    orderModel: widget.orderModel,
+                  ),
                 ),
               ),
             ],

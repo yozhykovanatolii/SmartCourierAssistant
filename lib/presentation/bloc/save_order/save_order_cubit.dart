@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
+import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
@@ -27,7 +28,24 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
     emit(state.copyWith(category: category));
   }
 
-  Future<void> saveOrder() async {
+  Future<void> deleteOrder() async {
+    await _orderRepository.deleteOrder('560e9f40-efc5-11f0-992e-eb65c479d453');
+  }
+
+  void editOrder(OrderModel? order) {
+    if (order != null) {
+      emit(
+        state.copyWith(
+          address: order.address,
+          clientFullName: order.clientFullName,
+          clientPhoneNumber: order.clientPhoneNumber,
+          category: order.category,
+        ),
+      );
+    }
+  }
+
+  Future<void> saveOrder(OrderModel? currentOrder) async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
       await _orderRepository.saveOrder(
@@ -35,6 +53,7 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
         state.clientPhoneNumber,
         state.address,
         state.category,
+        currentOrder: currentOrder,
       );
       emit(state.copyWith(formStatus: FormStatus.success));
     } on UserNotFoundException catch (exception) {

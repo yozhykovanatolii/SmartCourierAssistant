@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:smart_courier_assistant/core/widget/snack_bar_body.dart';
 
 class UiHelper {
+  static void showConfirmDialog(
+    BuildContext context,
+    Widget widget,
+  ) {
+    showDialog(
+      context: context,
+      builder: (_) => widget,
+    );
+  }
+
   static void showSnackBar({
     required BuildContext context,
     required String message,
