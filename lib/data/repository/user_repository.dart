@@ -4,6 +4,7 @@ import 'package:smart_courier_assistant/data/datasource/remote/firestore/user_fi
 import 'package:smart_courier_assistant/data/datasource/remote/storage/supabase_storage.dart';
 import 'package:smart_courier_assistant/data/model/user_model.dart';
 import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
+import 'package:smart_courier_assistant/data/service/dialer_service.dart';
 
 class UserRepository {
   final UserAuth _userAuth = UserAuth();
@@ -45,5 +46,9 @@ class UserRepository {
       final userModel = await _userFirestore.getUserModelById(user.uid);
       return userModel;
     });
+  }
+
+  Future<void> callUserDialer(String userPhoneNumber) async {
+    await DialerService.openDialer(userPhoneNumber);
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
 
 class OrderCard extends StatelessWidget {
@@ -95,21 +97,25 @@ class _OrderCardContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 8,
           children: [
-            Expanded(child: _OrderDoneButton()),
+            const Expanded(child: _OrderDoneButton()),
             Expanded(
               child: _OrderClientActionButton(
                 text: '📞 Call',
                 backgroundColor: Colors.blue,
+                onPressed: () => context.read<SaveOrderCubit>().openCallDialer(
+                  order.clientPhoneNumber,
+                ),
               ),
             ),
             Expanded(
               child: _OrderClientActionButton(
                 text: '💬 Chat',
                 backgroundColor: Colors.orange,
+                onPressed: () {},
               ),
             ),
           ],
@@ -195,9 +201,11 @@ class _OrderDoneButton extends StatelessWidget {
 class _OrderClientActionButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
+  final Function()? onPressed;
 
   const _OrderClientActionButton({
     required this.text,
+    required this.onPressed,
     required this.backgroundColor,
   });
 
@@ -206,7 +214,7 @@ class _OrderClientActionButton extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.047,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(backgroundColor),
           shape: WidgetStatePropertyAll(
