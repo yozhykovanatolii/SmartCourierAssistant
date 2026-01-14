@@ -7,7 +7,6 @@ class CommonTextField extends StatelessWidget {
   final String? counterText;
   final bool obscureText;
   final bool readOnly;
-  final Widget? suffixIcon;
   final Function(String)? onChanged;
   final Function()? onTap;
   final TextInputType? keyboardType;
@@ -20,7 +19,6 @@ class CommonTextField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.onTap,
-    this.suffixIcon,
     this.obscureText = false,
     this.readOnly = false,
     this.keyboardType,
@@ -68,7 +66,6 @@ class CommonTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         contentPadding: const EdgeInsets.all(14),
-        suffixIcon: suffixIcon,
         errorText: errorText,
         counterText: counterText,
         hintText: hintText,

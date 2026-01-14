@@ -26,6 +26,11 @@ class OrderRepository {
     await _orderFirestore.saveOrder(orderModel);
   }
 
+  Future<List<OrderModel>> getAllCourierActiveOrders() async {
+    final courierId = _userAuth.userId;
+    return await _orderFirestore.getAllUserOrders(courierId);
+  }
+
   Future<void> deleteOrder(String orderId) async {
     await _orderFirestore.deleteOrder(orderId);
   }

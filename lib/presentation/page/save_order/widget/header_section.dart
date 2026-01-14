@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/core/widget/information_dialog_box.dart';
+import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 
 class HeaderSection extends StatelessWidget {
-  const HeaderSection({super.key});
+  final bool isEditing;
+  const HeaderSection({
+    super.key,
+    required this.isEditing,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,29 @@ class HeaderSection extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(width: 48),
+        isEditing
+            ? IconButton(
+                onPressed: () {
+                  UiHelper.showConfirmDialog(
+                    context,
+                    InformationDialogBox(
+                      title: 'Deleting order',
+                      description:
+                          'You\'re going to delete an order. Are you sure?',
+                      onClickActionButton: () {
+                        context.read<SaveOrderCubit>().deleteOrder();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Iconsax.trash,
+                  color: Colors.red,
+                ),
+              )
+            : const SizedBox(width: 48),
       ],
     );
   }

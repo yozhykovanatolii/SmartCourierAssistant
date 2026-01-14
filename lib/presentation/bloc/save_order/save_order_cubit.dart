@@ -7,6 +7,7 @@ import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_
 
 class SaveOrderCubit extends Cubit<SaveOrderState> {
   final OrderRepository _orderRepository = OrderRepository();
+  String orderId = '';
 
   SaveOrderCubit() : super(SaveOrderState.initial());
 
@@ -29,11 +30,12 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
   }
 
   Future<void> deleteOrder() async {
-    await _orderRepository.deleteOrder('560e9f40-efc5-11f0-992e-eb65c479d453');
+    await _orderRepository.deleteOrder(orderId);
   }
 
   void editOrder(OrderModel? order) {
     if (order != null) {
+      orderId = order.id;
       emit(
         state.copyWith(
           address: order.address,

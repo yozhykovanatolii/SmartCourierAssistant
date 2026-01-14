@@ -14,10 +14,12 @@ import 'package:smart_courier_assistant/presentation/page/save_order/widget/orde
 
 class SaveOrderPage extends StatefulWidget {
   final OrderModel? orderModel;
+  final bool isEditing;
 
   const SaveOrderPage({
     super.key,
     this.orderModel,
+    this.isEditing = false,
   });
 
   @override
@@ -93,7 +95,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              const HeaderSection(),
+              HeaderSection(
+                isEditing: widget.isEditing,
+              ),
               const SizedBox(height: 20),
               const Text(
                 'Address',
@@ -103,7 +107,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
                 ),
               ),
               const SizedBox(height: 5),
-              const AddressTextField(),
+              AddressTextField(
+                addressController: _addressController,
+              ),
               const SizedBox(height: 20),
               const Text(
                 'Client',
@@ -113,7 +119,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
                 ),
               ),
               const SizedBox(height: 5),
-              const ClientFullNameTextField(),
+              ClientFullNameTextField(
+                clientFullNameController: _clientFullNameController,
+              ),
               const SizedBox(height: 20),
               const Text(
                 'Contact Phone',
@@ -123,7 +131,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
                 ),
               ),
               const SizedBox(height: 5),
-              const ClientPhoneNumberTextField(),
+              ClientPhoneNumberTextField(
+                clientPhoneNumberController: _clientPhoneNumberController,
+              ),
               const SizedBox(height: 15),
               const Text(
                 'Category',
