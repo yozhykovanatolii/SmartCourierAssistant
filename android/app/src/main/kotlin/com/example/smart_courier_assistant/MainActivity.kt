@@ -8,21 +8,23 @@ import io.flutter.plugin.common.MethodChannel
 
 
 class MainActivity : FlutterActivity(){
-    private val CHANNEL = "com.example.app/dialer";
+    private val CHANNEL = "com.example.app/native";
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
-            if(call.method == "openDialer"){
-                val phoneNumber = call.argument<String>("phoneNumber")
-                if(phoneNumber != null){
-                    openDialer(phoneNumber)
+            when (call.method) {
+                "openDialer" -> {
+                    val phoneNumber = call.argument<String>("phoneNumber")
+                    if (phoneNumber != null) openDialer(phoneNumber)
                     result.success(null)
-                }else{
-                    result.error("BAD_ARGS", "Phone number missing", null)
                 }
-            }else{
-                result.notImplemented()
+                "openWhatsAppChat" -> {
+                    val phone = call.argument<String>("phoneNumber")
+                    if (!phone.isNullOrEmpty()) openWhatsAppChat(phone)
+                    result.success(null)
+                }
+                else -> result.notImplemented()
             }
         }
     }
@@ -31,5 +33,14 @@ class MainActivity : FlutterActivity(){
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:$phoneNumber")
         startActivity(intent)
+    }
+
+    private fun openWhatsAppChat(phone: String){
+        val cleanPhone = phone.filter { it.isDigit() }
+        val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://wa.me/$cleanPhone")
+    )
+    startActivity(intent)
     }
 }

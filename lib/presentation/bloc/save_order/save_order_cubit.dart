@@ -96,4 +96,24 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
       );
     }
   }
+
+  Future<void> openUserMessanger(String clientPhoneNumber) async {
+    try {
+      await _userRepository.messageUser(clientPhoneNumber);
+    } catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.toString(),
+          formStatus: FormStatus.failure,
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(
+          errorMessage: '',
+          formStatus: FormStatus.initial,
+        ),
+      );
+    }
+  }
 }

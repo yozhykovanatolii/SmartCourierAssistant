@@ -115,7 +115,10 @@ class _OrderCardContent extends StatelessWidget {
               child: _OrderClientActionButton(
                 text: '💬 Chat',
                 backgroundColor: Colors.orange,
-                onPressed: () {},
+                onPressed: () =>
+                    context.read<SaveOrderCubit>().openUserMessanger(
+                      order.clientPhoneNumber,
+                    ),
               ),
             ),
           ],

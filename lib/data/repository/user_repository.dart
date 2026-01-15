@@ -4,7 +4,7 @@ import 'package:smart_courier_assistant/data/datasource/remote/firestore/user_fi
 import 'package:smart_courier_assistant/data/datasource/remote/storage/supabase_storage.dart';
 import 'package:smart_courier_assistant/data/model/user_model.dart';
 import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
-import 'package:smart_courier_assistant/data/service/dialer_service.dart';
+import 'package:smart_courier_assistant/data/service/native_service.dart';
 
 class UserRepository {
   final UserAuth _userAuth = UserAuth();
@@ -49,6 +49,10 @@ class UserRepository {
   }
 
   Future<void> callUserDialer(String userPhoneNumber) async {
-    await DialerService.openDialer(userPhoneNumber);
+    await NativeService.openDialer(userPhoneNumber);
+  }
+
+  Future<void> messageUser(String userPhoneNumber) async {
+    await NativeService.openWhatsAppChat(userPhoneNumber);
   }
 }
