@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 
@@ -12,8 +13,8 @@ class OrderCubit extends Cubit<OrderState> {
     try {
       final activeOrders = await _orderRepository.getAllCourierActiveOrders();
       emit(OrderSuccessState(activeOrders));
-    } catch (exception) {
-      emit(OrderFailureState(exception.toString()));
+    } on OrdersNotFoundException catch (exception) {
+      emit(OrderFailureState(exception.errorMessage));
     }
   }
 }

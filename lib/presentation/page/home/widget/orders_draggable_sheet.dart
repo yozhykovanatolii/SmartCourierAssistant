@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
+import 'package:smart_courier_assistant/presentation/page/home/widget/error_orders_section.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/order_card.dart';
 
 class OrdersDraggableSheet extends StatelessWidget {
@@ -48,14 +49,8 @@ class OrdersDraggableSheet extends StatelessWidget {
                 child: BlocBuilder<OrderCubit, OrderState>(
                   builder: (context, state) {
                     if (state is OrderFailureState) {
-                      return Center(
-                        child: Text(
-                          state.errorMessage,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                      return ErrorOrdersSection(
+                        errorMessage: state.errorMessage,
                       );
                     }
                     if (state is OrderSuccessState) {
