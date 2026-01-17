@@ -100,7 +100,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Address',
+                'Address🏠',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -112,7 +112,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Client',
+                'Client👤',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -124,7 +124,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Contact Phone',
+                'Contact Phone📱',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 15),
               const Text(
-                'Category',
+                'Category🗂️',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
