@@ -50,4 +50,8 @@ class AuthRepository {
       await _userFirestore.saveUser(userModel);
     }
   }
+
+  Future<void> logOut() async {
+    await _userAuth.signOut();
+  }
 }

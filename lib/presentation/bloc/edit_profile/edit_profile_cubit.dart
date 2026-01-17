@@ -9,14 +9,14 @@ import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_prof
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
-  final UserRepository userRepository = UserRepository();
-  final AuthRepository authRepository = AuthRepository();
+  final UserRepository _userRepository = UserRepository();
+  final AuthRepository _authRepository = AuthRepository();
 
   EditProfileCubit() : super(EditProfileState.initial());
 
   Future<void> editUserAvatar() async {
     try {
-      final userAvatarUrl = await userRepository.getUserImage();
+      final userAvatarUrl = await _userRepository.getUserImage();
       emit(state.copyWith(userAvatar: userAvatarUrl));
     } on PermissionDeniedException catch (exception) {
       emit(
@@ -60,10 +60,12 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     );
   }
 
+  Future<void> logOut() async => await _authRepository.logOut();
+
   Future<void> updateProfile() async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
-      await userRepository.updateUserData(
+      await _userRepository.updateUserData(
         state.userAvatar,
         state.fullName,
         state.phoneNumber,

@@ -12,7 +12,7 @@ class ThemeSwitch extends StatelessWidget {
     );
     return Switch(
       value: isDarkMode,
-      activeTrackColor: Colors.green,
+      activeTrackColor: Colors.blue,
       activeThumbColor: Colors.white,
       onChanged: (isDarkMode) {
         context.read<SettingsCubit>().changeThemeMode(isDarkMode);

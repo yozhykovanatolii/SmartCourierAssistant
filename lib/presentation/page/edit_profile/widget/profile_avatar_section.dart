@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
 
 class ProfileAvatarSection extends StatelessWidget {
@@ -56,7 +57,7 @@ class _EditAvatarButton extends StatelessWidget {
       style: const ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Colors.blue),
       ),
-      icon: const Icon(Icons.camera),
+      icon: const Icon(Iconsax.camera),
     );
   }
 }

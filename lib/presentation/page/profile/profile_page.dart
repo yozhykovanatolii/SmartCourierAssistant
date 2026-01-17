@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
+import 'package:smart_courier_assistant/presentation/page/profile/widget/logout_modal_sheet.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/section_list_tile.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/user_avatar_section.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/user_full_name_section.dart';
@@ -72,7 +74,10 @@ class ProfilePage extends StatelessWidget {
                     leadingEmoji: '🚪',
                     title: 'Logout',
                     isLogOut: true,
-                    onTap: () {},
+                    onTap: () => UiHelper.showModalSheet(
+                      context,
+                      const LogoutModalSheet(),
+                    ),
                   ),
                 ],
               ),
