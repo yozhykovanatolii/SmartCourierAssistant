@@ -3,7 +3,6 @@ import 'package:uuid/uuid.dart';
 
 class OrderModel {
   final String id;
-  final String courierId;
   final String clientFullName;
   final String clientPhoneNumber;
   final String address;
@@ -12,7 +11,6 @@ class OrderModel {
 
   OrderModel({
     required this.id,
-    required this.courierId,
     required this.clientFullName,
     required this.clientPhoneNumber,
     required this.address,
@@ -23,7 +21,6 @@ class OrderModel {
   factory OrderModel.initial() {
     return OrderModel(
       id: const Uuid().v1(),
-      courierId: '',
       clientFullName: '',
       clientPhoneNumber: '',
       address: '',
@@ -35,7 +32,6 @@ class OrderModel {
   Map<String, dynamic> toFirestore() {
     return <String, dynamic>{
       'id': id,
-      'courierId': courierId,
       'clientFullName': clientFullName,
       'clientPhoneNumber': clientPhoneNumber,
       'address': address,
@@ -51,7 +47,6 @@ class OrderModel {
     final data = snapshot.data();
     return OrderModel(
       id: data?['id'] as String,
-      courierId: data?['courierId'] as String,
       clientFullName: data?['clientFullName'] as String,
       clientPhoneNumber: data?['clientPhoneNumber'] as String,
       address: data?['address'] as String,
@@ -62,7 +57,6 @@ class OrderModel {
 
   OrderModel copyWith({
     String? id,
-    String? courierId,
     String? clientFullName,
     String? clientPhoneNumber,
     String? address,
@@ -71,7 +65,6 @@ class OrderModel {
   }) {
     return OrderModel(
       id: id ?? this.id,
-      courierId: courierId ?? this.courierId,
       clientFullName: clientFullName ?? this.clientFullName,
       clientPhoneNumber: clientPhoneNumber ?? this.clientPhoneNumber,
       address: address ?? this.address,

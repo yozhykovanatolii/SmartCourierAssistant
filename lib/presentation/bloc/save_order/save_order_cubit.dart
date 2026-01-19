@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
+import 'package:smart_courier_assistant/data/repository/route_repository.dart';
 import 'package:smart_courier_assistant/data/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
@@ -9,7 +10,8 @@ import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_
 class SaveOrderCubit extends Cubit<SaveOrderState> {
   final OrderRepository _orderRepository = OrderRepository();
   final UserRepository _userRepository = UserRepository();
-  String orderId = '';
+  final RouteRepository _routeRepository = RouteRepository();
+  String _orderId = '';
 
   SaveOrderCubit() : super(SaveOrderState.initial());
 
@@ -32,12 +34,12 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
   }
 
   Future<void> deleteOrder() async {
-    await _orderRepository.deleteOrder(orderId);
+    await _orderRepository.deleteOrder(_orderId);
   }
 
   void editOrder(OrderModel? order) {
     if (order != null) {
-      orderId = order.id;
+      _orderId = order.id;
       emit(
         state.copyWith(
           address: order.address,
@@ -52,11 +54,13 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
   Future<void> saveOrder(OrderModel? currentOrder) async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
+      final routeId = await _routeRepository.createRoute();
       await _orderRepository.saveOrder(
         state.clientFullName,
         state.clientPhoneNumber,
         state.address,
         state.category,
+        routeId,
         currentOrder: currentOrder,
       );
       emit(state.copyWith(formStatus: FormStatus.success));

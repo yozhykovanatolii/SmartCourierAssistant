@@ -1,37 +1,42 @@
 import 'package:smart_courier_assistant/data/datasource/remote/firebase_auth/user_auth.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firestore/order_firestore.dart';
+import 'package:smart_courier_assistant/data/datasource/remote/firestore/route_firestore.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 
 class OrderRepository {
   final UserAuth _userAuth = UserAuth();
   final OrderFirestore _orderFirestore = OrderFirestore();
+  final RouteFirestore _routeFirestore = RouteFirestore();
 
   Future<void> saveOrder(
     String clientFullName,
     String clientPhoneNumber,
     String address,
-    String category, {
+    String category,
+    String routeId, {
     OrderModel? currentOrder,
   }) async {
-    final userID = _userAuth.userId;
     OrderModel orderModel = OrderModel.initial();
     orderModel = orderModel.copyWith(
       id: currentOrder?.id,
-      courierId: userID,
       clientFullName: clientFullName,
       clientPhoneNumber: clientPhoneNumber,
       address: address,
       category: category,
     );
-    await _orderFirestore.saveOrder(orderModel);
+    await _orderFirestore.saveOrder(orderModel, routeId);
   }
 
   Future<List<OrderModel>> getAllCourierActiveOrders() async {
     final courierId = _userAuth.userId;
-    return await _orderFirestore.getAllUserOrders(courierId);
+    final routeModel = await _routeFirestore.getTodayRoute(courierId);
+    return await _orderFirestore.getAllUserOrders(routeModel.routeId);
   }
 
   Future<void> deleteOrder(String orderId) async {
-    await _orderFirestore.deleteOrder(orderId);
+    final courierId = _userAuth.userId;
+    final routeId = await _routeFirestore.getTodayRouteId(courierId);
+    if (routeId == null) return;
+    await _orderFirestore.deleteOrder(orderId, routeId);
   }
 }
