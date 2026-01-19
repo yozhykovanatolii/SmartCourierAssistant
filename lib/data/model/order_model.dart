@@ -8,6 +8,7 @@ class OrderModel {
   final String clientPhoneNumber;
   final String address;
   final String category;
+  final String status;
 
   OrderModel({
     required this.id,
@@ -16,6 +17,7 @@ class OrderModel {
     required this.clientPhoneNumber,
     required this.address,
     required this.category,
+    required this.status,
   });
 
   factory OrderModel.initial() {
@@ -26,6 +28,7 @@ class OrderModel {
       clientPhoneNumber: '',
       address: '',
       category: '',
+      status: 'Active',
     );
   }
 
@@ -37,6 +40,7 @@ class OrderModel {
       'clientPhoneNumber': clientPhoneNumber,
       'address': address,
       'category': category,
+      'status': status,
     };
   }
 
@@ -52,6 +56,7 @@ class OrderModel {
       clientPhoneNumber: data?['clientPhoneNumber'] as String,
       address: data?['address'] as String,
       category: data?['category'] as String,
+      status: data?['status'] as String,
     );
   }
 
@@ -62,6 +67,7 @@ class OrderModel {
     String? clientPhoneNumber,
     String? address,
     String? category,
+    String? status,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -70,6 +76,7 @@ class OrderModel {
       clientPhoneNumber: clientPhoneNumber ?? this.clientPhoneNumber,
       address: address ?? this.address,
       category: category ?? this.category,
+      status: status ?? this.status,
     );
   }
 }
