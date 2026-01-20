@@ -2,6 +2,7 @@ import 'package:smart_courier_assistant/data/datasource/remote/firebase_auth/use
 import 'package:smart_courier_assistant/data/datasource/remote/firestore/order_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firestore/route_firestore.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/service/geolocation_service.dart';
 
 class OrderRepository {
   final UserAuth _userAuth = UserAuth();
@@ -17,11 +18,14 @@ class OrderRepository {
     OrderModel? currentOrder,
   }) async {
     OrderModel orderModel = OrderModel.initial();
+    final location = await GeolocationService.getLocationByAddress(address);
     orderModel = orderModel.copyWith(
       id: currentOrder?.id,
       clientFullName: clientFullName,
       clientPhoneNumber: clientPhoneNumber,
       address: address,
+      latitude: location.latitude,
+      longitude: location.longitude,
       category: category,
     );
     await _orderFirestore.saveOrder(orderModel, routeId);

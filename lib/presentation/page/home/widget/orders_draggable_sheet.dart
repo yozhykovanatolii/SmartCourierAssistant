@@ -12,8 +12,8 @@ class OrdersDraggableSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.2,
-      minChildSize: 0.2,
+      initialChildSize: 0.25,
+      minChildSize: 0.25,
       maxChildSize: 0.8,
       snap: true,
       builder: (context, scrollController) {

@@ -6,6 +6,8 @@ class OrderModel {
   final String clientFullName;
   final String clientPhoneNumber;
   final String address;
+  final double latitude;
+  final double longitude;
   final String category;
   final String status;
 
@@ -14,6 +16,8 @@ class OrderModel {
     required this.clientFullName,
     required this.clientPhoneNumber,
     required this.address,
+    required this.latitude,
+    required this.longitude,
     required this.category,
     required this.status,
   });
@@ -24,6 +28,8 @@ class OrderModel {
       clientFullName: '',
       clientPhoneNumber: '',
       address: '',
+      latitude: 0,
+      longitude: 0,
       category: '',
       status: 'Active',
     );
@@ -35,6 +41,8 @@ class OrderModel {
       'clientFullName': clientFullName,
       'clientPhoneNumber': clientPhoneNumber,
       'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
       'category': category,
       'status': status,
     };
@@ -50,6 +58,8 @@ class OrderModel {
       clientFullName: data?['clientFullName'] as String,
       clientPhoneNumber: data?['clientPhoneNumber'] as String,
       address: data?['address'] as String,
+      latitude: data?['latitude'] as double,
+      longitude: data?['longitude'] as double,
       category: data?['category'] as String,
       status: data?['status'] as String,
     );
@@ -60,6 +70,8 @@ class OrderModel {
     String? clientFullName,
     String? clientPhoneNumber,
     String? address,
+    double? latitude,
+    double? longitude,
     String? category,
     String? status,
   }) {
@@ -68,6 +80,8 @@ class OrderModel {
       clientFullName: clientFullName ?? this.clientFullName,
       clientPhoneNumber: clientPhoneNumber ?? this.clientPhoneNumber,
       address: address ?? this.address,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
       category: category ?? this.category,
       status: status ?? this.status,
     );

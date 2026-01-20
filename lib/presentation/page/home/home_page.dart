@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-              bottom: 175,
+              bottom: 185,
               right: 15,
               child: ActionFloatingButton(
                 icon: Iconsax.gps,
