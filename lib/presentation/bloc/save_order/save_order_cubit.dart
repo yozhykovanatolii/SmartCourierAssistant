@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
+import 'package:smart_courier_assistant/core/exception/geolocation_exception.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/data/repository/route_repository.dart';
@@ -65,6 +66,13 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
       );
       emit(state.copyWith(formStatus: FormStatus.success));
     } on UserNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.errorMessage,
+          formStatus: FormStatus.success,
+        ),
+      );
+    } on GeolocationException catch (exception) {
       emit(
         state.copyWith(
           errorMessage: exception.errorMessage,
