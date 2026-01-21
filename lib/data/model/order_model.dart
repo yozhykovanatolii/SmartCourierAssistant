@@ -8,8 +8,10 @@ class OrderModel {
   final String address;
   final double latitude;
   final double longitude;
+  final DateTime plannedEta;
   final String category;
   final String status;
+  final int orderIndex;
 
   OrderModel({
     required this.id,
@@ -18,8 +20,10 @@ class OrderModel {
     required this.address,
     required this.latitude,
     required this.longitude,
+    required this.plannedEta,
     required this.category,
     required this.status,
+    required this.orderIndex,
   });
 
   factory OrderModel.initial() {
@@ -31,7 +35,9 @@ class OrderModel {
       latitude: 0,
       longitude: 0,
       category: '',
+      plannedEta: DateTime.now(),
       status: 'Active',
+      orderIndex: 0,
     );
   }
 
@@ -43,8 +49,10 @@ class OrderModel {
       'address': address,
       'latitude': latitude,
       'longitude': longitude,
+      'plannedEta': Timestamp.fromDate(plannedEta),
       'category': category,
       'status': status,
+      'orderIndex': orderIndex,
     };
   }
 
@@ -60,8 +68,10 @@ class OrderModel {
       address: data?['address'] as String,
       latitude: data?['latitude'] as double,
       longitude: data?['longitude'] as double,
+      plannedEta: (data?['plannedEta'] as Timestamp).toDate(),
       category: data?['category'] as String,
       status: data?['status'] as String,
+      orderIndex: (data?['orderIndex'] ?? 0) as int,
     );
   }
 
@@ -72,8 +82,10 @@ class OrderModel {
     String? address,
     double? latitude,
     double? longitude,
+    DateTime? plannedEta,
     String? category,
     String? status,
+    int? orderIndex,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -82,8 +94,10 @@ class OrderModel {
       address: address ?? this.address,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
+      plannedEta: plannedEta ?? this.plannedEta,
       category: category ?? this.category,
       status: status ?? this.status,
+      orderIndex: orderIndex ?? this.orderIndex,
     );
   }
 }

@@ -1,5 +1,5 @@
-import 'package:smart_courier_assistant/data/datasource/remote/firebase_auth/user_auth.dart';
-import 'package:smart_courier_assistant/data/datasource/remote/firestore/route_firestore.dart';
+import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
+import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
 import 'package:smart_courier_assistant/data/model/route_model.dart';
 
 class RouteRepository {

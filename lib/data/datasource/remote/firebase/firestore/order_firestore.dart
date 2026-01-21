@@ -10,6 +10,34 @@ class OrderFirestore {
     await docReference.set(orderModel);
   }
 
+  Future<List<OrderModel>> saveOrders(
+    List<OrderModel> orders,
+    String routeId,
+  ) async {
+    final collectionReference = _getOrderCollectionReference(routeId);
+    final batch = _firestore.batch();
+    for (final order in orders) {
+      batch.set(collectionReference.doc(order.id), order);
+    }
+    await batch.commit();
+    final querySnapshot = await collectionReference.orderBy('orderIndex').get();
+    if (querySnapshot.docs.isEmpty) {
+      throw OrdersNotFoundException('Orders weren\'t found');
+    }
+    return querySnapshot.docs.map((document) => document.data()).toList();
+  }
+
+  Future<void> deleteOrdersSubcollection(String routeId) async {
+    final collectionReference = _getOrderCollectionReference(routeId);
+    final snapshot = await collectionReference.get();
+
+    final batch = _firestore.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+    await batch.commit();
+  }
+
   Future<void> deleteOrder(String orderId, String routeId) async {
     final collectionReference = _getOrderCollectionReference(routeId);
     await collectionReference.doc(orderId).delete();

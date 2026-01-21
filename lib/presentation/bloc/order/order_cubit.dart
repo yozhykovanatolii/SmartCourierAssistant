@@ -17,4 +17,19 @@ class OrderCubit extends Cubit<OrderState> {
       emit(OrderFailureState(exception.errorMessage));
     }
   }
+
+  Future<void> optimizeOrdersRoute() async {
+    if (state is OrderSuccessState) {
+      final orders = (state as OrderSuccessState).activeOrders;
+      emit(OrderLoadingState());
+      try {
+        final newOrders = await _orderRepository.optimizeOrdersRoute(orders);
+        emit(OrderSuccessState(newOrders));
+      } on OrdersNotFoundException catch (exception) {
+        emit(OrderFailureState(exception.errorMessage));
+      }
+    } else {
+      return;
+    }
+  }
 }

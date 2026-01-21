@@ -68,7 +68,8 @@ class _HomePageState extends State<HomePage> {
                 icon: Iconsax.gps,
                 foregroundColor: Colors.blue,
                 heroTag: 'GetUserLocation',
-                onPressed: () {},
+                onPressed: () =>
+                    context.read<OrderCubit>().optimizeOrdersRoute(),
               ),
             ),
             const OrdersDraggableSheet(),
