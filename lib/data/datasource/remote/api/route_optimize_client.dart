@@ -8,9 +8,11 @@ class RouteOptimizeClient {
 
   Future<List<Map<String, dynamic>>> optimizeRoute(
     List<OrderModel> orders,
+    double latitude,
+    double longitude,
   ) async {
     final jobs = _ordersToJobs(orders);
-    final startCoordinates = [35.1215, 47.8357];
+    final startCoordinates = [longitude, latitude];
     final response = await http.post(
       Uri.parse('https://api.openrouteservice.org/optimization'),
       headers: {
@@ -29,6 +31,7 @@ class RouteOptimizeClient {
       }),
     );
     final data = jsonDecode(response.body);
+    print(data);
     final steps = data['routes'][0]['steps'] as List<dynamic>;
     return steps.cast<Map<String, dynamic>>();
   }

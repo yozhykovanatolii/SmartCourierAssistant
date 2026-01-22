@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
+import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/action_floating_button.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/google_map_section.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/orders_draggable_sheet.dart';
@@ -26,53 +27,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const GoogleMapSection(),
-            Positioned(
-              top: 25,
-              left: 15,
-              child: ActionFloatingButton(
-                icon: Iconsax.menu_1_copy,
-                foregroundColor: Colors.black,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ProfilePage(),
-                    ),
-                  );
-                },
+      body: BlocListener<OrderCubit, OrderState>(
+        listenWhen: (previous, current) =>
+            previous.geolocationError != current.geolocationError,
+        listener: (context, state) {
+          if (state.geolocationError.isNotEmpty) {
+            UiHelper.showSnackBar(
+              context: context,
+              message: state.geolocationError,
+              isErrorSnackBar: true,
+            );
+          }
+        },
+        child: SafeArea(
+          child: Stack(
+            children: [
+              const GoogleMapSection(),
+              Positioned(
+                top: 25,
+                left: 15,
+                child: ActionFloatingButton(
+                  icon: Iconsax.menu_1_copy,
+                  foregroundColor: Colors.black,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ProfilePage(),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            Positioned(
-              bottom: 300,
-              right: 15,
-              child: ActionFloatingButton(
-                icon: Iconsax.add,
-                foregroundColor: Colors.blue,
-                heroTag: 'AddOrder',
-                onPressed: () {
-                  UiHelper.showModalSheet(
-                    context,
-                    const SaveOrderPage(),
-                  );
-                },
+              Positioned(
+                bottom: 300,
+                right: 15,
+                child: ActionFloatingButton(
+                  icon: Iconsax.add,
+                  foregroundColor: Colors.blue,
+                  heroTag: 'AddOrder',
+                  onPressed: () {
+                    UiHelper.showModalSheet(
+                      context,
+                      const SaveOrderPage(),
+                    );
+                  },
+                ),
               ),
-            ),
-            Positioned(
-              bottom: 225,
-              right: 15,
-              child: ActionFloatingButton(
-                icon: Iconsax.gps,
-                foregroundColor: Colors.blue,
-                heroTag: 'GetUserLocation',
-                onPressed: () {},
+              Positioned(
+                bottom: 225,
+                right: 15,
+                child: ActionFloatingButton(
+                  icon: Iconsax.gps,
+                  foregroundColor: Colors.blue,
+                  heroTag: 'GetUserLocation',
+                  onPressed: () => context.read<OrderCubit>().getUserLocation(),
+                ),
               ),
-            ),
-            const OrdersDraggableSheet(),
-          ],
+              const OrdersDraggableSheet(),
+            ],
+          ),
         ),
       ),
     );

@@ -43,8 +43,14 @@ class OrderRepository {
 
   Future<void> optimizeOrdersRoute(
     List<OrderModel> orders,
+    double latitude,
+    double longitude,
   ) async {
-    final steps = await _optimizeClient.optimizeRoute(orders);
+    final steps = await _optimizeClient.optimizeRoute(
+      orders,
+      latitude,
+      longitude,
+    );
     final startTime = DateTime.now();
     Duration cumulativeDuration = Duration.zero;
     final unloadingTimePerJob = 300;

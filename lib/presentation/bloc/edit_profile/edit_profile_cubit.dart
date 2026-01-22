@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
-import 'package:smart_courier_assistant/core/exception/permission_denied_exception.dart';
+import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
 import 'package:smart_courier_assistant/data/model/user_model.dart';
 import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
@@ -18,7 +18,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     try {
       final userAvatarUrl = await _userRepository.getUserImage();
       emit(state.copyWith(userAvatar: userAvatarUrl));
-    } on PermissionDeniedException catch (exception) {
+    } on PermissionDenyException catch (exception) {
       emit(
         state.copyWith(
           errorMessage: exception.errorMessage,

@@ -22,8 +22,9 @@ class ErrorOrdersSection extends StatelessWidget {
           ),
           Text(
             errorMessage,
+            textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 14,
               color: Color(0xFF9CA3BF),
               fontWeight: FontWeight.w500,
             ),
