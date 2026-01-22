@@ -47,12 +47,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-              bottom: 250,
+              bottom: 300,
               right: 15,
               child: ActionFloatingButton(
                 icon: Iconsax.add,
                 foregroundColor: Colors.blue,
-                heroTag: 'ScanDocument',
+                heroTag: 'AddOrder',
                 onPressed: () {
                   UiHelper.showModalSheet(
                     context,
@@ -62,14 +62,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-              bottom: 185,
+              bottom: 225,
               right: 15,
               child: ActionFloatingButton(
                 icon: Iconsax.gps,
                 foregroundColor: Colors.blue,
                 heroTag: 'GetUserLocation',
-                onPressed: () =>
-                    context.read<OrderCubit>().optimizeOrdersRoute(),
+                onPressed: () {},
               ),
             ),
             const OrdersDraggableSheet(),

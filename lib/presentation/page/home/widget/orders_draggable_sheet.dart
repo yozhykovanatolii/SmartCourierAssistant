@@ -4,6 +4,7 @@ import 'package:smart_courier_assistant/core/widget/common_progress_indicator.da
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/error_orders_section.dart';
+import 'package:smart_courier_assistant/presentation/page/home/widget/header_sheet_section.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/order_card.dart';
 
 class OrdersDraggableSheet extends StatelessWidget {
@@ -36,14 +37,8 @@ class OrdersDraggableSheet extends StatelessWidget {
                 width: 50,
                 color: Colors.grey,
               ),
-              const SizedBox(height: 10),
-              const Text(
-                'Orders',
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              const SizedBox(height: 20),
+              const HeaderSheetSection(),
               const SizedBox(height: 20),
               Expanded(
                 child: BlocBuilder<OrderCubit, OrderState>(
