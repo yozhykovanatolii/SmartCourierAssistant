@@ -41,7 +41,7 @@ class OrderRepository {
     return await _orderFirestore.getAllUserOrders(routeModel.routeId);
   }
 
-  Future<List<OrderModel>> optimizeOrdersRoute(
+  Future<void> optimizeOrdersRoute(
     List<OrderModel> orders,
   ) async {
     final steps = await _optimizeClient.optimizeRoute(orders);
@@ -68,9 +68,8 @@ class OrderRepository {
       );
       updatedOrders.add(updatedOrder);
     }
-    final newOrders = await _orderFirestore.saveOrders(updatedOrders, _routeId);
+    await _orderFirestore.saveOrders(updatedOrders, _routeId);
     print('Маршрут $_routeId успешно оптимизирован и сохранён.');
-    return newOrders;
   }
 
   Future<void> deleteOrder(String orderId) async {

@@ -10,7 +10,7 @@ class OrderFirestore {
     await docReference.set(orderModel);
   }
 
-  Future<List<OrderModel>> saveOrders(
+  Future<void> saveOrders(
     List<OrderModel> orders,
     String routeId,
   ) async {
@@ -20,11 +20,6 @@ class OrderFirestore {
       batch.set(collectionReference.doc(order.id), order);
     }
     await batch.commit();
-    final querySnapshot = await collectionReference.orderBy('orderIndex').get();
-    if (querySnapshot.docs.isEmpty) {
-      throw OrdersNotFoundException('Orders weren\'t found');
-    }
-    return querySnapshot.docs.map((document) => document.data()).toList();
   }
 
   Future<void> deleteOrdersSubcollection(String routeId) async {
@@ -45,7 +40,7 @@ class OrderFirestore {
 
   Future<List<OrderModel>> getAllUserOrders(String routeId) async {
     final collectionReference = _getOrderCollectionReference(routeId);
-    final querySnapshot = await collectionReference.get();
+    final querySnapshot = await collectionReference.orderBy('orderIndex').get();
     if (querySnapshot.docs.isEmpty) {
       throw OrdersNotFoundException('Orders weren\'t found');
     }
