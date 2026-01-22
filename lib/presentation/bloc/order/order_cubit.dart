@@ -6,21 +6,26 @@ import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart
 class OrderCubit extends Cubit<OrderState> {
   final OrderRepository _orderRepository = OrderRepository();
 
-  OrderCubit() : super(OrderInitialState());
+  OrderCubit() : super(OrderState.initial());
 
   Future<void> fetchOrders() async {
-    emit(OrderLoadingState());
+    emit(state.copyWith(status: OrderStatus.loading));
     try {
       final activeOrders = await _orderRepository.getAllCourierActiveOrders();
-      emit(OrderSuccessState(activeOrders));
+      emit(state.copyWith(status: OrderStatus.success, orders: activeOrders));
     } on OrdersNotFoundException catch (exception) {
-      emit(OrderFailureState(exception.errorMessage));
+      emit(
+        state.copyWith(
+          status: OrderStatus.failure,
+          errorMessage: exception.errorMessage,
+        ),
+      );
     }
   }
 
   Future<void> optimizeOrdersRoute() async {
-    if (state is OrderSuccessState) {
-      final orders = (state as OrderSuccessState).activeOrders;
+    final orders = state.orders;
+    if (orders.isNotEmpty) {
       await _orderRepository.optimizeOrdersRoute(orders);
     } else {
       return;

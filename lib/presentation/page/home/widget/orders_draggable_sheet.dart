@@ -43,13 +43,14 @@ class OrdersDraggableSheet extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<OrderCubit, OrderState>(
                   builder: (context, state) {
-                    if (state is OrderFailureState) {
+                    final status = state.status;
+                    if (status == OrderStatus.failure) {
                       return ErrorOrdersSection(
                         errorMessage: state.errorMessage,
                       );
                     }
-                    if (state is OrderSuccessState) {
-                      final activeOrders = state.activeOrders;
+                    if (status == OrderStatus.success) {
+                      final activeOrders = state.orders;
                       return ListView.builder(
                         controller: scrollController,
                         itemBuilder: (context, index) {
