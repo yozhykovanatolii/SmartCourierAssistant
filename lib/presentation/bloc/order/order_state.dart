@@ -1,10 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 
 enum OrderStatus { initial, loading, success, failure }
 
 class OrderState {
   final List<OrderModel> orders;
+  final List<LatLng> routePoints;
   final String errorMessage;
   final String geolocationError;
   final double latitude;
@@ -13,6 +14,7 @@ class OrderState {
 
   OrderState({
     required this.orders,
+    required this.routePoints,
     required this.errorMessage,
     required this.geolocationError,
     required this.latitude,
@@ -23,6 +25,7 @@ class OrderState {
   factory OrderState.initial() {
     return OrderState(
       orders: [],
+      routePoints: [],
       errorMessage: '',
       geolocationError: '',
       latitude: 50.4501,
@@ -33,6 +36,7 @@ class OrderState {
 
   OrderState copyWith({
     List<OrderModel>? orders,
+    List<LatLng>? routePoints,
     String? errorMessage,
     String? geolocationError,
     double? latitude,
@@ -41,6 +45,7 @@ class OrderState {
   }) {
     return OrderState(
       orders: orders ?? this.orders,
+      routePoints: routePoints ?? this.routePoints,
       errorMessage: errorMessage ?? this.errorMessage,
       geolocationError: geolocationError ?? this.geolocationError,
       latitude: latitude ?? this.latitude,

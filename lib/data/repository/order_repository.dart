@@ -41,7 +41,7 @@ class OrderRepository {
     return await _orderFirestore.getAllUserOrders(routeModel.routeId);
   }
 
-  Future<void> optimizeOrdersRoute(
+  Future<List<OrderModel>> optimizeOrdersRoute(
     List<OrderModel> orders,
     double latitude,
     double longitude,
@@ -76,6 +76,7 @@ class OrderRepository {
     }
     await _orderFirestore.saveOrders(updatedOrders, _routeId);
     print('Маршрут $_routeId успешно оптимизирован и сохранён.');
+    return updatedOrders;
   }
 
   Future<void> deleteOrder(String orderId) async {

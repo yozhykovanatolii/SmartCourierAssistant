@@ -1,9 +1,13 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:smart_courier_assistant/data/datasource/remote/api/route_optimize_client.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
+import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/model/route_model.dart';
 
 class RouteRepository {
   final RouteFirestore _routeFirestore = RouteFirestore();
+  final RouteOptimizeClient _optimizeClient = RouteOptimizeClient();
   final UserAuth _userAuth = UserAuth();
 
   Future<String> createRoute() async {
@@ -16,5 +20,17 @@ class RouteRepository {
       return routeModel.routeId;
     }
     return routeId;
+  }
+
+  Future<List<LatLng>> buildRoutePolyline(
+    List<OrderModel> orders,
+    double startLat,
+    double startLng,
+  ) async {
+    return await _optimizeClient.getRoutePolyline(
+      orders,
+      startLat,
+      startLng,
+    );
   }
 }

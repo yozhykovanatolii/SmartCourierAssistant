@@ -4,11 +4,13 @@ import 'package:smart_courier_assistant/core/exception/geolocation_exception.dar
 import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/repository/geolocation_repository.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
+import 'package:smart_courier_assistant/data/repository/route_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   final OrderRepository _orderRepository = OrderRepository();
   final GeolocationRepository _geolocationRepository = GeolocationRepository();
+  final RouteRepository _routeRepository = RouteRepository();
 
   OrderCubit() : super(OrderState.initial());
 
@@ -50,12 +52,20 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> optimizeOrdersRoute() async {
     final orders = state.orders;
+    final latitude = state.latitude;
+    final longitude = state.longitude;
     if (orders.isNotEmpty) {
-      await _orderRepository.optimizeOrdersRoute(
+      final updatedOrders = await _orderRepository.optimizeOrdersRoute(
         orders,
-        state.latitude,
-        state.longitude,
+        latitude,
+        longitude,
       );
+      final routePoints = await _routeRepository.buildRoutePolyline(
+        updatedOrders,
+        latitude,
+        longitude,
+      );
+      emit(state.copyWith(routePoints: routePoints));
     } else {
       return;
     }
