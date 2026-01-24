@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:smart_courier_assistant/core/util/marker_factory.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
@@ -47,30 +48,15 @@ class _GoogleMapSectionState extends State<GoogleMapSection> {
 
   void _updateMap(OrderState state) {
     if (_controller == null) return;
-
     setState(() {
-      _markers = _buildOrderMarkers(state.orders);
       _polylines = _buildRoutePolyline(state.routePoints);
     });
-
+    _updateMarkers(state.orders);
     if (state.routePoints.isNotEmpty) {
       _moveCameraToBounds(state.routePoints);
     } else if (state.latitude != 0 && state.longitude != 0) {
       _moveCameraToUser(state.latitude, state.longitude);
     }
-  }
-
-  Set<Marker> _buildOrderMarkers(List<OrderModel> orders) {
-    return orders.map((order) {
-      return Marker(
-        markerId: MarkerId(order.id),
-        position: LatLng(order.latitude, order.longitude),
-        infoWindow: InfoWindow(
-          title: order.clientFullName,
-          snippet: order.address,
-        ),
-      );
-    }).toSet();
   }
 
   Set<Polyline> _buildRoutePolyline(List<LatLng> points) {
@@ -82,6 +68,30 @@ class _GoogleMapSectionState extends State<GoogleMapSection> {
         color: Colors.blue,
       ),
     };
+  }
+
+  Future<void> _updateMarkers(List<OrderModel> orders) async {
+    final Set<Marker> markers = {};
+    for (int i = 0; i < orders.length; i++) {
+      final order = orders[i];
+      final icon = await MarkerFactory.numberedMarker(i + 1);
+
+      markers.add(
+        Marker(
+          markerId: MarkerId(order.id),
+          position: LatLng(order.latitude, order.longitude),
+          icon: icon,
+          infoWindow: InfoWindow(
+            title: order.clientFullName,
+            snippet: order.address,
+          ),
+        ),
+      );
+    }
+
+    setState(() {
+      _markers = markers;
+    });
   }
 
   void _moveCameraToBounds(List<LatLng> points) {
