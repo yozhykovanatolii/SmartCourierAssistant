@@ -10,6 +10,7 @@ class SaveOrderState {
   final String address;
   final String category;
   final FormStatus formStatus;
+  final DateTime deliveryBy;
   final String errorMessage;
 
   SaveOrderState({
@@ -18,6 +19,7 @@ class SaveOrderState {
     required this.address,
     required this.category,
     required this.formStatus,
+    required this.deliveryBy,
     required this.errorMessage,
   });
 
@@ -28,6 +30,7 @@ class SaveOrderState {
       address: '',
       category: '📦 Parcel',
       formStatus: FormStatus.initial,
+      deliveryBy: DateTime.now(),
       errorMessage: '',
     );
   }
@@ -38,6 +41,7 @@ class SaveOrderState {
     String? address,
     String? category,
     FormStatus? formStatus,
+    DateTime? deliveryBy,
     String? errorMessage,
   }) {
     return SaveOrderState(
@@ -46,6 +50,7 @@ class SaveOrderState {
       address: address ?? this.address,
       category: category ?? this.category,
       formStatus: formStatus ?? this.formStatus,
+      deliveryBy: deliveryBy ?? this.deliveryBy,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

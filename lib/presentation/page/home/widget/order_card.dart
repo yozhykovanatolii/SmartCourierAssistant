@@ -79,9 +79,9 @@ class _OrderCardContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _CardHeaderSection(order),
-        const Text(
-          'ETA 14:30 • ON TIME',
-          style: TextStyle(
+        Text(
+          'ETA ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ${order.deliveryRisk}',
+          style: const TextStyle(
             color: Color(0xFF2ECC71),
             fontSize: 16,
             fontWeight: FontWeight.w600,

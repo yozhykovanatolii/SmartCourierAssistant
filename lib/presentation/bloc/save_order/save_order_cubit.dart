@@ -34,6 +34,18 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
     emit(state.copyWith(category: category));
   }
 
+  void chooseDeliveryTime(int hour, int minute) {
+    DateTime currentDeliveryBy = state.deliveryBy;
+    if (currentDeliveryBy.hour == hour && currentDeliveryBy.minute == minute) {
+      return;
+    }
+    currentDeliveryBy = currentDeliveryBy.copyWith(
+      hour: hour,
+      minute: minute,
+    );
+    emit(state.copyWith(deliveryBy: currentDeliveryBy));
+  }
+
   Future<void> deleteOrder() async {
     await _orderRepository.deleteOrder(_orderId);
   }
@@ -46,6 +58,7 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
           address: order.address,
           clientFullName: order.clientFullName,
           clientPhoneNumber: order.clientPhoneNumber,
+          deliveryBy: order.deliveryBy,
           category: order.category,
         ),
       );
@@ -62,6 +75,7 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
         state.address,
         state.category,
         routeId,
+        state.deliveryBy,
         currentOrder: currentOrder,
       );
       emit(state.copyWith(formStatus: FormStatus.success));

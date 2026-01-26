@@ -10,6 +10,7 @@ import 'package:smart_courier_assistant/presentation/page/save_order/widget/cate
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/client_full_name_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/client_phone_number_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/header_section.dart';
+import 'package:smart_courier_assistant/presentation/page/save_order/widget/order_delivery_time_section.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/order_save_button.dart';
 
 class SaveOrderPage extends StatefulWidget {
@@ -76,7 +77,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        margin: const EdgeInsets.only(top: 103),
+        margin: const EdgeInsets.only(top: 65),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.vertical(
@@ -134,7 +135,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ClientPhoneNumberTextField(
                 clientPhoneNumberController: _clientPhoneNumberController,
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
+              const OrderDeliveryTimeSection(),
+              const SizedBox(height: 10),
               const Text(
                 'Category🗂️',
                 style: TextStyle(

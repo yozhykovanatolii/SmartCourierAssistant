@@ -32,6 +32,17 @@ class UiHelper {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  static Future<TimeOfDay> showTimePickerDialog({
+    required BuildContext context,
+    required TimeOfDay initialTime,
+  }) async {
+    final newSelectedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime,
+    );
+    return newSelectedTime ?? initialTime;
+  }
+
   static void showModalSheet(BuildContext context, Widget widget) {
     showModalBottomSheet(
       isScrollControlled: true,

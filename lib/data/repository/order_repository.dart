@@ -1,3 +1,4 @@
+import 'package:smart_courier_assistant/core/util/calculation_eta_util.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/api/route_optimize_client.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/order_firestore.dart';
@@ -17,7 +18,8 @@ class OrderRepository {
     String clientPhoneNumber,
     String address,
     String category,
-    String routeId, {
+    String routeId,
+    DateTime deliveryBy, {
     OrderModel? currentOrder,
   }) async {
     OrderModel orderModel = OrderModel.initial();
@@ -29,6 +31,8 @@ class OrderRepository {
       address: address,
       latitude: location.latitude,
       longitude: location.longitude,
+      deliveryBy: deliveryBy,
+      plannedEta: currentOrder?.plannedEta,
       category: category,
     );
     await _orderFirestore.saveOrder(orderModel, routeId);
@@ -51,29 +55,10 @@ class OrderRepository {
       latitude,
       longitude,
     );
-    final startTime = DateTime.now();
-    Duration cumulativeDuration = Duration.zero;
-    final unloadingTimePerJob = 300;
-    final jobIdToOrderId = {for (var o in orders) o.id.hashCode: o.id};
-    List<OrderModel> updatedOrders = [];
-    for (int i = 0; i < steps.length; i++) {
-      final step = steps[i];
-      if (step['type'] != 'job') continue;
-      final orderId = jobIdToOrderId[step['job']];
-      final order = orders.firstWhere((o) => o.id == orderId);
-      cumulativeDuration += Duration(
-        seconds: step['duration'] + unloadingTimePerJob,
-      );
-      final eta = startTime.add(cumulativeDuration);
-      final updatedOrder = order.copyWith(
-        latitude: step['location'][1],
-        longitude: step['location'][0],
-        status: order.status,
-        plannedEta: eta,
-        orderIndex: updatedOrders.length,
-      );
-      updatedOrders.add(updatedOrder);
-    }
+    final updatedOrders = CalculationEtaUtil.calculateEtaForOrders(
+      steps,
+      orders,
+    );
     await _orderFirestore.saveOrders(updatedOrders, _routeId);
     print('Маршрут $_routeId успешно оптимизирован и сохранён.');
     return updatedOrders;

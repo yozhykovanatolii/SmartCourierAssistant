@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,6 +10,8 @@ class OrderModel {
   final double latitude;
   final double longitude;
   final DateTime plannedEta;
+  final DateTime deliveryBy;
+  final String deliveryRisk;
   final String category;
   final String status;
   final int orderIndex;
@@ -21,6 +24,8 @@ class OrderModel {
     required this.latitude,
     required this.longitude,
     required this.plannedEta,
+    required this.deliveryBy,
+    required this.deliveryRisk,
     required this.category,
     required this.status,
     required this.orderIndex,
@@ -35,7 +40,9 @@ class OrderModel {
       latitude: 0,
       longitude: 0,
       category: '',
+      deliveryRisk: 'Ontime',
       plannedEta: DateTime.now(),
+      deliveryBy: DateTime.now(),
       status: 'Active',
       orderIndex: 0,
     );
@@ -50,7 +57,9 @@ class OrderModel {
       'latitude': latitude,
       'longitude': longitude,
       'plannedEta': Timestamp.fromDate(plannedEta),
+      'deliveryBy': Timestamp.fromDate(deliveryBy),
       'category': category,
+      'deliveryRisk': deliveryRisk,
       'status': status,
       'orderIndex': orderIndex,
     };
@@ -69,8 +78,10 @@ class OrderModel {
       latitude: data?['latitude'] as double,
       longitude: data?['longitude'] as double,
       plannedEta: (data?['plannedEta'] as Timestamp).toDate(),
+      deliveryBy: (data?['deliveryBy'] as Timestamp).toDate(),
       category: data?['category'] as String,
       status: data?['status'] as String,
+      deliveryRisk: data?['deliveryRisk'] as String,
       orderIndex: (data?['orderIndex'] ?? 0) as int,
     );
   }
@@ -83,6 +94,8 @@ class OrderModel {
     double? latitude,
     double? longitude,
     DateTime? plannedEta,
+    DateTime? deliveryBy,
+    String? deliveryRisk,
     String? category,
     String? status,
     int? orderIndex,
@@ -95,6 +108,8 @@ class OrderModel {
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
       plannedEta: plannedEta ?? this.plannedEta,
+      deliveryBy: deliveryBy ?? this.deliveryBy,
+      deliveryRisk: deliveryRisk ?? this.deliveryRisk,
       category: category ?? this.category,
       status: status ?? this.status,
       orderIndex: orderIndex ?? this.orderIndex,
