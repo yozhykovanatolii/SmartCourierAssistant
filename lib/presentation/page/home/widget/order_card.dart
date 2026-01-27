@@ -4,6 +4,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
+import 'package:smart_courier_assistant/presentation/page/proof_delivery/proof_delivery_page.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
 
 class OrderCard extends StatelessWidget {
@@ -179,7 +180,9 @@ class _OrderDoneButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: () {
+        UiHelper.showModalSheet(context, const ProofDeliveryPage());
+      },
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(12),
