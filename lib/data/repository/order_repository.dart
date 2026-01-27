@@ -3,7 +3,9 @@ import 'package:smart_courier_assistant/data/datasource/remote/api/route_optimiz
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/order_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
+import 'package:smart_courier_assistant/data/datasource/remote/storage/supabase_storage.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
 import 'package:smart_courier_assistant/data/service/geolocation_service.dart';
 
 class OrderRepository {
@@ -11,6 +13,7 @@ class OrderRepository {
   final OrderFirestore _orderFirestore = OrderFirestore();
   final RouteFirestore _routeFirestore = RouteFirestore();
   final RouteOptimizeClient _optimizeClient = RouteOptimizeClient();
+  final SupabaseStorage _supabaseStorage = SupabaseStorage();
   String _routeId = '';
 
   Future<void> saveOrder(
@@ -69,5 +72,11 @@ class OrderRepository {
     final routeId = await _routeFirestore.getTodayRouteId(courierId);
     if (routeId == null) return;
     await _orderFirestore.deleteOrder(orderId, routeId);
+  }
+
+  Future<String> getOrderPhoto() async {
+    final imageFile = await CameraPickerService.pickImageFileFromGallery();
+    final imageUrl = await _supabaseStorage.saveImage(imageFile, 'orders');
+    return imageUrl;
   }
 }

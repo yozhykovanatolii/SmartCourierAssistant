@@ -17,7 +17,10 @@ class UserRepository {
 
   Future<String> getUserImage() async {
     final userImageFile = await CameraPickerService.pickImageFileFromGallery();
-    final userImageUrl = await _supabaseStorage.saveImage(userImageFile);
+    final userImageUrl = await _supabaseStorage.saveImage(
+      userImageFile,
+      'users',
+    );
     return userImageUrl;
   }
 

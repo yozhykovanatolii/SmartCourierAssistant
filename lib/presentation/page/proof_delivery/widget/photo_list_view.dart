@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/proof_delivery/widget/dashed_border.dart';
 
 class PhotoListView extends StatelessWidget {
@@ -7,15 +9,18 @@ class PhotoListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orderPhotos = context.select(
+      (ProofDeliveryCubit cubit) => cubit.state.orderPhotos,
+    );
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.15,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: 11,
+        itemCount: orderPhotos.length + 1,
         itemBuilder: (context, index) {
-          if (index < 10) {
-            return const _PhotoCardItem(
-              photoUrl: '',
+          if (index < orderPhotos.length) {
+            return _PhotoCardItem(
+              photoUrl: orderPhotos[index],
             );
           }
           return const _OpenGalleryButton();
@@ -51,7 +56,8 @@ class _PhotoCardItem extends StatelessWidget {
           left: 75,
           child: IconButton(
             iconSize: 30,
-            onPressed: () {},
+            onPressed: () =>
+                context.read<ProofDeliveryCubit>().deleteOrderPhoto(photoUrl),
             style: const ButtonStyle(
               foregroundColor: WidgetStatePropertyAll(Colors.white),
             ),
@@ -71,7 +77,7 @@ class _OpenGalleryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => context.read<ProofDeliveryCubit>().addOrderPhoto(),
       child: CustomPaint(
         painter: DashedBorder(),
         child: Container(

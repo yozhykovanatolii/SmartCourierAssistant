@@ -10,6 +10,7 @@ import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_prof
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
+import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/settings/settings_cubit.dart';
@@ -42,6 +43,7 @@ void main() async {
           create: (_) => SettingsCubit()..fetchSettings(),
         ),
         BlocProvider(create: (_) => OrderCubit()),
+        BlocProvider(create: (_) => ProofDeliveryCubit()),
       ],
       child: const SmartCourierAssistantApp(),
     ),
