@@ -40,4 +40,8 @@ class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {
       ..remove(orderPhotoUrl);
     emit(state.copyWith(orderPhotos: updatedList));
   }
+
+  void editCourierComment(String courierComment) {
+    emit(state.copyWith(courierComment: courierComment));
+  }
 }
