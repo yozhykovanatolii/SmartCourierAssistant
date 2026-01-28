@@ -64,7 +64,14 @@ class ProofDeliveryPage extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 5),
+              Text(
+                'Take several photos of your order and select from the gallery.',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(height: 15),
               const PhotoListView(),
               const Expanded(
                 child: Align(
