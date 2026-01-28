@@ -102,7 +102,7 @@ class _OrderCardContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 8,
           children: [
-            const Expanded(child: _OrderDoneButton()),
+            Expanded(child: _OrderDoneButton(order.id)),
             Expanded(
               child: _OrderClientActionButton(
                 text: '📞 Call',
@@ -175,13 +175,20 @@ class _CardHeaderSection extends StatelessWidget {
 }
 
 class _OrderDoneButton extends StatelessWidget {
-  const _OrderDoneButton();
+  final String orderId;
+
+  const _OrderDoneButton(this.orderId);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: () {
-        UiHelper.showModalSheet(context, const ProofDeliveryPage());
+        UiHelper.showModalSheet(
+          context,
+          ProofDeliveryPage(
+            orderId: orderId,
+          ),
+        );
       },
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(

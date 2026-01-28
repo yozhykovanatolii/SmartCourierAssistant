@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
+import 'package:smart_courier_assistant/data/model/proof_delivery_model.dart';
 
 class OrderModel {
   final String id;
@@ -14,6 +14,7 @@ class OrderModel {
   final String deliveryRisk;
   final String category;
   final String status;
+  final ProofDeliveryModel? proofDelivery;
   final int orderIndex;
 
   OrderModel({
@@ -28,6 +29,7 @@ class OrderModel {
     required this.deliveryRisk,
     required this.category,
     required this.status,
+    required this.proofDelivery,
     required this.orderIndex,
   });
 
@@ -45,6 +47,7 @@ class OrderModel {
       deliveryBy: DateTime.now(),
       status: 'Active',
       orderIndex: 0,
+      proofDelivery: null,
     );
   }
 
@@ -62,6 +65,7 @@ class OrderModel {
       'deliveryRisk': deliveryRisk,
       'status': status,
       'orderIndex': orderIndex,
+      if (proofDelivery != null) 'proofDelivery': proofDelivery!.toFirestore(),
     };
   }
 
@@ -83,6 +87,11 @@ class OrderModel {
       status: data?['status'] as String,
       deliveryRisk: data?['deliveryRisk'] as String,
       orderIndex: (data?['orderIndex'] ?? 0) as int,
+      proofDelivery: data?['proofDelivery'] != null
+          ? ProofDeliveryModel.fromFirestore(
+              Map<String, dynamic>.from(data?['proofDelivery']),
+            )
+          : null,
     );
   }
 
@@ -98,6 +107,7 @@ class OrderModel {
     String? deliveryRisk,
     String? category,
     String? status,
+    ProofDeliveryModel? proofDeliveryModel,
     int? orderIndex,
   }) {
     return OrderModel(
@@ -112,6 +122,7 @@ class OrderModel {
       deliveryRisk: deliveryRisk ?? this.deliveryRisk,
       category: category ?? this.category,
       status: status ?? this.status,
+      proofDelivery: proofDeliveryModel ?? this.proofDelivery,
       orderIndex: orderIndex ?? this.orderIndex,
     );
   }

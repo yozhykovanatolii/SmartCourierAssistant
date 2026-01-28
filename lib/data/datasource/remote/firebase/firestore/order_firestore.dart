@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/model/proof_delivery_model.dart';
 
 class OrderFirestore {
   final _firestore = FirebaseFirestore.instance;
@@ -45,6 +46,18 @@ class OrderFirestore {
       throw OrdersNotFoundException('Orders weren\'t found');
     }
     return querySnapshot.docs.map((document) => document.data()).toList();
+  }
+
+  Future<void> updateOrderProofDelivery(
+    ProofDeliveryModel proofDelivery,
+    String routeId,
+    String orderId,
+  ) async {
+    final docReference = _getUserDocumentReference(orderId, routeId);
+    await docReference.update({
+      'status': 'Delivered',
+      'proofDelivery': proofDelivery.toFirestore(),
+    });
   }
 
   CollectionReference<OrderModel> _getOrderCollectionReference(String routeId) {

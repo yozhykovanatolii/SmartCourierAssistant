@@ -1,12 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
+import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
+import 'package:smart_courier_assistant/data/repository/delivery_repository.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_state.dart';
 
 class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {
   final OrderRepository _orderRepository = OrderRepository();
+  final DeliveryRepository _deliveryRepository = DeliveryRepository();
 
   ProofDeliveryCubit() : super(ProofDeliveryState.initial());
 
@@ -31,7 +35,12 @@ class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {
         ),
       );
     } finally {
-      emit(state.copyWith(errorMessage: '', formStatus: FormStatus.initial));
+      emit(
+        state.copyWith(
+          errorMessage: '',
+          formStatus: FormStatus.initial,
+        ),
+      );
     }
   }
 
@@ -43,5 +52,38 @@ class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {
 
   void editCourierComment(String courierComment) {
     emit(state.copyWith(courierComment: courierComment));
+  }
+
+  Future<void> confirmDelivery(String orderId) async {
+    emit(state.copyWith(formStatus: FormStatus.loading));
+    try {
+      await _deliveryRepository.createProofOfDelivery(
+        orderId,
+        state.courierComment,
+        state.orderPhotos,
+      );
+      emit(state.copyWith(formStatus: FormStatus.success));
+    } on UserNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.errorMessage,
+          formStatus: FormStatus.failure,
+        ),
+      );
+    } on OrdersNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          errorMessage: exception.errorMessage,
+          formStatus: FormStatus.failure,
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(
+          errorMessage: '',
+          formStatus: FormStatus.initial,
+        ),
+      );
+    }
   }
 }

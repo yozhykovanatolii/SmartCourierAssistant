@@ -10,7 +10,12 @@ import 'package:smart_courier_assistant/presentation/page/proof_delivery/widget/
 import 'package:smart_courier_assistant/presentation/page/proof_delivery/widget/photo_list_view.dart';
 
 class ProofDeliveryPage extends StatelessWidget {
-  const ProofDeliveryPage({super.key});
+  final String orderId;
+
+  const ProofDeliveryPage({
+    super.key,
+    required this.orderId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +27,13 @@ class ProofDeliveryPage extends StatelessWidget {
             message: state.errorMessage,
             isErrorSnackBar: true,
           );
+        }
+        if (state.formStatus == FormStatus.success) {
+          UiHelper.showSnackBar(
+            context: context,
+            message: 'Success confirming a delivery',
+          );
+          Navigator.of(context).pop();
         }
       },
       child: Container(
@@ -73,10 +85,10 @@ class ProofDeliveryPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               const PhotoListView(),
-              const Expanded(
+              Expanded(
                 child: Align(
                   alignment: AlignmentGeometry.bottomCenter,
-                  child: ConfirmButton(),
+                  child: ConfirmButton(orderId: orderId),
                 ),
               ),
             ],

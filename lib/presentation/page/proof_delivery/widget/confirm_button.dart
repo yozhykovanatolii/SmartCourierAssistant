@@ -8,7 +8,12 @@ import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_d
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class ConfirmButton extends StatelessWidget {
-  const ConfirmButton({super.key});
+  final String orderId;
+
+  const ConfirmButton({
+    super.key,
+    required this.orderId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,11 @@ class ConfirmButton extends StatelessWidget {
                   fontSize: 18,
                 ),
               );
-        final onPressed = buttonStatus == ButtonStatus.disabled ? null : () {};
+        final onPressed = buttonStatus == ButtonStatus.disabled
+            ? null
+            : () {
+                context.read<ProofDeliveryCubit>().confirmDelivery(orderId);
+              };
         return CommonButton(
           width: MediaQuery.of(context).size.width,
           onPressed: onPressed,
