@@ -7,6 +7,7 @@ import 'package:smart_courier_assistant/presentation/page/profile/widget/logout_
 import 'package:smart_courier_assistant/presentation/page/profile/widget/section_list_tile.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/user_avatar_section.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/user_full_name_section.dart';
+import 'package:smart_courier_assistant/presentation/page/routes_history/routes_history_page.dart';
 import 'package:smart_courier_assistant/presentation/page/settings/settings_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -55,7 +56,14 @@ class ProfilePage extends StatelessWidget {
                   SectionListTile(
                     leadingEmoji: '🗺️',
                     title: 'My routes',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const RoutesHistoryPage(),
+                        ),
+                      );
+                    },
                   ),
                   SectionListTile(
                     leadingEmoji: '📦',
