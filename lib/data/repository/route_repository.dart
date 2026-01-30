@@ -33,4 +33,9 @@ class RouteRepository {
       startLng,
     );
   }
+
+  Future<List<RouteModel>> getAllCourierRoutes() async {
+    final courierId = _userAuth.userId;
+    return await _routeFirestore.getAllCourierRoutes(courierId);
+  }
 }

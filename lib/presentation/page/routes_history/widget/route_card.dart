@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/data/model/route_model.dart';
 
 class RouteCard extends StatelessWidget {
-  final DateTime dateCreated;
+  final RouteModel route;
 
   const RouteCard({
     super.key,
-    required this.dateCreated,
+    required this.route,
   });
 
   @override
@@ -22,9 +23,9 @@ class RouteCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Route 0a045830-f60d-11f0-933d-438bad7f15f6",
-              style: TextStyle(
+            Text(
+              "Route ${route.routeId}",
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
                 color: Color(0xFF111827),
@@ -40,7 +41,7 @@ class RouteCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  "${dateCreated.day}.${dateCreated.month}.${dateCreated.year}",
+                  "${route.date.day}.${route.date.month}.${route.date.year}",
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF6B7280),

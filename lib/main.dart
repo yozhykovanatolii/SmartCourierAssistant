@@ -12,6 +12,7 @@ import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
+import 'package:smart_courier_assistant/presentation/bloc/route/route_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/settings/settings_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/splash/splash_page.dart';
@@ -44,6 +45,7 @@ void main() async {
         ),
         BlocProvider(create: (_) => OrderCubit()),
         BlocProvider(create: (_) => ProofDeliveryCubit()),
+        BlocProvider(create: (_) => RouteCubit()),
       ],
       child: const SmartCourierAssistantApp(),
     ),
