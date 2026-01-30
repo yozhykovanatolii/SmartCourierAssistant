@@ -44,7 +44,7 @@ class OrderCard extends StatelessWidget {
             const SizedBox(height: 8),
             SizedBox(
               width: 2,
-              height: 110,
+              height: order.status == 'Delivered' ? 90 : 110,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return Column(
@@ -101,30 +101,32 @@ class _OrderCardContent extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 8,
-          children: [
-            Expanded(child: _OrderDoneButton(order.id)),
-            Expanded(
-              child: _OrderClientActionButton(
-                text: '📞 Call',
-                backgroundColor: Colors.blue,
-                onPressed: () => context.read<SaveOrderCubit>().openCallDialer(
-                  order.clientPhoneNumber,
-                ),
-              ),
-            ),
-            Expanded(
-              child: _OrderClientActionButton(
-                text: '💬 Chat',
-                backgroundColor: Colors.orange,
-                onPressed: () =>
-                    context.read<SaveOrderCubit>().openUserMessanger(
-                      order.clientPhoneNumber,
+          children: order.status == 'Delivered'
+              ? []
+              : [
+                  Expanded(child: _OrderDoneButton(order.id)),
+                  Expanded(
+                    child: _OrderClientActionButton(
+                      text: '📞 Call',
+                      backgroundColor: Colors.blue,
+                      onPressed: () =>
+                          context.read<SaveOrderCubit>().openCallDialer(
+                            order.clientPhoneNumber,
+                          ),
                     ),
-              ),
-            ),
-          ],
+                  ),
+                  Expanded(
+                    child: _OrderClientActionButton(
+                      text: '💬 Chat',
+                      backgroundColor: Colors.orange,
+                      onPressed: () =>
+                          context.read<SaveOrderCubit>().openUserMessanger(
+                            order.clientPhoneNumber,
+                          ),
+                    ),
+                  ),
+                ],
         ),
-        const SizedBox(height: 5),
         const Divider(),
       ],
     );
@@ -154,15 +156,17 @@ class _CardHeaderSection extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            UiHelper.showModalSheet(
-              context,
-              SaveOrderPage(
-                orderModel: order,
-                isEditing: true,
-              ),
-            );
-          },
+          onTap: order.status == 'Delivered'
+              ? null
+              : () {
+                  UiHelper.showModalSheet(
+                    context,
+                    SaveOrderPage(
+                      orderModel: order,
+                      isEditing: true,
+                    ),
+                  );
+                },
           child: Icon(
             Iconsax.arrow_right_3_copy,
             size: 30,
