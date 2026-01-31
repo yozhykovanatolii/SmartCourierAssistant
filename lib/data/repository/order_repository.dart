@@ -48,6 +48,10 @@ class OrderRepository {
     return await _orderFirestore.getAllUserOrders(routeModel.routeId);
   }
 
+  Future<List<OrderModel>> getAllCourierOrdersByRouteId(String routeId) async {
+    return await _orderFirestore.getAllUserOrders(routeId);
+  }
+
   Future<List<OrderModel>> optimizeOrdersRoute(
     List<OrderModel> orders,
     double latitude,

@@ -29,6 +29,23 @@ class OrderCubit extends Cubit<OrderState> {
     }
   }
 
+  Future<void> fetchOrdersByRouteId(String routeId) async {
+    emit(state.copyWith(status: OrderStatus.loading));
+    try {
+      final orders = await _orderRepository.getAllCourierOrdersByRouteId(
+        routeId,
+      );
+      emit(state.copyWith(status: OrderStatus.success, orders: orders));
+    } on OrdersNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          status: OrderStatus.failure,
+          errorMessage: exception.errorMessage,
+        ),
+      );
+    }
+  }
+
   Future<void> getUserLocation() async {
     try {
       final location = await _geolocationRepository.getCurrentLocation();
