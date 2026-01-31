@@ -117,7 +117,6 @@ class PdfGeneratorUtil {
         },
       ),
     );
-    print('Hello, pdf');
     final downloadsPath = '/storage/emulated/0/Download';
     final file = File('$downloadsPath/order_${order.id}.pdf');
     await file.writeAsBytes(await pdf.save());
