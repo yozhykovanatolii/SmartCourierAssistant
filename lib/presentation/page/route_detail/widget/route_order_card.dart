@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/core/util/pdf_generator_util.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 
 class RouteOrderCard extends StatelessWidget {
@@ -128,7 +129,9 @@ class _CardHeaderSection extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () async {
+            await PdfGeneratorUtil.generateOrderReportPdf(order);
+          },
           child: Icon(
             Iconsax.save_2,
             size: 30,
