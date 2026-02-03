@@ -32,11 +32,10 @@ class RouteCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Route ${route.routeId}",
+                route.routeId,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
-                  color: Color(0xFF111827),
                 ),
               ),
               const SizedBox(height: 15),
@@ -66,7 +65,6 @@ class RouteCard extends StatelessWidget {
                     "10 orders",
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF111827),
                     ),
                   ),
                   const SizedBox(width: 12),

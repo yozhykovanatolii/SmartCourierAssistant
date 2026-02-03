@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 
 class HeaderSheetSection extends StatelessWidget {
@@ -8,17 +9,17 @@ class HeaderSheetSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Orders',
-          style: TextStyle(
+          S.of(context).orders,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
           ),
         ),
-        _OptimizeRouteButton(),
+        const _OptimizeRouteButton(),
       ],
     );
   }
@@ -39,7 +40,7 @@ class _OptimizeRouteButton extends StatelessWidget {
             color: Colors.blue,
           ),
           Text(
-            'Optimize route',
+            S.of(context).optimizeRoute,
             style: TextStyle(
               fontSize: MediaQuery.textScalerOf(context).scale(17),
               fontWeight: FontWeight.w600,

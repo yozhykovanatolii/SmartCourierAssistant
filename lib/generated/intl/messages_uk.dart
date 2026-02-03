@@ -22,14 +22,43 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "address": MessageLookupByLibrary.simpleMessage("Адреса🏠"),
+    "areYouSureYouWantToLogOut": MessageLookupByLibrary.simpleMessage(
+      "Ви впевнені, що хочете вийти?",
+    ),
+    "call": MessageLookupByLibrary.simpleMessage("📞 Дзв."),
+    "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
+    "category": MessageLookupByLibrary.simpleMessage("Категорія🗂️"),
+    "chat": MessageLookupByLibrary.simpleMessage("💬 Чат"),
+    "client": MessageLookupByLibrary.simpleMessage("Клієнт👤"),
+    "comment": MessageLookupByLibrary.simpleMessage("Коментарій📝"),
+    "confirm": MessageLookupByLibrary.simpleMessage("Підтвердити"),
+    "contactPhone": MessageLookupByLibrary.simpleMessage("Номер телефону📱"),
     "createAccount": MessageLookupByLibrary.simpleMessage(
       "Створити обліковий запис",
     ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Темна тема"),
+    "deletingOrder": MessageLookupByLibrary.simpleMessage(
+      "Видалити замовлення",
+    ),
+    "deliveryBy": MessageLookupByLibrary.simpleMessage("Доставити до⏰"),
+    "done": MessageLookupByLibrary.simpleMessage("✅ Гот."),
     "dontHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Немаєш облікового запису?",
     ),
     "editProfile": MessageLookupByLibrary.simpleMessage("Редагування профілю"),
+    "enterAddressOfOrder": MessageLookupByLibrary.simpleMessage(
+      "Введіть адресу замовлення",
+    ),
+    "enterClientFullName": MessageLookupByLibrary.simpleMessage(
+      "Введіть прізвище, ім\'я клієнта",
+    ),
+    "enterClientPhoneNumber": MessageLookupByLibrary.simpleMessage(
+      "Введіть номер телефона клієнта",
+    ),
+    "enterComment": MessageLookupByLibrary.simpleMessage(
+      "Введіть коментарій...",
+    ),
     "enterYourEmail": MessageLookupByLibrary.simpleMessage(
       "Введіть вашу пошту",
     ),
@@ -56,9 +85,21 @@ class MessageLookup extends MessageLookupByLibrary {
         ),
     "language": MessageLookupByLibrary.simpleMessage("Мова"),
     "languages": MessageLookupByLibrary.simpleMessage("Мови"),
+    "logout": MessageLookupByLibrary.simpleMessage("Вихід з аккаунту"),
+    "myRoutes": MessageLookupByLibrary.simpleMessage("Мої маршрути"),
+    "noCancelIt": MessageLookupByLibrary.simpleMessage("Ні, відмінити"),
+    "noKeepIt": MessageLookupByLibrary.simpleMessage("Ні, зберегти."),
+    "optimizeRoute": MessageLookupByLibrary.simpleMessage("Оптимізувати"),
+    "orderOrderid": MessageLookupByLibrary.simpleMessage("Order #{order.id}"),
+    "orders": MessageLookupByLibrary.simpleMessage("Замовлення"),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Номер телефону"),
+    "photo": MessageLookupByLibrary.simpleMessage("Фото📸"),
+    "profile": MessageLookupByLibrary.simpleMessage("Профіль"),
+    "proofOfDelivery": MessageLookupByLibrary.simpleMessage("Докази доставки"),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Оновити пароль"),
+    "routeDetail": MessageLookupByLibrary.simpleMessage("Деталі маршрута"),
     "save": MessageLookupByLibrary.simpleMessage("Зберегти"),
+    "saveOrder": MessageLookupByLibrary.simpleMessage("Замовлення"),
     "selectTheLanguageThatIsMostConvenientForYouTo":
         MessageLookupByLibrary.simpleMessage(
           "Виберіть мову, якою вам найзручніше користуватися застосунком.",
@@ -72,14 +113,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "successAuthorization": MessageLookupByLibrary.simpleMessage(
       "Успішна авторизація",
     ),
+    "successAuthorizationWithGoogle": MessageLookupByLibrary.simpleMessage(
+      "Успішна авторизація через Google",
+    ),
+    "successConfirmingADelivery": MessageLookupByLibrary.simpleMessage(
+      "Успішне підтвердження замовлення",
+    ),
     "successRegistration": MessageLookupByLibrary.simpleMessage(
       "Успішна реєстрація",
+    ),
+    "successSavingAnOrder": MessageLookupByLibrary.simpleMessage(
+      "Успішне збереження замовлення",
     ),
     "successUpdatingProfile": MessageLookupByLibrary.simpleMessage(
       "Успішне оновлення профілю",
     ),
+    "takeSeveralPhotosOfYourOrderAndSelectFromThe":
+        MessageLookupByLibrary.simpleMessage(
+          "Зробіть кілька фотографій вашого замовлення та виберіть з галереї.",
+        ),
     "welcomeBack": MessageLookupByLibrary.simpleMessage(
       "Привіт! Ласкаво просимо назад, нам тебе не вистачало",
+    ),
+    "yesConfirmIt": MessageLookupByLibrary.simpleMessage("Так, підтвердити!"),
+    "yesDeleteIt": MessageLookupByLibrary.simpleMessage("Так, видалити!"),
+    "yesLogout": MessageLookupByLibrary.simpleMessage("Так, вийти"),
+    "yourProfile": MessageLookupByLibrary.simpleMessage("Ваш профіль"),
+    "youreGoingToDeleteAnOrderAreYouSure": MessageLookupByLibrary.simpleMessage(
+      "Ви збираєтеся видалити замовлення. Ви впевнені?",
     ),
   };
 }

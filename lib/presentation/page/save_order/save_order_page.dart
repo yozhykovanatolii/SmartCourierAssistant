@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
@@ -70,7 +71,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
         if (state.formStatus == FormStatus.success) {
           UiHelper.showSnackBar(
             context: context,
-            message: 'Success saving an order',
+            message: S.of(context).successSavingAnOrder,
           );
           Navigator.of(context).pop();
         }
@@ -101,7 +102,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Address🏠',
+                S.of(context).address,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
@@ -110,7 +111,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Client👤',
+                S.of(context).client,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
@@ -119,7 +120,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Contact Phone📱',
+                S.of(context).contactPhone,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
@@ -130,7 +131,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               const OrderDeliveryTimeSection(),
               const SizedBox(height: 10),
               Text(
-                'Category🗂️',
+                S.of(context).category,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 
 class InformationDialogBox extends StatelessWidget {
   final String title;
@@ -50,7 +51,9 @@ class InformationDialogBox extends StatelessWidget {
               children: [
                 Expanded(
                   child: _DialogActionButton(
-                    text: isDeleting ? 'No, Keep It.' : 'No, Cancel It.',
+                    text: isDeleting
+                        ? S.of(context).noKeepIt
+                        : S.of(context).noCancelIt,
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -58,7 +61,9 @@ class InformationDialogBox extends StatelessWidget {
                 ),
                 Expanded(
                   child: _DialogActionButton(
-                    text: isDeleting ? 'Yes, Delete It!' : 'Yes, Confirm It!',
+                    text: isDeleting
+                        ? S.of(context).yesDeleteIt
+                        : S.of(context).yesConfirmIt,
                     textColor: Colors.white,
                     color: isDeleting ? Colors.red : Colors.blue,
                     onPressed: onClickActionButton,

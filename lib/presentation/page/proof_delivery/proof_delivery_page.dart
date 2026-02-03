@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_state.dart';
@@ -31,7 +32,7 @@ class ProofDeliveryPage extends StatelessWidget {
         if (state.formStatus == FormStatus.success) {
           UiHelper.showSnackBar(
             context: context,
-            message: 'Success confirming a delivery',
+            message: S.of(context).successConfirmingADelivery,
           );
           Navigator.of(context).pop();
         }
@@ -60,18 +61,18 @@ class ProofDeliveryPage extends StatelessWidget {
               const HeaderProofDelivery(),
               const SizedBox(height: 20),
               Text(
-                'Comment📝',
+                S.of(context).comment,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               const CommentTextField(),
               const SizedBox(height: 20),
               Text(
-                'Photo📸',
+                S.of(context).photo,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               Text(
-                'Take several photos of your order and select from the gallery.',
+                S.of(context).takeSeveralPhotosOfYourOrderAndSelectFromThe,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 15),

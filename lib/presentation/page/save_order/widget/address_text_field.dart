@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_text_field.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 
 class AddressTextField extends StatelessWidget {
@@ -20,7 +21,7 @@ class AddressTextField extends StatelessWidget {
       controller: addressController,
       onChanged: (address) =>
           context.read<SaveOrderCubit>().setOrderAddress(address),
-      hintText: 'Enter address of order',
+      hintText: S.of(context).enterAddressOfOrder,
       errorText: addressError,
     );
   }

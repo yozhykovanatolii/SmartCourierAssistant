@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
               if (state.googleLoginStatus == FormStatus.success) {
                 UiHelper.showSnackBar(
                   context: context,
-                  message: 'Success authorization with Google',
+                  message: S.of(context).successAuthorizationWithGoogle,
                 );
               }
               Navigator.push(

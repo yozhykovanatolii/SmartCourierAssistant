@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 
 class HeaderProofDelivery extends StatelessWidget {
   const HeaderProofDelivery({super.key});
@@ -27,7 +28,7 @@ class HeaderProofDelivery extends StatelessWidget {
           ),
         ),
         Text(
-          'Proof of delivery',
+          S.of(context).proofOfDelivery,
           style: TextStyle(
             fontSize: MediaQuery.textScalerOf(context).scale(23),
             fontWeight: FontWeight.bold,

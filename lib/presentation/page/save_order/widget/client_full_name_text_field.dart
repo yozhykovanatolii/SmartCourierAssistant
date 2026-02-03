@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_text_field.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 
 class ClientFullNameTextField extends StatelessWidget {
@@ -21,7 +22,7 @@ class ClientFullNameTextField extends StatelessWidget {
       controller: clientFullNameController,
       onChanged: (fullName) =>
           context.read<SaveOrderCubit>().setClientFullName(fullName),
-      hintText: 'Enter client full name',
+      hintText: S.of(context).enterClientFullName,
       errorText: clientFullNameError,
     );
   }

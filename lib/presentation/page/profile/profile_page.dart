@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(S.of(context).profile),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(
@@ -34,7 +34,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   SectionListTile(
                     leadingEmoji: '👤',
-                    title: 'Your profile',
+                    title: S.of(context).yourProfile,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -46,7 +46,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   SectionListTile(
                     leadingEmoji: '🗺️',
-                    title: 'My routes',
+                    title: S.of(context).myRoutes,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -68,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   SectionListTile(
                     leadingEmoji: '🚪',
-                    title: 'Logout',
+                    title: S.of(context).logout,
                     isLogOut: true,
                     onTap: () => UiHelper.showModalSheet(
                       context,

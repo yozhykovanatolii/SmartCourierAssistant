@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/route/route_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/route/route_state.dart';
 import 'package:smart_courier_assistant/presentation/page/routes_history/widget/error_routes_section.dart';
@@ -24,7 +25,7 @@ class _RoutesHistoryPageState extends State<RoutesHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Routes History🗺️'),
+        title: Text(S.of(context).myRoutes),
       ),
       body: BlocBuilder<RouteCubit, RouteState>(
         builder: (context, state) {

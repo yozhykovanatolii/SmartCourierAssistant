@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 
 class OrderDeliveryTimeSection extends StatelessWidget {
@@ -8,17 +9,17 @@ class OrderDeliveryTimeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Delivery by⏰',
-          style: TextStyle(
+          S.of(context).deliveryBy,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
-        _DeliveryTimeButton(),
+        const _DeliveryTimeButton(),
       ],
     );
   }

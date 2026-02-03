@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/proof_delivery/proof_delivery_page.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
@@ -133,7 +134,7 @@ class _OrderCardContent extends StatelessWidget {
                   Expanded(child: _OrderDoneButton(order.id)),
                   Expanded(
                     child: _OrderClientActionButton(
-                      text: '📞 Call',
+                      text: S.of(context).call,
                       backgroundColor: Colors.blue,
                       onPressed: () =>
                           context.read<SaveOrderCubit>().openCallDialer(
@@ -143,7 +144,7 @@ class _OrderCardContent extends StatelessWidget {
                   ),
                   Expanded(
                     child: _OrderClientActionButton(
-                      text: '💬 Chat',
+                      text: S.of(context).chat,
                       backgroundColor: Colors.orange,
                       onPressed: () =>
                           context.read<SaveOrderCubit>().openUserMessanger(
@@ -228,9 +229,9 @@ class _OrderDoneButton extends StatelessWidget {
           width: 1.5,
         ),
       ),
-      child: const Text(
-        '✅ Done',
-        style: TextStyle(
+      child: Text(
+        S.of(context).done,
+        style: const TextStyle(
           color: Colors.green,
           fontSize: 12.3,
           fontWeight: FontWeight.w600,

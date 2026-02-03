@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
 import 'package:smart_courier_assistant/data/model/route_model.dart';
+import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/error_orders_section.dart';
@@ -30,7 +31,7 @@ class _RouteDetailPageState extends State<RouteDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Route Detail'),
+        title: Text(S.of(context).routeDetail),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.all(5),
@@ -38,7 +39,7 @@ class _RouteDetailPageState extends State<RouteDetailPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Route #${widget.route.routeId}',
+              '#${widget.route.routeId}',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
