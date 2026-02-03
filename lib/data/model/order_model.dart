@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
+
 import 'package:smart_courier_assistant/data/model/proof_delivery_model.dart';
 
 class OrderModel {
@@ -12,6 +13,7 @@ class OrderModel {
   final DateTime plannedEta;
   final DateTime deliveryBy;
   final String deliveryRisk;
+  final String recommendation;
   final String category;
   final String status;
   final ProofDeliveryModel? proofDelivery;
@@ -27,6 +29,7 @@ class OrderModel {
     required this.plannedEta,
     required this.deliveryBy,
     required this.deliveryRisk,
+    required this.recommendation,
     required this.category,
     required this.status,
     required this.proofDelivery,
@@ -42,6 +45,7 @@ class OrderModel {
       latitude: 0,
       longitude: 0,
       category: '',
+      recommendation: 'Uknown',
       deliveryRisk: 'Ontime',
       plannedEta: DateTime.now(),
       deliveryBy: DateTime.now(),
@@ -64,6 +68,7 @@ class OrderModel {
       'category': category,
       'deliveryRisk': deliveryRisk,
       'status': status,
+      'recommendation': recommendation,
       'orderIndex': orderIndex,
       if (proofDelivery != null) 'proofDelivery': proofDelivery!.toFirestore(),
     };
@@ -86,6 +91,7 @@ class OrderModel {
       category: data?['category'] as String,
       status: data?['status'] as String,
       deliveryRisk: data?['deliveryRisk'] as String,
+      recommendation: data?['recommendation'] as String,
       orderIndex: (data?['orderIndex'] ?? 0) as int,
       proofDelivery: data?['proofDelivery'] != null
           ? ProofDeliveryModel.fromFirestore(
@@ -105,9 +111,10 @@ class OrderModel {
     DateTime? plannedEta,
     DateTime? deliveryBy,
     String? deliveryRisk,
+    String? recommendation,
     String? category,
     String? status,
-    ProofDeliveryModel? proofDeliveryModel,
+    ProofDeliveryModel? proofDelivery,
     int? orderIndex,
   }) {
     return OrderModel(
@@ -120,9 +127,10 @@ class OrderModel {
       plannedEta: plannedEta ?? this.plannedEta,
       deliveryBy: deliveryBy ?? this.deliveryBy,
       deliveryRisk: deliveryRisk ?? this.deliveryRisk,
+      recommendation: recommendation ?? this.recommendation,
       category: category ?? this.category,
       status: status ?? this.status,
-      proofDelivery: proofDeliveryModel ?? this.proofDelivery,
+      proofDelivery: proofDelivery ?? this.proofDelivery,
       orderIndex: orderIndex ?? this.orderIndex,
     );
   }

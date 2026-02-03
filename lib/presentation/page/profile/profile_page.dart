@@ -66,11 +66,6 @@ class ProfilePage extends StatelessWidget {
                     },
                   ),
                   SectionListTile(
-                    leadingEmoji: '📦',
-                    title: 'My orders',
-                    onTap: () {},
-                  ),
-                  SectionListTile(
                     leadingEmoji: '⚙️',
                     title: S.of(context).settings,
                     onTap: () {

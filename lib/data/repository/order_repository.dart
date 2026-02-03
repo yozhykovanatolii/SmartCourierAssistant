@@ -36,6 +36,7 @@ class OrderRepository {
       longitude: location.longitude,
       deliveryBy: deliveryBy,
       plannedEta: currentOrder?.plannedEta,
+      recommendation: currentOrder?.recommendation ?? orderModel.recommendation,
       category: category,
     );
     await _orderFirestore.saveOrder(orderModel, routeId);

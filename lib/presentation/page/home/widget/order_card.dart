@@ -19,52 +19,73 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 5,
+    return Stack(
       children: [
-        Column(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '$index',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: 2,
-              height: order.status == 'Delivered' ? 90 : 110,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(
-                      10,
-                      (index) => Container(
-                        width: 2,
-                        height: constraints.maxHeight / 30,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            const SizedBox(width: 32),
+            const SizedBox(width: 5),
+            Expanded(child: _OrderCardContent(order)),
           ],
         ),
-        Expanded(child: _OrderCardContent(order)),
+        Positioned(
+          top: 0,
+          left: 0,
+          child: _IndexCircle(index: index),
+        ),
+        const Positioned(
+          top: 40,
+          left: 15,
+          bottom: 0,
+          child: _DottedLine(),
+        ),
       ],
+    );
+  }
+}
+
+class _IndexCircle extends StatelessWidget {
+  final int index;
+
+  const _IndexCircle({required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 32,
+      height: 32,
+      decoration: const BoxDecoration(
+        color: Colors.blue,
+        shape: BoxShape.circle,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        '$index',
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class _DottedLine extends StatelessWidget {
+  const _DottedLine();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(
+        20,
+        (_) => Container(
+          width: 2,
+          height: 6,
+          color: Colors.blue,
+        ),
+      ),
     );
   }
 }
@@ -97,7 +118,12 @@ class _OrderCardContent extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 5),
+        if (order.status != 'Delivered')
+          _RecommendationSection(
+            recommendation: order.recommendation,
+          ),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 8,
@@ -248,6 +274,50 @@ class _OrderClientActionButton extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _RecommendationSection extends StatelessWidget {
+  final String recommendation;
+
+  const _RecommendationSection({
+    required this.recommendation,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (recommendation == 'Uknown') {
+      return const SizedBox.shrink();
+    }
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF3CD),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: Color(0xFFF39C12),
+            size: 20,
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              recommendation,
+              style: const TextStyle(
+                color: Color(0xFF7D6608),
+                fontSize: 13.5,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
