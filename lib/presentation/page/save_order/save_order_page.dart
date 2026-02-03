@@ -78,9 +78,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.only(top: 65),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(30),
           ),
         ),
@@ -100,36 +100,27 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
                 isEditing: widget.isEditing,
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Address🏠',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               AddressTextField(
                 addressController: _addressController,
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Client👤',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               ClientFullNameTextField(
                 clientFullNameController: _clientFullNameController,
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Contact Phone📱',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               ClientPhoneNumberTextField(
@@ -138,12 +129,9 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
               const SizedBox(height: 10),
               const OrderDeliveryTimeSection(),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 'Category🗂️',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               const CategoryListChoiceSection(),

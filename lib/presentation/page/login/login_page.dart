@@ -72,19 +72,13 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Text(
                     S.of(context).signIn,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 10),
                   Text(
                     S.of(context).welcomeBack,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 17,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                   const SizedBox(height: 50),
                   const LoginEmailTextField(),

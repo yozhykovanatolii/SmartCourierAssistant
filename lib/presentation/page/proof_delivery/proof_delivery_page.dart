@@ -39,9 +39,9 @@ class ProofDeliveryPage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.only(top: 175),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(30),
           ),
         ),
@@ -59,29 +59,20 @@ class ProofDeliveryPage extends StatelessWidget {
               const SizedBox(height: 10),
               const HeaderProofDelivery(),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Comment📝',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               const CommentTextField(),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Photo📸',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               Text(
                 'Take several photos of your order and select from the gallery.',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 15,
-                ),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 15),
               const PhotoListView(),

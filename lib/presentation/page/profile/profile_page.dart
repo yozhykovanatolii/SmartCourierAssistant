@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
-import 'package:smart_courier_assistant/core/widget/back_page_button.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/logout_modal_sheet.dart';
@@ -17,15 +16,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackPageButton(),
-        title: const Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+        title: const Text('Profile'),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(

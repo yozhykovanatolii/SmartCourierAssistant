@@ -30,14 +30,7 @@ class _RouteDetailPageState extends State<RouteDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Route Detail',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+        title: const Text('Route Detail'),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.all(5),

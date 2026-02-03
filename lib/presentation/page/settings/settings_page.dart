@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_courier_assistant/core/widget/back_page_button.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/settings/widget/language_button.dart';
 import 'package:smart_courier_assistant/presentation/page/settings/widget/setting_list_tile.dart';
@@ -12,15 +11,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackPageButton(),
-        title: Text(
-          S.of(context).settings,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+        title: Text(S.of(context).settings),
       ),
       body: ListView(
         children: [

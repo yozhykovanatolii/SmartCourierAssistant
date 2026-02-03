@@ -175,7 +175,6 @@ class _CardHeaderSection extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              color: Color(0xFF1C1C1E),
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),

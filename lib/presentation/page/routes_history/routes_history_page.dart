@@ -24,14 +24,7 @@ class _RoutesHistoryPageState extends State<RoutesHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Routes History🗺️',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+        title: const Text('Routes History🗺️'),
       ),
       body: BlocBuilder<RouteCubit, RouteState>(
         builder: (context, state) {
