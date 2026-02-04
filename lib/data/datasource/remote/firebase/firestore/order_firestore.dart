@@ -7,7 +7,7 @@ class OrderFirestore {
   final _firestore = FirebaseFirestore.instance;
 
   Future<void> saveOrder(OrderModel orderModel, String routeId) async {
-    final docReference = _getUserDocumentReference(orderModel.id, routeId);
+    final docReference = _getOrderDocumentReference(orderModel.id, routeId);
     await docReference.set(orderModel);
   }
 
@@ -19,17 +19,6 @@ class OrderFirestore {
     final batch = _firestore.batch();
     for (final order in orders) {
       batch.set(collectionReference.doc(order.id), order);
-    }
-    await batch.commit();
-  }
-
-  Future<void> deleteOrdersSubcollection(String routeId) async {
-    final collectionReference = _getOrderCollectionReference(routeId);
-    final snapshot = await collectionReference.get();
-
-    final batch = _firestore.batch();
-    for (final doc in snapshot.docs) {
-      batch.delete(doc.reference);
     }
     await batch.commit();
   }
@@ -53,7 +42,7 @@ class OrderFirestore {
     String routeId,
     String orderId,
   ) async {
-    final docReference = _getUserDocumentReference(orderId, routeId);
+    final docReference = _getOrderDocumentReference(orderId, routeId);
     await docReference.update({
       'status': 'Delivered',
       'proofDelivery': proofDelivery.toFirestore(),
@@ -72,7 +61,7 @@ class OrderFirestore {
         );
   }
 
-  DocumentReference<OrderModel> _getUserDocumentReference(
+  DocumentReference<OrderModel> _getOrderDocumentReference(
     String id,
     String routeId,
   ) {
