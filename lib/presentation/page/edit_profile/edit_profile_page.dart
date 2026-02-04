@@ -12,6 +12,7 @@ import 'package:smart_courier_assistant/presentation/page/edit_profile/widget/ed
 import 'package:smart_courier_assistant/presentation/page/edit_profile/widget/profile_avatar_section.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/widget/profile_full_name_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/widget/profile_phone_number_text_field.dart';
+import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -69,6 +70,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   context: context,
                   message: state.errorMessage,
                   isErrorSnackBar: true,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LoginPage()),
                 );
               }
             },

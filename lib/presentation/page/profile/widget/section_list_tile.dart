@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class SectionListTile extends StatelessWidget {
-  final String leadingEmoji;
+  final IconData leadingIcon;
   final String title;
   final Function()? onTap;
   final bool isLogOut;
 
   const SectionListTile({
     super.key,
-    required this.leadingEmoji,
+    required this.leadingIcon,
     required this.title,
     this.isLogOut = false,
     this.onTap,
@@ -19,11 +19,10 @@ class SectionListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      leading: Text(
-        leadingEmoji,
-        style: const TextStyle(
-          fontSize: 24,
-        ),
+      leading: Icon(
+        leadingIcon,
+        size: 30,
+        color: isLogOut ? Colors.red : Colors.blue,
       ),
       title: Text(
         title,

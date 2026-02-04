@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
+import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
+import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/logout_modal_sheet.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/section_list_tile.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/widget/user_avatar_section.dart';
@@ -18,67 +23,84 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(S.of(context).profile),
       ),
-      body: SafeArea(
-        minimum: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 20,
-        ),
-        child: Column(
-          children: [
-            const UserAvatarSection(),
-            const SizedBox(height: 10),
-            const UserFullNameSection(),
-            const SizedBox(height: 30),
-            Expanded(
-              child: ListView(
-                children: [
-                  SectionListTile(
-                    leadingEmoji: '👤',
-                    title: S.of(context).yourProfile,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const EditProfilePage(),
-                        ),
-                      );
-                    },
-                  ),
-                  SectionListTile(
-                    leadingEmoji: '🗺️',
-                    title: S.of(context).myRoutes,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const RoutesHistoryPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  SectionListTile(
-                    leadingEmoji: '⚙️',
-                    title: S.of(context).settings,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const SettingsPage()),
-                      );
-                    },
-                  ),
-                  SectionListTile(
-                    leadingEmoji: '🚪',
-                    title: S.of(context).logout,
-                    isLogOut: true,
-                    onTap: () => UiHelper.showModalSheet(
-                      context,
-                      const LogoutModalSheet(),
+      body: BlocListener<AppBloc, AppState>(
+        listener: (context, state) {
+          if (state is UserUnauthenticatedState) {
+            UiHelper.showSnackBar(
+              context: context,
+              message: state.errorMessage,
+              isErrorSnackBar: true,
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginPage()),
+            );
+          }
+        },
+        child: SafeArea(
+          minimum: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 20,
+          ),
+          child: Column(
+            children: [
+              const UserAvatarSection(),
+              const SizedBox(height: 10),
+              const UserFullNameSection(),
+              const SizedBox(height: 30),
+              Expanded(
+                child: ListView(
+                  children: [
+                    SectionListTile(
+                      leadingIcon: Iconsax.user,
+                      title: S.of(context).yourProfile,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const EditProfilePage(),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                ],
+                    SectionListTile(
+                      leadingIcon: Iconsax.routing,
+                      title: S.of(context).myRoutes,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const RoutesHistoryPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    SectionListTile(
+                      leadingIcon: Iconsax.setting_2,
+                      title: S.of(context).settings,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const SettingsPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    SectionListTile(
+                      leadingIcon: Iconsax.logout,
+                      title: S.of(context).logout,
+                      isLogOut: true,
+                      onTap: () => UiHelper.showModalSheet(
+                        context,
+                        const LogoutModalSheet(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
