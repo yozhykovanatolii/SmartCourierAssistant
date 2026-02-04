@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:smart_courier_assistant/core/exception/geolocation_exception.dart';
 import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
+import 'package:smart_courier_assistant/core/exception/route_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/repository/geolocation_repository.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/data/repository/route_repository.dart';
@@ -19,6 +20,13 @@ class OrderCubit extends Cubit<OrderState> {
     try {
       final activeOrders = await _orderRepository.getAllCourierActiveOrders();
       emit(state.copyWith(status: OrderStatus.success, orders: activeOrders));
+    } on RouteNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          status: OrderStatus.failure,
+          errorMessage: exception.errorMessage,
+        ),
+      );
     } on OrdersNotFoundException catch (exception) {
       emit(
         state.copyWith(
@@ -36,6 +44,13 @@ class OrderCubit extends Cubit<OrderState> {
         routeId,
       );
       emit(state.copyWith(status: OrderStatus.success, orders: orders));
+    } on RouteNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          status: OrderStatus.failure,
+          errorMessage: exception.errorMessage,
+        ),
+      );
     } on OrdersNotFoundException catch (exception) {
       emit(
         state.copyWith(

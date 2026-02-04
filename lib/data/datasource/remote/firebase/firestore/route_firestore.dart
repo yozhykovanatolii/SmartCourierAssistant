@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
+import 'package:smart_courier_assistant/core/exception/route_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/model/route_model.dart';
 
 class RouteFirestore {
   final _firestore = FirebaseFirestore.instance;
 
   Future<void> createRoute(RouteModel routeModel) async {
-    final docReference = _getUserDocumentReference(routeModel.routeId);
+    final docReference = _getRouteDocumentReference(routeModel.routeId);
     await docReference.set(routeModel);
   }
 
@@ -37,7 +37,7 @@ class RouteFirestore {
         .limit(1)
         .get();
     if (querySnapshot.docs.isEmpty) {
-      throw OrdersNotFoundException('Orders were not found');
+      throw RouteNotFoundException('Route was not found');
     }
     return querySnapshot.docs.first.data();
   }
@@ -48,7 +48,7 @@ class RouteFirestore {
         .where('courierId', isEqualTo: courierId)
         .get();
     if (querySnapshot.docs.isEmpty) {
-      throw OrdersNotFoundException('Orders were not found');
+      throw RouteNotFoundException('Routes were not found');
     }
     return querySnapshot.docs.map((document) => document.data()).toList();
   }
@@ -63,7 +63,7 @@ class RouteFirestore {
         );
   }
 
-  DocumentReference<RouteModel> _getUserDocumentReference(String id) {
+  DocumentReference<RouteModel> _getRouteDocumentReference(String id) {
     return _firestore
         .collection('routes')
         .doc(id)
