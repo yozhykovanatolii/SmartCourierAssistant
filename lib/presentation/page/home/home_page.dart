@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
+import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/action_floating_button.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/google_map_section.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/orders_draggable_sheet.dart';
+import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/profile_page.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
 
@@ -27,18 +30,37 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<OrderCubit, OrderState>(
-        listenWhen: (previous, current) =>
-            previous.geolocationError != current.geolocationError,
-        listener: (context, state) {
-          if (state.geolocationError.isNotEmpty) {
-            UiHelper.showSnackBar(
-              context: context,
-              message: state.geolocationError,
-              isErrorSnackBar: true,
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AppBloc, AppState>(
+            listener: (context, state) {
+              if (state is UserUnauthenticatedState) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: state.errorMessage,
+                  isErrorSnackBar: true,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LoginPage()),
+                );
+              }
+            },
+          ),
+          BlocListener<OrderCubit, OrderState>(
+            listenWhen: (previous, current) =>
+                previous.geolocationError != current.geolocationError,
+            listener: (context, state) {
+              if (state.geolocationError.isNotEmpty) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: state.geolocationError,
+                  isErrorSnackBar: true,
+                );
+              }
+            },
+          ),
+        ],
         child: SafeArea(
           child: Stack(
             children: [
@@ -48,7 +70,6 @@ class _HomePageState extends State<HomePage> {
                 left: 15,
                 child: ActionFloatingButton(
                   icon: Iconsax.menu_1_copy,
-                  foregroundColor: Colors.black,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -64,7 +85,6 @@ class _HomePageState extends State<HomePage> {
                 right: 15,
                 child: ActionFloatingButton(
                   icon: Iconsax.add,
-                  foregroundColor: Colors.blue,
                   heroTag: 'AddOrder',
                   onPressed: () {
                     UiHelper.showModalSheet(
@@ -79,7 +99,6 @@ class _HomePageState extends State<HomePage> {
                 right: 15,
                 child: ActionFloatingButton(
                   icon: Iconsax.gps,
-                  foregroundColor: Colors.blue,
                   heroTag: 'GetUserLocation',
                   onPressed: () => context.read<OrderCubit>().getUserLocation(),
                 ),

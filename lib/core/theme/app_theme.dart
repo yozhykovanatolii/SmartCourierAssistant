@@ -24,6 +24,10 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blue,
+      ),
       appBarTheme: const AppBarTheme(
         titleTextStyle: TextStyle(
           color: Colors.black,
@@ -40,6 +44,10 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.blue,
+      ),
       appBarTheme: const AppBarTheme(
         titleTextStyle: TextStyle(
           fontSize: 20,
