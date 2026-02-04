@@ -52,10 +52,10 @@ class UserRepository {
   }
 
   Future<void> callUserDialer(String userPhoneNumber) async {
-    await NativeService.openDialer(userPhoneNumber);
+    await NativeService.openExtrenal('openDialer', userPhoneNumber);
   }
 
   Future<void> messageUser(String userPhoneNumber) async {
-    await NativeService.openWhatsAppChat(userPhoneNumber);
+    await NativeService.openExtrenal('openWhatsAppChat', userPhoneNumber);
   }
 }
