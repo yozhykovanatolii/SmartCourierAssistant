@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/settings/widget/language_button.dart';
 import 'package:smart_courier_assistant/presentation/page/settings/widget/setting_list_tile.dart';
@@ -16,10 +17,12 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         children: [
           SettingListTile(
+            leadingIcon: Iconsax.sun_1,
             text: S.of(context).darkMode,
             trailing: const ThemeSwitch(),
           ),
           SettingListTile(
+            leadingIcon: Iconsax.language_circle,
             text: S.of(context).language,
             trailing: const LanguageButton(),
           ),
