@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smart_courier_assistant/core/util/marker_factory.dart';
+import 'package:smart_courier_assistant/core/util/ui/marker_factory.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';

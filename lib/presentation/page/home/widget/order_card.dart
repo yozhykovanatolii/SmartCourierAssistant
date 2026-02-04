@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:smart_courier_assistant/core/util/ui_helper.dart';
+import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
