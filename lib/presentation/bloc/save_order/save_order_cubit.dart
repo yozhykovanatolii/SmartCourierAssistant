@@ -5,12 +5,10 @@ import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/data/repository/route_repository.dart';
-import 'package:smart_courier_assistant/data/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class SaveOrderCubit extends Cubit<SaveOrderState> {
   final OrderRepository _orderRepository = OrderRepository();
-  final UserRepository _userRepository = UserRepository();
   final RouteRepository _routeRepository = RouteRepository();
   String _orderId = '';
 
@@ -91,46 +89,6 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
         state.copyWith(
           errorMessage: exception.errorMessage,
           formStatus: FormStatus.success,
-        ),
-      );
-    } finally {
-      emit(
-        state.copyWith(
-          errorMessage: '',
-          formStatus: FormStatus.initial,
-        ),
-      );
-    }
-  }
-
-  Future<void> openCallDialer(String clientPhoneNumber) async {
-    try {
-      await _userRepository.callUserDialer(clientPhoneNumber);
-    } catch (exception) {
-      emit(
-        state.copyWith(
-          errorMessage: exception.toString(),
-          formStatus: FormStatus.failure,
-        ),
-      );
-    } finally {
-      emit(
-        state.copyWith(
-          errorMessage: '',
-          formStatus: FormStatus.initial,
-        ),
-      );
-    }
-  }
-
-  Future<void> openUserMessanger(String clientPhoneNumber) async {
-    try {
-      await _userRepository.messageUser(clientPhoneNumber);
-    } catch (exception) {
-      emit(
-        state.copyWith(
-          errorMessage: exception.toString(),
-          formStatus: FormStatus.failure,
         ),
       );
     } finally {

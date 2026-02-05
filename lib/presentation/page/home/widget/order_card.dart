@@ -4,7 +4,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
-import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
+import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/proof_delivery/proof_delivery_page.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
 
@@ -137,7 +137,7 @@ class _OrderCardContent extends StatelessWidget {
                       text: S.of(context).call,
                       backgroundColor: Colors.blue,
                       onPressed: () =>
-                          context.read<SaveOrderCubit>().openCallDialer(
+                          context.read<OrderCubit>().openCallDialer(
                             order.clientPhoneNumber,
                           ),
                     ),
@@ -147,7 +147,7 @@ class _OrderCardContent extends StatelessWidget {
                       text: S.of(context).chat,
                       backgroundColor: Colors.orange,
                       onPressed: () =>
-                          context.read<SaveOrderCubit>().openUserMessanger(
+                          context.read<OrderCubit>().openUserMessanger(
                             order.clientPhoneNumber,
                           ),
                     ),

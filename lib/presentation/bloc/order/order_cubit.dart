@@ -6,11 +6,13 @@ import 'package:smart_courier_assistant/core/exception/route_not_found_exception
 import 'package:smart_courier_assistant/data/repository/geolocation_repository.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/data/repository/route_repository.dart';
+import 'package:smart_courier_assistant/data/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   final OrderRepository _orderRepository = OrderRepository();
   final GeolocationRepository _geolocationRepository = GeolocationRepository();
+  final UserRepository _userRepository = UserRepository();
   final RouteRepository _routeRepository = RouteRepository();
 
   OrderCubit() : super(OrderState.initial());
@@ -100,6 +102,34 @@ class OrderCubit extends Cubit<OrderState> {
       emit(state.copyWith(routePoints: routePoints));
     } else {
       return;
+    }
+  }
+
+  Future<void> openCallDialer(String clientPhoneNumber) async {
+    try {
+      await _userRepository.callUserDialer(clientPhoneNumber);
+    } catch (exception) {
+      emit(
+        state.copyWith(actionError: exception.toString()),
+      );
+    } finally {
+      emit(
+        state.copyWith(actionError: ''),
+      );
+    }
+  }
+
+  Future<void> openUserMessanger(String clientPhoneNumber) async {
+    try {
+      await _userRepository.messageUser(clientPhoneNumber);
+    } catch (exception) {
+      emit(
+        state.copyWith(actionError: exception.toString()),
+      );
+    } finally {
+      emit(
+        state.copyWith(actionError: ''),
+      );
     }
   }
 }

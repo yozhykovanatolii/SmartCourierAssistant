@@ -49,15 +49,17 @@ class _HomePageState extends State<HomePage> {
           ),
           BlocListener<OrderCubit, OrderState>(
             listenWhen: (previous, current) =>
+                previous.actionError != current.actionError ||
                 previous.geolocationError != current.geolocationError,
             listener: (context, state) {
-              if (state.geolocationError.isNotEmpty) {
-                UiHelper.showSnackBar(
-                  context: context,
-                  message: state.geolocationError,
-                  isErrorSnackBar: true,
-                );
-              }
+              final error = state.actionError.isNotEmpty
+                  ? state.actionError
+                  : state.geolocationError;
+              UiHelper.showSnackBar(
+                context: context,
+                message: error,
+                isErrorSnackBar: true,
+              );
             },
           ),
         ],

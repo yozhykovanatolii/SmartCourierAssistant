@@ -5,7 +5,7 @@ import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
-import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
+import 'package:smart_courier_assistant/presentation/page/home/home_page.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/forgot_password_text_button.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_email_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_password_text_field.dart';
@@ -19,51 +19,31 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state.googleLoginStatus == FormStatus.failure) {
-                UiHelper.showSnackBar(
-                  context: context,
-                  message: state.errorMessage,
-                  isErrorSnackBar: true,
-                );
-              }
-              if (state.googleLoginStatus == FormStatus.success) {
-                UiHelper.showSnackBar(
-                  context: context,
-                  message: S.of(context).successAuthorizationWithGoogle,
-                );
-              }
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const EditProfilePage()),
-              );
-            },
-          ),
-          BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state.formStatus == FormStatus.failure) {
-                UiHelper.showSnackBar(
-                  context: context,
-                  message: state.errorMessage,
-                  isErrorSnackBar: true,
-                );
-              }
-              if (state.formStatus == FormStatus.success) {
-                UiHelper.showSnackBar(
-                  context: context,
-                  message: S.of(context).successAuthorization,
-                );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const EditProfilePage()),
-                );
-              }
-            },
-          ),
-        ],
+      body: BlocListener<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state.formStatus == FormStatus.failure ||
+              state.googleLoginStatus == FormStatus.failure) {
+            UiHelper.showSnackBar(
+              context: context,
+              message: state.errorMessage,
+              isErrorSnackBar: true,
+            );
+          }
+          if (state.formStatus == FormStatus.success ||
+              state.googleLoginStatus == FormStatus.success) {
+            final successMessage = state.formStatus == FormStatus.success
+                ? S.of(context).successAuthorization
+                : S.of(context).successAuthorizationWithGoogle;
+            UiHelper.showSnackBar(
+              context: context,
+              message: successMessage,
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const HomePage()),
+            );
+          }
+        },
         child: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 30),
           child: Center(

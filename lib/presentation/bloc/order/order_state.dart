@@ -8,6 +8,7 @@ class OrderState {
   final List<LatLng> routePoints;
   final String errorMessage;
   final String geolocationError;
+  final String actionError;
   final double latitude;
   final double longitude;
   final OrderStatus status;
@@ -17,6 +18,7 @@ class OrderState {
     required this.routePoints,
     required this.errorMessage,
     required this.geolocationError,
+    required this.actionError,
     required this.latitude,
     required this.longitude,
     required this.status,
@@ -28,6 +30,7 @@ class OrderState {
       routePoints: [],
       errorMessage: '',
       geolocationError: '',
+      actionError: '',
       latitude: 50.4501,
       longitude: 30.5234,
       status: OrderStatus.initial,
@@ -39,6 +42,7 @@ class OrderState {
     List<LatLng>? routePoints,
     String? errorMessage,
     String? geolocationError,
+    String? actionError,
     double? latitude,
     double? longitude,
     OrderStatus? status,
@@ -48,6 +52,7 @@ class OrderState {
       routePoints: routePoints ?? this.routePoints,
       errorMessage: errorMessage ?? this.errorMessage,
       geolocationError: geolocationError ?? this.geolocationError,
+      actionError: actionError ?? this.actionError,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
       status: status ?? this.status,
