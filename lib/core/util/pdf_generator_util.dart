@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 
 class PdfGeneratorUtil {
-  static Future<File> generateOrderReportPdf(OrderModel order) async {
+  static Future<File> generateOrderReportPdf(OrderEntity order) async {
     final pdf = pw.Document();
     final robotoData = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
     final robotoFont = pw.Font.ttf(robotoData);
@@ -54,9 +54,9 @@ class PdfGeneratorUtil {
                 'Planned ETA: ${order.plannedEta}',
                 style: pw.TextStyle(font: robotoFont, fontSize: 16),
               ),
-              if (order.proofDelivery != null)
+              if (order.proofDeliveryEntity != null)
                 pw.Text(
-                  'Actual delivery: ${order.proofDelivery!.confirmedAt}',
+                  'Actual delivery: ${order.proofDeliveryEntity!.confirmedAt}',
                   style: pw.TextStyle(font: robotoFont, fontSize: 16),
                 ),
               pw.SizedBox(height: 8),
@@ -77,7 +77,7 @@ class PdfGeneratorUtil {
                 style: pw.TextStyle(font: robotoFont, fontSize: 16),
               ),
               pw.SizedBox(height: 16),
-              if (order.proofDelivery != null) ...[
+              if (order.proofDeliveryEntity != null) ...[
                 pw.Text(
                   'Proof of delivery',
                   style: pw.TextStyle(
@@ -87,13 +87,13 @@ class PdfGeneratorUtil {
                   ),
                 ),
                 pw.SizedBox(height: 8),
-                if (order.proofDelivery!.courierComment.isNotEmpty)
+                if (order.proofDeliveryEntity!.courierComment.isNotEmpty)
                   pw.Text(
-                    'Comment: ${order.proofDelivery!.courierComment}',
+                    'Comment: ${order.proofDeliveryEntity!.courierComment}',
                     style: pw.TextStyle(font: robotoFont, fontSize: 16),
                   ),
                 pw.SizedBox(height: 8),
-                if (order.proofDelivery!.orderPhotos.isNotEmpty)
+                if (order.proofDeliveryEntity!.orderPhotos.isNotEmpty)
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
@@ -102,7 +102,8 @@ class PdfGeneratorUtil {
                         style: pw.TextStyle(font: robotoFont, fontSize: 16),
                       ),
                       pw.SizedBox(height: 4),
-                      for (var photoPath in order.proofDelivery!.orderPhotos)
+                      for (var photoPath
+                          in order.proofDeliveryEntity!.orderPhotos)
                         pw.Image(
                           pw.MemoryImage(File(photoPath).readAsBytesSync()),
                           width: 200,

@@ -4,13 +4,13 @@ import 'package:smart_courier_assistant/core/state/button_status.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/widget/common_button.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class OrderSaveButton extends StatelessWidget {
-  final OrderModel? orderModel;
+  final OrderEntity? orderModel;
 
   const OrderSaveButton({
     super.key,

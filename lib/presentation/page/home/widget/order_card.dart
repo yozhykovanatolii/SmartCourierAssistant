@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/page/proof_delivery/proof_delivery_page.dart';
@@ -10,7 +10,7 @@ import 'package:smart_courier_assistant/presentation/page/save_order/save_order_
 
 class OrderCard extends StatelessWidget {
   final int index;
-  final OrderModel order;
+  final OrderEntity order;
 
   const OrderCard({
     super.key,
@@ -92,7 +92,7 @@ class _DottedLine extends StatelessWidget {
 }
 
 class _OrderCardContent extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
 
   const _OrderCardContent(this.order);
 
@@ -103,9 +103,9 @@ class _OrderCardContent extends StatelessWidget {
       children: [
         _CardHeaderSection(order),
         Text(
-          'ETA ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ${order.deliveryRisk}',
-          style: const TextStyle(
-            color: Color(0xFF2ECC71),
+          'ETA ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ${order.deliveryRisk.text}',
+          style: TextStyle(
+            color: Color(order.deliveryRisk.color),
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -119,11 +119,6 @@ class _OrderCardContent extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 5),
-        if (order.status != 'Delivered')
-          _RecommendationSection(
-            recommendation: order.recommendation,
-          ),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,7 +156,7 @@ class _OrderCardContent extends StatelessWidget {
 }
 
 class _CardHeaderSection extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
 
   const _CardHeaderSection(this.order);
 
@@ -172,7 +167,7 @@ class _CardHeaderSection extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            order.address,
+            order.address.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -188,7 +183,7 @@ class _CardHeaderSection extends StatelessWidget {
                   UiHelper.showModalSheet(
                     context,
                     SaveOrderPage(
-                      orderModel: order,
+                      order: order,
                       isEditing: true,
                     ),
                   );
@@ -281,9 +276,11 @@ class _OrderClientActionButton extends StatelessWidget {
 
 class _RecommendationSection extends StatelessWidget {
   final String recommendation;
+  final DeliveryRisk deliveryRisk;
 
   const _RecommendationSection({
     required this.recommendation,
+    required this.deliveryRisk,
   });
 
   @override
@@ -294,24 +291,24 @@ class _RecommendationSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF3CD),
+        color: Color(deliveryRisk.color),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.warning_amber_rounded,
-            color: Color(0xFFF39C12),
+            color: Color(deliveryRisk.color),
             size: 20,
           ),
           const SizedBox(width: 8),
           Flexible(
             child: Text(
               recommendation,
-              style: const TextStyle(
-                color: Color(0xFF7D6608),
+              style: TextStyle(
+                color: Color(deliveryRisk.color),
                 fontSize: 13.5,
                 fontWeight: FontWeight.w600,
               ),

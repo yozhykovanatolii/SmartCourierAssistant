@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
@@ -15,12 +15,12 @@ import 'package:smart_courier_assistant/presentation/page/save_order/widget/orde
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/order_save_button.dart';
 
 class SaveOrderPage extends StatefulWidget {
-  final OrderModel? orderModel;
+  final OrderEntity? order;
   final bool isEditing;
 
   const SaveOrderPage({
     super.key,
-    this.orderModel,
+    this.order,
     this.isEditing = false,
   });
 
@@ -40,11 +40,10 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
   void initState() {
     cubit = context.read<SaveOrderCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      cubit.editOrder(widget.orderModel);
-      _addressController.text = widget.orderModel?.address ?? '';
-      _clientFullNameController.text = widget.orderModel?.clientFullName ?? '';
-      _clientPhoneNumberController.text =
-          widget.orderModel?.clientPhoneNumber ?? '';
+      cubit.editOrder(widget.order);
+      _addressController.text = widget.order?.address.name ?? '';
+      _clientFullNameController.text = widget.order?.clientFullName ?? '';
+      _clientPhoneNumberController.text = widget.order?.clientPhoneNumber ?? '';
     });
     super.initState();
   }
@@ -140,7 +139,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
                 child: Align(
                   alignment: AlignmentGeometry.bottomCenter,
                   child: OrderSaveButton(
-                    orderModel: widget.orderModel,
+                    orderModel: widget.order,
                   ),
                 ),
               ),

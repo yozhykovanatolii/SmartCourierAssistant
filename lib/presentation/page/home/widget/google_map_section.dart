@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smart_courier_assistant/core/util/ui/marker_factory.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 
@@ -70,7 +70,7 @@ class _GoogleMapSectionState extends State<GoogleMapSection> {
     };
   }
 
-  Future<void> _updateMarkers(List<OrderModel> orders) async {
+  Future<void> _updateMarkers(List<OrderEntity> orders) async {
     final Set<Marker> markers = {};
     for (int i = 0; i < orders.length; i++) {
       final order = orders[i];
@@ -79,11 +79,11 @@ class _GoogleMapSectionState extends State<GoogleMapSection> {
       markers.add(
         Marker(
           markerId: MarkerId(order.id),
-          position: LatLng(order.latitude, order.longitude),
+          position: LatLng(order.address.latitude, order.address.longitude),
           icon: icon,
           infoWindow: InfoWindow(
             title: order.clientFullName,
-            snippet: order.address,
+            snippet: order.address.name,
           ),
         ),
       );

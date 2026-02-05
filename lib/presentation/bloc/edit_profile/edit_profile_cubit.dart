@@ -3,9 +3,9 @@ import 'package:smart_courier_assistant/core/exception/auth/user_not_found_excep
 import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
-import 'package:smart_courier_assistant/data/model/user_model.dart';
 import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
 import 'package:smart_courier_assistant/data/repository/user_repository.dart';
+import 'package:smart_courier_assistant/domain/entity/user_entity.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_state.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
@@ -17,7 +17,10 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   Future<void> editUserAvatar() async {
     try {
       final userAvatarUrl = await _userRepository.getUserImage();
-      emit(state.copyWith(userAvatar: userAvatarUrl));
+      final userEntity = state.userEntity;
+      emit(
+        state.copyWith(userEntity: userEntity.copyWith(avatar: userAvatarUrl)),
+      );
     } on PermissionDenyException catch (exception) {
       emit(
         state.copyWith(
@@ -43,21 +46,19 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   }
 
   void editUserFullName(String fullName) {
-    emit(state.copyWith(fullName: fullName));
+    final userEntity = state.userEntity;
+    emit(state.copyWith(userEntity: userEntity.copyWith(fullName: fullName)));
   }
 
   void editUserPhoneNumber(String phoneNumber) {
-    emit(state.copyWith(phoneNumber: phoneNumber));
+    final userEntity = state.userEntity;
+    emit(
+      state.copyWith(userEntity: userEntity.copyWith(phoneNumber: phoneNumber)),
+    );
   }
 
-  void fetchUserProfile(UserModel user) {
-    emit(
-      state.copyWith(
-        fullName: user.fullName,
-        phoneNumber: user.phoneNumber,
-        userAvatar: user.avatar,
-      ),
-    );
+  void fetchUserProfile(UserEntity user) {
+    emit(state.copyWith(userEntity: user));
   }
 
   Future<void> logOut() async => await _authRepository.logOut();
@@ -65,11 +66,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   Future<void> updateProfile() async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
-      await _userRepository.updateUserData(
-        state.userAvatar,
-        state.fullName,
-        state.phoneNumber,
-      );
+      await _userRepository.updateUserData(state.userEntity);
       emit(state.copyWith(formStatus: FormStatus.success));
     } on UserNotFoundException catch (exception) {
       emit(

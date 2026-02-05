@@ -1,10 +1,10 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 
 enum OrderStatus { initial, loading, success, failure }
 
 class OrderState {
-  final List<OrderModel> orders;
+  final List<OrderEntity> orders;
   final List<LatLng> routePoints;
   final String errorMessage;
   final String geolocationError;
@@ -38,7 +38,7 @@ class OrderState {
   }
 
   OrderState copyWith({
-    List<OrderModel>? orders,
+    List<OrderEntity>? orders,
     List<LatLng>? routePoints,
     String? errorMessage,
     String? geolocationError,

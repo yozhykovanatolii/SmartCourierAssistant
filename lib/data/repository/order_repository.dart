@@ -4,9 +4,12 @@ import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/order_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/storage/supabase_storage.dart';
+import 'package:smart_courier_assistant/data/mapper/order_mapper.dart';
+import 'package:smart_courier_assistant/data/mapper/proof_delivery_mapper.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
 import 'package:smart_courier_assistant/data/service/geolocation_service.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 
 class OrderRepository {
   final UserAuth _userAuth = UserAuth();
@@ -23,7 +26,7 @@ class OrderRepository {
     String category,
     String routeId,
     DateTime deliveryBy, {
-    OrderModel? currentOrder,
+    OrderEntity? currentOrder,
   }) async {
     OrderModel orderModel = OrderModel.initial();
     final location = await GeolocationService.getLocationByAddress(address);
@@ -37,39 +40,57 @@ class OrderRepository {
       deliveryBy: deliveryBy,
       plannedEta: currentOrder?.plannedEta,
       recommendation: currentOrder?.recommendation ?? orderModel.recommendation,
+      proofDelivery: ProofDeliveryMapper.fromEntity(
+        currentOrder?.proofDeliveryEntity,
+      ),
       category: category,
     );
     await _orderFirestore.saveOrder(orderModel, routeId);
   }
 
-  Future<List<OrderModel>> getAllCourierActiveOrders() async {
+  Future<List<OrderEntity>> getAllCourierActiveOrders() async {
     final courierId = _userAuth.userId;
     final routeModel = await _routeFirestore.getTodayRoute(courierId);
     _routeId = routeModel.routeId;
-    return await _orderFirestore.getAllUserOrders(routeModel.routeId);
+    print('Success route: ${routeModel.routeId}');
+    final ordersModel = await _orderFirestore.getAllUserOrders(
+      routeModel.routeId,
+    );
+    print('Success orders: ${ordersModel.length}');
+    return ordersModel
+        .map((orderModel) => OrderMapper.toEntity(orderModel))
+        .toList();
   }
 
-  Future<List<OrderModel>> getAllCourierOrdersByRouteId(String routeId) async {
-    return await _orderFirestore.getAllUserOrders(routeId);
+  Future<List<OrderEntity>> getAllCourierOrdersByRouteId(String routeId) async {
+    final ordersModel = await _orderFirestore.getAllUserOrders(routeId);
+    return ordersModel
+        .map((orderModel) => OrderMapper.toEntity(orderModel))
+        .toList();
   }
 
-  Future<List<OrderModel>> optimizeOrdersRoute(
-    List<OrderModel> orders,
+  Future<List<OrderEntity>> optimizeOrdersRoute(
+    List<OrderEntity> orders,
     double latitude,
     double longitude,
   ) async {
+    final ordersModel = orders
+        .map((order) => OrderMapper.fromEntity(order))
+        .toList();
     final steps = await _optimizeClient.optimizeRoute(
-      orders,
+      ordersModel,
       latitude,
       longitude,
     );
     final updatedOrders = CalculationEtaUtil.calculateEtaForOrders(
       steps,
-      orders,
+      ordersModel,
     );
     await _orderFirestore.saveOrders(updatedOrders, _routeId);
     print('Маршрут $_routeId успешно оптимизирован и сохранён.');
-    return updatedOrders;
+    return updatedOrders
+        .map((updatedOrder) => OrderMapper.toEntity(updatedOrder))
+        .toList();
   }
 
   Future<void> deleteOrder(String orderId) async {

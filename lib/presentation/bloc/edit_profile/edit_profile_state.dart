@@ -1,49 +1,41 @@
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/validator/user_validator.dart';
+import 'package:smart_courier_assistant/domain/entity/user_entity.dart';
 
 class EditProfileState {
-  final String fullName;
-  final String phoneNumber;
-  final String userAvatar;
+  final UserEntity userEntity;
   final String errorMessage;
   final FormStatus formStatus;
 
   EditProfileState({
-    required this.fullName,
-    required this.phoneNumber,
-    required this.userAvatar,
+    required this.userEntity,
     required this.errorMessage,
     required this.formStatus,
   });
 
   factory EditProfileState.initial() {
     return EditProfileState(
-      fullName: '',
-      phoneNumber: '',
-      userAvatar: '',
+      userEntity: UserEntity.initial(),
       errorMessage: '',
       formStatus: FormStatus.initial,
     );
   }
 
   EditProfileState copyWith({
-    String? fullName,
-    String? phoneNumber,
-    String? userAvatar,
+    UserEntity? userEntity,
     String? errorMessage,
     FormStatus? formStatus,
   }) {
     return EditProfileState(
-      fullName: fullName ?? this.fullName,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      userAvatar: userAvatar ?? this.userAvatar,
+      userEntity: userEntity ?? this.userEntity,
       errorMessage: errorMessage ?? this.errorMessage,
       formStatus: formStatus ?? this.formStatus,
     );
   }
 
-  String? get fullNameError => UserValidator.validateFullName(fullName);
+  String? get fullNameError =>
+      UserValidator.validateFullName(userEntity.fullName);
 
   String? get phoneNumberError =>
-      UserValidator.validatePhoneNumber(phoneNumber);
+      UserValidator.validatePhoneNumber(userEntity.phoneNumber);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
-import 'package:smart_courier_assistant/data/model/route_model.dart';
+import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
@@ -13,7 +13,7 @@ import 'package:smart_courier_assistant/presentation/page/login/login_page.dart'
 import 'package:smart_courier_assistant/presentation/page/route_detail/widget/route_order_card.dart';
 
 class RouteDetailPage extends StatefulWidget {
-  final RouteModel route;
+  final RouteEntity route;
 
   const RouteDetailPage({
     super.key,
@@ -57,7 +57,7 @@ class _RouteDetailPageState extends State<RouteDetailPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '#${widget.route.routeId}',
+                'Route #${widget.route.routeId}',
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class _RouteDetailPageState extends State<RouteDetailPage> {
               ),
               const SizedBox(height: 10),
               Text(
-                '🗓 ${widget.route.date.day}.${widget.route.date.month}.${widget.route.date.year}',
+                '🗓 ${widget.route.createAt.day}.${widget.route.createAt.month}.${widget.route.createAt.year}',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
@@ -73,9 +73,9 @@ class _RouteDetailPageState extends State<RouteDetailPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                '📦 10 orders | ⚠️ 2 at risk',
-                style: TextStyle(
+              Text(
+                '📦 ${widget.route.ordersCount} orders | ⚠️ ${widget.route.delayedOrdersCount} delayed',
+                style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w500,
                   color: Colors.black87,

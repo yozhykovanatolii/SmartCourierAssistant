@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
-
 import 'package:smart_courier_assistant/data/model/proof_delivery_model.dart';
 
 class OrderModel {
@@ -46,7 +45,7 @@ class OrderModel {
       longitude: 0,
       category: '',
       recommendation: 'Uknown',
-      deliveryRisk: 'Ontime',
+      deliveryRisk: 'On time',
       plannedEta: DateTime.now(),
       deliveryBy: DateTime.now(),
       status: 'Active',

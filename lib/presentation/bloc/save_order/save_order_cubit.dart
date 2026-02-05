@@ -2,9 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/geolocation_exception.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
 import 'package:smart_courier_assistant/data/repository/route_repository.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class SaveOrderCubit extends Cubit<SaveOrderState> {
@@ -48,12 +48,12 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
     await _orderRepository.deleteOrder(_orderId);
   }
 
-  void editOrder(OrderModel? order) {
+  void editOrder(OrderEntity? order) {
     if (order != null) {
       _orderId = order.id;
       emit(
         state.copyWith(
-          address: order.address,
+          address: order.address.name,
           clientFullName: order.clientFullName,
           clientPhoneNumber: order.clientPhoneNumber,
           deliveryBy: order.deliveryBy,
@@ -63,7 +63,7 @@ class SaveOrderCubit extends Cubit<SaveOrderState> {
     }
   }
 
-  Future<void> saveOrder(OrderModel? currentOrder) async {
+  Future<void> saveOrder(OrderEntity? currentOrder) async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
       final routeId = await _routeRepository.createRoute();

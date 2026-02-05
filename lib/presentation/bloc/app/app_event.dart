@@ -1,11 +1,11 @@
-import 'package:smart_courier_assistant/data/model/user_model.dart';
+import 'package:smart_courier_assistant/domain/entity/user_entity.dart';
 
 sealed class AppEvent {}
 
 class AppUserSubscriptionRequested extends AppEvent {}
 
 class AppUserChanged extends AppEvent {
-  final UserModel user;
+  final UserEntity user;
 
   AppUserChanged(this.user);
 }

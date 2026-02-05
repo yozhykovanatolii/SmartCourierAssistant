@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:smart_courier_assistant/data/model/route_model.dart';
+import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
 import 'package:smart_courier_assistant/presentation/page/route_detail/route_detail_page.dart';
 
 class RouteCard extends StatelessWidget {
-  final RouteModel route;
+  final RouteEntity route;
 
   const RouteCard({
     super.key,
@@ -48,7 +48,7 @@ class RouteCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    "${route.date.day}.${route.date.month}.${route.date.year}",
+                    "${route.createAt.day}.${route.createAt.month}.${route.createAt.year}",
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF6B7280),
@@ -61,9 +61,9 @@ class RouteCard extends StatelessWidget {
                     color: Color(0xFF4CAF50),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
-                    "10 orders",
-                    style: TextStyle(
+                  Text(
+                    "${route.ordersCount} orders",
+                    style: const TextStyle(
                       fontSize: 14,
                     ),
                   ),
@@ -74,9 +74,9 @@ class RouteCard extends StatelessWidget {
                     color: Color(0xFFDC2626),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
-                    "2 delayed",
-                    style: TextStyle(
+                  Text(
+                    "${route.delayedOrdersCount} delayed",
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFFDC2626),
                       fontWeight: FontWeight.w500,

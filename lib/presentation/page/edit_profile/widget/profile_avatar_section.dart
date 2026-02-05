@@ -29,7 +29,7 @@ class _EditProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userAvatarUrl = context.select(
-      (EditProfileCubit bloc) => bloc.state.userAvatar,
+      (EditProfileCubit bloc) => bloc.state.userEntity.avatar,
     );
     return SizedBox(
       height: 120,

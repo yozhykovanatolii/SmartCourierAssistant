@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:smart_courier_assistant/core/util/pdf_generator_util.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 
 class RouteOrderCard extends StatelessWidget {
   final int index;
-  final OrderModel order;
+  final OrderEntity order;
 
   const RouteOrderCard({
     super.key,
@@ -66,7 +66,7 @@ class RouteOrderCard extends StatelessWidget {
 }
 
 class _OrderCardContent extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
 
   const _OrderCardContent(this.order);
 
@@ -77,14 +77,14 @@ class _OrderCardContent extends StatelessWidget {
       children: [
         _CardHeaderSection(order),
         Text(
-          order.address,
+          order.address.name,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
         Text(
-          'Deliver by ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ETA ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ${order.deliveryRisk}',
+          'Deliver by ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ETA ${order.plannedEta.hour}:${order.plannedEta.minute.toString().padLeft(2, '0')} • ${order.deliveryRisk.text}',
           style: const TextStyle(
             color: Color(0xFF6E6E73),
             fontSize: 14,
@@ -92,10 +92,9 @@ class _OrderCardContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        const Text(
-          'Delivered',
-          style: TextStyle(
-            color: Colors.green,
+        Text(
+          order.status,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -107,7 +106,7 @@ class _OrderCardContent extends StatelessWidget {
 }
 
 class _CardHeaderSection extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
 
   const _CardHeaderSection(this.order);
 
