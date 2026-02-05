@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/register_exception.dart';
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
 import 'package:smart_courier_assistant/data/repository/user_repository.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {

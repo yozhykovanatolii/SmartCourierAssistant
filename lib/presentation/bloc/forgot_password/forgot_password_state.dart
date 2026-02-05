@@ -1,5 +1,5 @@
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/validator/user_validator.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 
 class ForgotPasswordState {
   final String email;

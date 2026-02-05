@@ -1,0 +1,1 @@
+enum ButtonStatus { enabled, disabled }

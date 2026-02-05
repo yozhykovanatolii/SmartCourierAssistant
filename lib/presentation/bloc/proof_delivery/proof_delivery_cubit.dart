@@ -3,9 +3,9 @@ import 'package:smart_courier_assistant/core/exception/auth/user_not_found_excep
 import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/data/repository/delivery_repository.dart';
 import 'package:smart_courier_assistant/data/repository/order_repository.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_state.dart';
 
 class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {

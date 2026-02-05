@@ -1,6 +1,6 @@
+import 'package:smart_courier_assistant/core/state/button_status.dart';
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/validator/delivery_validator.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
-import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 
 class ProofDeliveryState {
   final List<String> orderPhotos;

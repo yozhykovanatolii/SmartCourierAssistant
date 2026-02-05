@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/widget/common_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_cubit.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 
 class ResetPasswordButton extends StatelessWidget {
   const ResetPasswordButton({super.key});

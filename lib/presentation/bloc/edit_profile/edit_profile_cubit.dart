@@ -2,11 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/data/model/user_model.dart';
 import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
 import 'package:smart_courier_assistant/data/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_state.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
   final UserRepository _userRepository = UserRepository();

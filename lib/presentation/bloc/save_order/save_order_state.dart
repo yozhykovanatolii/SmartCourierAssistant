@@ -1,8 +1,7 @@
+import 'package:smart_courier_assistant/core/state/button_status.dart';
+import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/validator/order_validator.dart';
 import 'package:smart_courier_assistant/core/validator/user_validator.dart';
-import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
-
-enum ButtonStatus { enabled, disabled }
 
 class SaveOrderState {
   final String clientFullName;
