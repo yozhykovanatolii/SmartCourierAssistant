@@ -21,19 +21,12 @@ class CalculationEtaUtil {
       );
       final eta = startTime.add(cumulativeDuration);
       final deliveryRisk = _getDeliveryRiskByETA(eta, order.deliveryBy);
-      final recommendation = _generateOrderRecomendation(
-        deliveryRisk,
-        eta,
-        order.deliveryBy,
-        order.address,
-      );
       final updatedOrder = order.copyWith(
         latitude: step['location'][1],
         longitude: step['location'][0],
         status: order.status,
         plannedEta: eta,
         deliveryRisk: deliveryRisk,
-        recommendation: recommendation,
         orderIndex: updatedOrders.length,
       );
       updatedOrders.add(updatedOrder);
@@ -49,18 +42,5 @@ class CalculationEtaUtil {
       return 'At risk';
     }
     return 'Delayed';
-  }
-
-  static String _generateOrderRecomendation(
-    String deliveryRisk,
-    DateTime plannedEta,
-    DateTime deliverBy,
-    String address,
-  ) {
-    if (deliveryRisk == 'On time') return 'Uknown';
-    if (deliveryRisk == 'Delayed') {
-      return 'Delay unavoidable (~${plannedEta.difference(deliverBy).inMinutes.abs()} min). We recommend completing "$address" last.';
-    }
-    return 'Risk of delay. Consider completing "$address" earlier to reduce potential lateness.';
   }
 }

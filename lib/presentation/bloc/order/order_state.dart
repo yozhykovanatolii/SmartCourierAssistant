@@ -6,6 +6,7 @@ enum OrderStatus { initial, loading, success, failure }
 class OrderState {
   final List<OrderEntity> orders;
   final List<LatLng> routePoints;
+  final String routeRecommendation;
   final String errorMessage;
   final String geolocationError;
   final String actionError;
@@ -16,6 +17,7 @@ class OrderState {
   OrderState({
     required this.orders,
     required this.routePoints,
+    required this.routeRecommendation,
     required this.errorMessage,
     required this.geolocationError,
     required this.actionError,
@@ -28,6 +30,7 @@ class OrderState {
     return OrderState(
       orders: [],
       routePoints: [],
+      routeRecommendation: '',
       errorMessage: '',
       geolocationError: '',
       actionError: '',
@@ -40,6 +43,7 @@ class OrderState {
   OrderState copyWith({
     List<OrderEntity>? orders,
     List<LatLng>? routePoints,
+    String? routeRecommendation,
     String? errorMessage,
     String? geolocationError,
     String? actionError,
@@ -50,6 +54,7 @@ class OrderState {
     return OrderState(
       orders: orders ?? this.orders,
       routePoints: routePoints ?? this.routePoints,
+      routeRecommendation: routeRecommendation ?? this.routeRecommendation,
       errorMessage: errorMessage ?? this.errorMessage,
       geolocationError: geolocationError ?? this.geolocationError,
       actionError: actionError ?? this.actionError,

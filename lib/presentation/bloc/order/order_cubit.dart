@@ -21,7 +21,15 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(status: OrderStatus.loading));
     try {
       final activeOrders = await _orderRepository.getAllCourierActiveOrders();
-      emit(state.copyWith(status: OrderStatus.success, orders: activeOrders));
+      final routeRecommendation = await _routeRepository
+          .getCurrentRouteRecommendation();
+      emit(
+        state.copyWith(
+          status: OrderStatus.success,
+          orders: activeOrders,
+          routeRecommendation: routeRecommendation,
+        ),
+      );
     } on RouteNotFoundException catch (exception) {
       emit(
         state.copyWith(
@@ -94,12 +102,21 @@ class OrderCubit extends Cubit<OrderState> {
         latitude,
         longitude,
       );
+      final recommendation = await _routeRepository.getRouteRecommendationByAI(
+        updatedOrders,
+      );
+      print('Recommendation: $recommendation');
       final routePoints = await _routeRepository.buildRoutePolyline(
         updatedOrders,
         latitude,
         longitude,
       );
-      emit(state.copyWith(routePoints: routePoints));
+      emit(
+        state.copyWith(
+          routePoints: routePoints,
+          routeRecommendation: recommendation,
+        ),
+      );
     } else {
       return;
     }

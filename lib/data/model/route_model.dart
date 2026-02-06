@@ -5,17 +5,20 @@ class RouteModel {
   final String routeId;
   final String courierId;
   final DateTime date;
+  final String recommendation;
 
   RouteModel({
     required this.routeId,
     required this.courierId,
     required this.date,
+    required this.recommendation,
   });
 
   factory RouteModel.initial() {
     return RouteModel(
       routeId: const Uuid().v1(),
       courierId: '',
+      recommendation: '',
       date: DateTime.now(),
     );
   }
@@ -25,6 +28,7 @@ class RouteModel {
       'routeId': routeId,
       'courierId': courierId,
       'date': Timestamp.fromDate(date),
+      'recommendation': recommendation,
     };
   }
 
@@ -37,6 +41,7 @@ class RouteModel {
       routeId: data?['routeId'] as String,
       courierId: data?['courierId'] as String,
       date: (data?['date'] as Timestamp).toDate(),
+      recommendation: data?['recommendation'] as String,
     );
   }
 
@@ -44,11 +49,13 @@ class RouteModel {
     String? routeId,
     String? courierId,
     DateTime? date,
+    String? recommendation,
   }) {
     return RouteModel(
       routeId: routeId ?? this.routeId,
       courierId: courierId ?? this.courierId,
       date: date ?? this.date,
+      recommendation: recommendation ?? this.recommendation,
     );
   }
 }

@@ -18,9 +18,11 @@ import 'package:smart_courier_assistant/presentation/bloc/settings/settings_cubi
 import 'package:smart_courier_assistant/presentation/page/splash/splash_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
