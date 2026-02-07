@@ -8,6 +8,7 @@ class UiHelper {
   ) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (_) => widget,
     );
   }
