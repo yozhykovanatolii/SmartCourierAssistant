@@ -96,7 +96,12 @@ class OrderCubit extends Cubit<OrderState> {
     final orders = state.orders;
     final latitude = state.latitude;
     final longitude = state.longitude;
-    if (orders.isNotEmpty) {
+    emit(
+      state.copyWith(
+        routeOptimizationStatus: RouteOptimizationStatus.loading,
+      ),
+    );
+    try {
       final updatedOrders = await _orderRepository.optimizeOrdersRoute(
         orders,
         latitude,
@@ -113,12 +118,26 @@ class OrderCubit extends Cubit<OrderState> {
       );
       emit(
         state.copyWith(
+          orders: updatedOrders,
           routePoints: routePoints,
           routeRecommendation: recommendation,
+          routeOptimizationStatus: RouteOptimizationStatus.success,
         ),
       );
-    } else {
-      return;
+    } catch (exception) {
+      emit(
+        state.copyWith(
+          optimizationError: exception.toString(),
+          routeOptimizationStatus: RouteOptimizationStatus.failure,
+        ),
+      );
+    } finally {
+      emit(
+        state.copyWith(
+          optimizationError: '',
+          routeOptimizationStatus: RouteOptimizationStatus.initial,
+        ),
+      );
     }
   }
 

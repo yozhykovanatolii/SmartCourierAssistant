@@ -30,6 +30,9 @@ class RouteOptimizeClient {
         ],
       }),
     );
+    if (response.statusCode != 200) {
+      throw Exception('Some exception');
+    }
     final data = jsonDecode(response.body);
     final steps = data['routes'][0]['steps'] as List<dynamic>;
     return steps.cast<Map<String, dynamic>>();

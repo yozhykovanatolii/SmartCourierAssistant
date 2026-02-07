@@ -9,6 +9,7 @@ import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart
 import 'package:smart_courier_assistant/presentation/page/home/widget/action_floating_button.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/google_map_section.dart';
 import 'package:smart_courier_assistant/presentation/page/home/widget/orders_draggable_sheet.dart';
+import 'package:smart_courier_assistant/presentation/page/home/widget/route_optimization_dialog.dart';
 import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/profile_page.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
@@ -60,6 +61,31 @@ class _HomePageState extends State<HomePage> {
                 message: error,
                 isErrorSnackBar: true,
               );
+            },
+          ),
+          BlocListener<OrderCubit, OrderState>(
+            listenWhen: (previous, current) =>
+                previous.routeOptimizationStatus !=
+                current.routeOptimizationStatus,
+            listener: (context, state) {
+              final optimizationStatus = state.routeOptimizationStatus;
+              if (optimizationStatus == RouteOptimizationStatus.loading) {
+                UiHelper.showConfirmDialog(
+                  context,
+                  const RouteOptimizationDialog(),
+                );
+              }
+              if (optimizationStatus == RouteOptimizationStatus.success) {
+                Navigator.pop(context);
+              }
+              if (optimizationStatus == RouteOptimizationStatus.failure) {
+                UiHelper.showSnackBar(
+                  context: context,
+                  message: state.optimizationError,
+                  isErrorSnackBar: true,
+                );
+                Navigator.pop(context);
+              }
             },
           ),
         ],
