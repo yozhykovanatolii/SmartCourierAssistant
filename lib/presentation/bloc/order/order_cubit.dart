@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/geolocation_exception.dart';
+import 'package:smart_courier_assistant/core/exception/optimization_route_exception.dart';
 import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/route_not_found_exception.dart';
 import 'package:smart_courier_assistant/data/repository/geolocation_repository.dart';
@@ -124,10 +126,17 @@ class OrderCubit extends Cubit<OrderState> {
           routeOptimizationStatus: RouteOptimizationStatus.success,
         ),
       );
-    } catch (exception) {
+    } on OptimizationRouteException catch (exception) {
       emit(
         state.copyWith(
-          optimizationError: exception.toString(),
+          optimizationError: exception.errorMessage,
+          routeOptimizationStatus: RouteOptimizationStatus.failure,
+        ),
+      );
+    } on UserNotFoundException catch (exception) {
+      emit(
+        state.copyWith(
+          optimizationError: exception.errorMessage,
           routeOptimizationStatus: RouteOptimizationStatus.failure,
         ),
       );

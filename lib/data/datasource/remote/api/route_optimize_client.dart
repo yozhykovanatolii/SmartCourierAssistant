@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:smart_courier_assistant/core/exception/optimization_route_exception.dart';
 import 'package:smart_courier_assistant/data/model/order_model.dart';
 
 class RouteOptimizeClient {
@@ -31,7 +32,9 @@ class RouteOptimizeClient {
       }),
     );
     if (response.statusCode != 200) {
-      throw Exception('Some exception');
+      throw OptimizationRouteException(
+        'Failed to calculate the optimal route. Please try again.',
+      );
     }
     final data = jsonDecode(response.body);
     final steps = data['routes'][0]['steps'] as List<dynamic>;
