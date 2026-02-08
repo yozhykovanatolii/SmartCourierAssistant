@@ -1,10 +1,10 @@
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_courier_assistant/core/navigation/app_routes.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
-import 'package:smart_courier_assistant/presentation/page/home/home_page.dart';
-import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -26,16 +26,10 @@ class SplashPage extends StatelessWidget {
       ),
       onEnd: () {
         if (state is UserAuthenticatedState) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const HomePage()),
-          );
+          context.go(AppRoutes.homePage);
         }
         if (state is UserUnauthenticatedState) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const LoginPage()),
-          );
+          context.go(AppRoutes.loginPage);
         }
       },
     );

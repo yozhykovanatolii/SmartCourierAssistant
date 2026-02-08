@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/navigation/app_router.dart';
 import 'package:smart_courier_assistant/core/theme/app_theme.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
@@ -16,7 +17,6 @@ import 'package:smart_courier_assistant/presentation/bloc/register/register_cubi
 import 'package:smart_courier_assistant/presentation/bloc/route/route_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/settings/settings_cubit.dart';
-import 'package:smart_courier_assistant/presentation/page/splash/splash_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
 
@@ -65,7 +65,7 @@ class SmartCourierAssistantApp extends StatelessWidget {
     final languageCode = context.select(
       (SettingsCubit cubit) => cubit.state.languageCode,
     );
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: isDarkMode ? AppTheme.darkMode : AppTheme.lightMode,
       localizationsDelegates: [
@@ -76,7 +76,7 @@ class SmartCourierAssistantApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       locale: Locale(languageCode),
-      home: const SplashPage(),
+      routerConfig: AppRouter().router,
     );
   }
 }

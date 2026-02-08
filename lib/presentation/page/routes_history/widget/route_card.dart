@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/core/navigation/app_routes.dart';
 import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
-import 'package:smart_courier_assistant/presentation/page/route_detail/route_detail_page.dart';
 
 class RouteCard extends StatelessWidget {
   final RouteEntity route;
@@ -15,10 +16,7 @@ class RouteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => RouteDetailPage(route: route)),
-        );
+        context.push(AppRoutes.routeDetailPage, extra: route);
       },
       child: Card(
         elevation: 2,

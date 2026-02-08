@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_courier_assistant/core/navigation/app_routes.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/login/login_state.dart';
-import 'package:smart_courier_assistant/presentation/page/home/home_page.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/forgot_password_text_button.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_email_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/login/widget/login_password_text_field.dart';
@@ -38,10 +39,7 @@ class LoginPage extends StatelessWidget {
               context: context,
               message: successMessage,
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const HomePage()),
-            );
+            context.go(AppRoutes.homePage);
           }
         },
         child: SafeArea(

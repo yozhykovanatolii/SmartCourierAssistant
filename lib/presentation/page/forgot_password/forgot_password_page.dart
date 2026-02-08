@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_courier_assistant/core/navigation/app_routes.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
@@ -7,7 +9,6 @@ import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_state.dart';
 import 'package:smart_courier_assistant/presentation/page/forgot_password/widget/forgot_password_email_text_field.dart';
 import 'package:smart_courier_assistant/presentation/page/forgot_password/widget/reset_password_button.dart';
-import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
@@ -24,10 +25,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   .of(context)
                   .ifAnAccountWithThisEmailExistsYouWillReceive,
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const LoginPage()),
-            );
+            context.go(AppRoutes.loginPage);
           }
           if (state.formStatus == FormStatus.failure) {
             UiHelper.showSnackBar(

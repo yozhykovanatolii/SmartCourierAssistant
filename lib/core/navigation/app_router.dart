@@ -1,17 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_courier_assistant/core/navigation/app_routes.dart';
-import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
 import 'package:smart_courier_assistant/presentation/page/edit_profile/edit_profile_page.dart';
 import 'package:smart_courier_assistant/presentation/page/forgot_password/forgot_password_page.dart';
 import 'package:smart_courier_assistant/presentation/page/home/home_page.dart';
 import 'package:smart_courier_assistant/presentation/page/login/login_page.dart';
 import 'package:smart_courier_assistant/presentation/page/profile/profile_page.dart';
-import 'package:smart_courier_assistant/presentation/page/proof_delivery/proof_delivery_page.dart';
 import 'package:smart_courier_assistant/presentation/page/register/register_page.dart';
 import 'package:smart_courier_assistant/presentation/page/route_detail/route_detail_page.dart';
 import 'package:smart_courier_assistant/presentation/page/routes_history/routes_history_page.dart';
-import 'package:smart_courier_assistant/presentation/page/save_order/save_order_page.dart';
 import 'package:smart_courier_assistant/presentation/page/settings/settings_page.dart';
 import 'package:smart_courier_assistant/presentation/page/splash/splash_page.dart';
 
@@ -72,20 +69,6 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.settingsPage,
         builder: (context, state) => const SettingsPage(),
-      ),
-      GoRoute(
-        path: AppRoutes.saveOrderPage,
-        builder: (context, state) {
-          final order = state.extra as OrderEntity?;
-          return SaveOrderPage(order: order);
-        },
-      ),
-      GoRoute(
-        path: AppRoutes.proofDeliveryPage,
-        builder: (context, state) {
-          final orderId = state.extra as String;
-          return ProofDeliveryPage(orderId: orderId);
-        },
       ),
     ];
   }
