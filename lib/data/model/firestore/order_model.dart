@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
-import 'package:smart_courier_assistant/data/model/proof_delivery_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/proof_delivery_model.dart';
 
 class OrderModel {
   final String id;

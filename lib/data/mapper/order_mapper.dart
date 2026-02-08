@@ -1,5 +1,5 @@
 import 'package:smart_courier_assistant/data/mapper/proof_delivery_mapper.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
 import 'package:smart_courier_assistant/domain/entity/address_entity.dart';
 import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/domain/entity/proof_delivery_entity.dart';

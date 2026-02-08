@@ -1,7 +1,7 @@
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/order_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
-import 'package:smart_courier_assistant/data/model/proof_delivery_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/proof_delivery_model.dart';
 
 class DeliveryRepository {
   final UserAuth _userAuth = UserAuth();

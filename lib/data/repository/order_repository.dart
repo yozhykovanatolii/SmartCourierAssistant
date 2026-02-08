@@ -6,7 +6,7 @@ import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestor
 import 'package:smart_courier_assistant/data/datasource/remote/storage/supabase_storage.dart';
 import 'package:smart_courier_assistant/data/mapper/order_mapper.dart';
 import 'package:smart_courier_assistant/data/mapper/proof_delivery_mapper.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
 import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
 import 'package:smart_courier_assistant/data/service/geolocation_service.dart';
 import 'package:smart_courier_assistant/domain/entity/order_entity.dart';

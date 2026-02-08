@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
 import 'package:http/http.dart' as http;
 
 class RouteDirectionClient {

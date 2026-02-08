@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:smart_courier_assistant/core/exception/optimization_route_exception.dart';
-import 'package:smart_courier_assistant/data/model/order_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
 
 class RouteOptimizeClient {
   static const _apiKey =

@@ -1,4 +1,4 @@
-import 'package:smart_courier_assistant/data/model/risky_order_model.dart';
+import 'package:smart_courier_assistant/data/model/api/risky_order_model.dart';
 
 class RouteAnalysisModel {
   final int totalOrders;

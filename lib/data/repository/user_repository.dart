@@ -3,7 +3,7 @@ import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/user_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/storage/supabase_storage.dart';
 import 'package:smart_courier_assistant/data/mapper/user_mapper.dart';
-import 'package:smart_courier_assistant/data/model/user_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/user_model.dart';
 import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
 import 'package:smart_courier_assistant/data/service/native_service.dart';
 import 'package:smart_courier_assistant/domain/entity/user_entity.dart';

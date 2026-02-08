@@ -6,9 +6,9 @@ import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestor
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
 import 'package:smart_courier_assistant/data/mapper/order_mapper.dart';
 import 'package:smart_courier_assistant/data/mapper/route_mapper.dart';
-import 'package:smart_courier_assistant/data/model/risky_order_model.dart';
-import 'package:smart_courier_assistant/data/model/route_analysis_model.dart';
-import 'package:smart_courier_assistant/data/model/route_model.dart';
+import 'package:smart_courier_assistant/data/model/api/risky_order_model.dart';
+import 'package:smart_courier_assistant/data/model/api/route_analysis_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/route_model.dart';
 import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
 

@@ -1,5 +1,5 @@
-import 'package:smart_courier_assistant/data/model/order_model.dart';
-import 'package:smart_courier_assistant/data/model/route_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
+import 'package:smart_courier_assistant/data/model/firestore/route_model.dart';
 import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
 
 class RouteMapper {

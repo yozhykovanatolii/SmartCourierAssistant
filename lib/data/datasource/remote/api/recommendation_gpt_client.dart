@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:smart_courier_assistant/data/model/route_analysis_model.dart';
+import 'package:smart_courier_assistant/data/model/api/route_analysis_model.dart';
 import 'package:http/http.dart' as http;
 
 class RecommendationGptClient {
