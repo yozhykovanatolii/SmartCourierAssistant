@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smart_courier_assistant/core/constants/app_constant.dart';
 
 class UserModel {
   final String id;
@@ -53,8 +54,7 @@ class UserModel {
       email: '',
       password: '57abcdefB#',
       phoneNumber: '',
-      avatar:
-          'https://xwgraskemxbhjtgqrjxn.supabase.co/storage/v1/object/public/images/uploads/1758373217886',
+      avatar: AppConstant.defaultAvatarUrl,
     );
   }
 

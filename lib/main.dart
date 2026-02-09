@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:smart_courier_assistant/core/constants/app_constant.dart';
 import 'package:smart_courier_assistant/core/di/dependencies.dart';
 import 'package:smart_courier_assistant/core/navigation/app_router.dart';
 import 'package:smart_courier_assistant/core/theme/app_theme.dart';
@@ -29,9 +30,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Supabase.initialize(
-    url: 'https://xwgraskemxbhjtgqrjxn.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3Z3Jhc2tlbXhiaGp0Z3FyanhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzNjI0MDIsImV4cCI6MjA3MzkzODQwMn0.8N39PRYkuu8vS0j69ucNSNblXDct7NBT7IrVqBpFK8c',
+    url: AppConstant.supabaseProjectUrl,
+    anonKey: dotenv.env['SUPABASE_PROJECT_API_KEY'] ?? '',
   );
   Dependencies.setupDependencies();
   runApp(

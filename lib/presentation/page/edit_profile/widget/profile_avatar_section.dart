@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:smart_courier_assistant/core/constants/app_constant.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
 
 class ProfileAvatarSection extends StatelessWidget {
@@ -36,9 +37,7 @@ class _EditProfileAvatar extends StatelessWidget {
       width: 120,
       child: CircleAvatar(
         backgroundImage: userAvatarUrl.isEmpty
-            ? const AssetImage(
-                'assets/images/test.jpg',
-              )
+            ? const AssetImage(AppConstant.defaultAvatar)
             : NetworkImage(userAvatarUrl),
       ),
     );

@@ -1,11 +1,11 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_courier_assistant/core/exception/optimization_route_exception.dart';
 import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
 
 class RouteOptimizeClient {
-  static const _apiKey =
-      'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjlhZjFhY2E3MjYwZjQ5ZDZhY2ZmMGFjY2RiOGU5MjkxIiwiaCI6Im11cm11cjY0In0=';
+  static final _apiKey = dotenv.env['OPENROUTE_API_KEY'] ?? '';
 
   Future<List<Map<String, dynamic>>> optimizeRoute(
     List<OrderModel> orders,

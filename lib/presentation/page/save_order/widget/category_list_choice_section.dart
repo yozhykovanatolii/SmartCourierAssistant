@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_courier_assistant/core/constants/app_constant.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 
 class CategoryListChoiceSection extends StatelessWidget {
-  static const categories = [
-    '📦 Parcel',
-    '🍔 Food',
-    '📄 Docs',
-  ];
-
+  static const _categories = AppConstant.categories;
   const CategoryListChoiceSection({super.key});
 
   @override
@@ -23,9 +19,9 @@ class CategoryListChoiceSection extends StatelessWidget {
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
         children: List.generate(
-          categories.length,
+          _categories.length,
           (index) => _CategoryCard(
-            category: categories[index],
+            category: _categories[index],
           ),
         ),
       ),
