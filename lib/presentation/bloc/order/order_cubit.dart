@@ -1,29 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+
 import 'package:smart_courier_assistant/core/exception/auth/user_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/geolocation_exception.dart';
 import 'package:smart_courier_assistant/core/exception/optimization_route_exception.dart';
 import 'package:smart_courier_assistant/core/exception/orders_not_found_exception.dart';
 import 'package:smart_courier_assistant/core/exception/route_not_found_exception.dart';
-import 'package:smart_courier_assistant/data/repository/geolocation_repository.dart';
-import 'package:smart_courier_assistant/data/repository/order_repository.dart';
-import 'package:smart_courier_assistant/data/repository/route_repository.dart';
-import 'package:smart_courier_assistant/data/repository/user_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/geolocation_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/order_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/route_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
-  final OrderRepository _orderRepository = OrderRepository();
-  final GeolocationRepository _geolocationRepository = GeolocationRepository();
-  final UserRepository _userRepository = UserRepository();
-  final RouteRepository _routeRepository = RouteRepository();
+  final OrderRepository orderRepository;
+  final GeolocationRepository geolocationRepository;
+  final UserRepository userRepository;
+  final RouteRepository routeRepository;
 
-  OrderCubit() : super(OrderState.initial());
+  OrderCubit(
+    this.orderRepository,
+    this.geolocationRepository,
+    this.userRepository,
+    this.routeRepository,
+  ) : super(OrderState.initial());
 
   Future<void> fetchOrders() async {
     emit(state.copyWith(status: OrderStatus.loading));
     try {
-      final activeOrders = await _orderRepository.getAllCourierActiveOrders();
-      final routeRecommendation = await _routeRepository
+      final activeOrders = await orderRepository.getAllCourierActiveOrders();
+      final routeRecommendation = await routeRepository
           .getCurrentRouteRecommendation();
       emit(
         state.copyWith(
@@ -52,7 +59,7 @@ class OrderCubit extends Cubit<OrderState> {
   Future<void> fetchOrdersByRouteId(String routeId) async {
     emit(state.copyWith(status: OrderStatus.loading));
     try {
-      final orders = await _orderRepository.getAllCourierOrdersByRouteId(
+      final orders = await orderRepository.getAllCourierOrdersByRouteId(
         routeId,
       );
       emit(state.copyWith(status: OrderStatus.success, orders: orders));
@@ -75,7 +82,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> getUserLocation() async {
     try {
-      final location = await _geolocationRepository.getCurrentLocation();
+      final location = await geolocationRepository.getCurrentLocation();
       print('${location.latitude}, ${location.longitude}');
       emit(
         state.copyWith(
@@ -104,16 +111,16 @@ class OrderCubit extends Cubit<OrderState> {
       ),
     );
     try {
-      final updatedOrders = await _orderRepository.optimizeOrdersRoute(
+      final updatedOrders = await orderRepository.optimizeOrdersRoute(
         orders,
         latitude,
         longitude,
       );
-      final recommendation = await _routeRepository.getRouteRecommendationByAI(
+      final recommendation = await routeRepository.getRouteRecommendationByAI(
         updatedOrders,
       );
       print('Recommendation: $recommendation');
-      final routePoints = await _routeRepository.buildRoutePolyline(
+      final routePoints = await routeRepository.buildRoutePolyline(
         updatedOrders,
         latitude,
         longitude,
@@ -152,7 +159,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> openCallDialer(String clientPhoneNumber) async {
     try {
-      await _userRepository.callUserDialer(clientPhoneNumber);
+      await userRepository.callUserDialer(clientPhoneNumber);
     } catch (exception) {
       emit(
         state.copyWith(actionError: exception.toString()),
@@ -166,7 +173,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> openUserMessanger(String clientPhoneNumber) async {
     try {
-      await _userRepository.messageUser(clientPhoneNumber);
+      await userRepository.messageUser(clientPhoneNumber);
     } catch (exception) {
       emit(
         state.copyWith(actionError: exception.toString()),

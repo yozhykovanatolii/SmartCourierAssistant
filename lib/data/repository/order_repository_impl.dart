@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:smart_courier_assistant/core/util/calculation_eta_util.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/api/route_optimize_client.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
@@ -10,15 +11,25 @@ import 'package:smart_courier_assistant/data/model/firestore/order_model.dart';
 import 'package:smart_courier_assistant/data/service/camera_picker_service.dart';
 import 'package:smart_courier_assistant/data/service/geolocation_service.dart';
 import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
+import 'package:smart_courier_assistant/domain/repository/order_repository.dart';
 
-class OrderRepository {
-  final UserAuth _userAuth = UserAuth();
-  final OrderFirestore _orderFirestore = OrderFirestore();
-  final RouteFirestore _routeFirestore = RouteFirestore();
-  final RouteOptimizeClient _optimizeClient = RouteOptimizeClient();
-  final SupabaseStorage _supabaseStorage = SupabaseStorage();
+class OrderRepositoryImpl implements OrderRepository {
+  final UserAuth userAuth;
+  final OrderFirestore orderFirestore;
+  final RouteFirestore routeFirestore;
+  final RouteOptimizeClient optimizeClient;
+  final SupabaseStorage supabaseStorage;
   String _routeId = '';
 
+  OrderRepositoryImpl({
+    required this.userAuth,
+    required this.orderFirestore,
+    required this.routeFirestore,
+    required this.optimizeClient,
+    required this.supabaseStorage,
+  });
+
+  @override
   Future<void> saveOrder(
     String clientFullName,
     String clientPhoneNumber,
@@ -45,15 +56,16 @@ class OrderRepository {
       ),
       category: category,
     );
-    await _orderFirestore.saveOrder(orderModel, routeId);
+    await orderFirestore.saveOrder(orderModel, routeId);
   }
 
+  @override
   Future<List<OrderEntity>> getAllCourierActiveOrders() async {
-    final courierId = _userAuth.userId;
-    final routeModel = await _routeFirestore.getTodayRoute(courierId);
+    final courierId = userAuth.userId;
+    final routeModel = await routeFirestore.getTodayRoute(courierId);
     _routeId = routeModel.routeId;
     print('Success route: ${routeModel.routeId}');
-    final ordersModel = await _orderFirestore.getAllUserOrders(
+    final ordersModel = await orderFirestore.getAllUserOrders(
       routeModel.routeId,
     );
     print('Success orders: ${ordersModel.length}');
@@ -62,13 +74,15 @@ class OrderRepository {
         .toList();
   }
 
+  @override
   Future<List<OrderEntity>> getAllCourierOrdersByRouteId(String routeId) async {
-    final ordersModel = await _orderFirestore.getAllUserOrders(routeId);
+    final ordersModel = await orderFirestore.getAllUserOrders(routeId);
     return ordersModel
         .map((orderModel) => OrderMapper.toEntity(orderModel))
         .toList();
   }
 
+  @override
   Future<List<OrderEntity>> optimizeOrdersRoute(
     List<OrderEntity> orders,
     double latitude,
@@ -77,7 +91,7 @@ class OrderRepository {
     final ordersModel = orders
         .map((order) => OrderMapper.fromEntity(order))
         .toList();
-    final steps = await _optimizeClient.optimizeRoute(
+    final steps = await optimizeClient.optimizeRoute(
       ordersModel,
       latitude,
       longitude,
@@ -86,23 +100,25 @@ class OrderRepository {
       steps,
       ordersModel,
     );
-    await _orderFirestore.saveOrders(updatedOrders, _routeId);
+    await orderFirestore.saveOrders(updatedOrders, _routeId);
     print('Маршрут $_routeId успешно оптимизирован и сохранён.');
     return updatedOrders
         .map((updatedOrder) => OrderMapper.toEntity(updatedOrder))
         .toList();
   }
 
+  @override
   Future<void> deleteOrder(String orderId) async {
-    final courierId = _userAuth.userId;
-    final routeId = await _routeFirestore.getTodayRouteId(courierId);
+    final courierId = userAuth.userId;
+    final routeId = await routeFirestore.getTodayRouteId(courierId);
     if (routeId == null) return;
-    await _orderFirestore.deleteOrder(orderId, routeId);
+    await orderFirestore.deleteOrder(orderId, routeId);
   }
 
+  @override
   Future<String> getOrderPhoto() async {
     final imageFile = await CameraPickerService.pickImageFileFromGallery();
-    final imageUrl = await _supabaseStorage.saveImage(imageFile, 'orders');
+    final imageUrl = await supabaseStorage.saveImage(imageFile, 'orders');
     return imageUrl;
   }
 }

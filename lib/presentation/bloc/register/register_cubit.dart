@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/register_exception.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
-import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
-import 'package:smart_courier_assistant/data/repository/user_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/auth_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  final UserRepository _userRepository = UserRepository();
-  final AuthRepository _authRepository = AuthRepository();
+  final UserRepository userRepository;
+  final AuthRepository authRepository;
 
-  RegisterCubit() : super(RegisterState.initial());
+  RegisterCubit(this.userRepository, this.authRepository)
+    : super(RegisterState.initial());
 
   void setRegisterFullName(String fullName) {
     emit(state.copyWith(fullName: fullName));
@@ -36,7 +37,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
-      final isUserExist = await _userRepository.checkIfUserExistByEmail(
+      final isUserExist = await userRepository.checkIfUserExistByEmail(
         state.email,
       );
       if (isUserExist) {
@@ -48,7 +49,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         );
         return;
       }
-      await _authRepository.signUpUser(
+      await authRepository.signUpUser(
         state.email,
         state.password,
         state.fullName,

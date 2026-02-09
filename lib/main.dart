@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:smart_courier_assistant/core/di/dependencies.dart';
 import 'package:smart_courier_assistant/core/navigation/app_router.dart';
 import 'package:smart_courier_assistant/core/theme/app_theme.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
@@ -31,23 +33,25 @@ void main() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3Z3Jhc2tlbXhiaGp0Z3FyanhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzNjI0MDIsImV4cCI6MjA3MzkzODQwMn0.8N39PRYkuu8vS0j69ucNSNblXDct7NBT7IrVqBpFK8c',
   );
+  Dependencies.setupDependencies();
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => LoginCubit()),
-        BlocProvider(create: (_) => ForgotPasswordCubit()),
-        BlocProvider(create: (_) => RegisterCubit()),
-        BlocProvider(create: (_) => EditProfileCubit()),
-        BlocProvider(create: (_) => SaveOrderCubit()),
+        BlocProvider(create: (_) => GetIt.I<LoginCubit>()),
+        BlocProvider(create: (_) => GetIt.I<ForgotPasswordCubit>()),
+        BlocProvider(create: (_) => GetIt.I<RegisterCubit>()),
+        BlocProvider(create: (_) => GetIt.I<EditProfileCubit>()),
+        BlocProvider(create: (_) => GetIt.I<SaveOrderCubit>()),
         BlocProvider(
-          create: (_) => AppBloc()..add(AppUserSubscriptionRequested()),
+          create: (_) =>
+              GetIt.I<AppBloc>()..add(AppUserSubscriptionRequested()),
         ),
         BlocProvider(
-          create: (_) => SettingsCubit()..fetchSettings(),
+          create: (_) => GetIt.I<SettingsCubit>()..fetchSettings(),
         ),
-        BlocProvider(create: (_) => OrderCubit()),
-        BlocProvider(create: (_) => ProofDeliveryCubit()),
-        BlocProvider(create: (_) => RouteCubit()),
+        BlocProvider(create: (_) => GetIt.I<OrderCubit>()),
+        BlocProvider(create: (_) => GetIt.I<ProofDeliveryCubit>()),
+        BlocProvider(create: (_) => GetIt.I<RouteCubit>()),
       ],
       child: const SmartCourierAssistantApp(),
     ),

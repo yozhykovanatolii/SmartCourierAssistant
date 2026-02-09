@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/exception/auth/reset_password_exception.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
-import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
-import 'package:smart_courier_assistant/data/repository/user_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/auth_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/forgot_password/forgot_password_state.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
-  final AuthRepository _authRepository = AuthRepository();
-  final UserRepository _userRepository = UserRepository();
+  final AuthRepository authRepository;
+  final UserRepository userRepository;
 
-  ForgotPasswordCubit() : super(ForgotPasswordState.initial());
+  ForgotPasswordCubit(this.authRepository, this.userRepository)
+    : super(ForgotPasswordState.initial());
 
   void changeUserEmail(String email) {
     emit(state.copyWith(email: email));
@@ -18,7 +19,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   Future<void> sendEmailLetter() async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
-      final isUserExist = await _userRepository.checkIfUserExistByEmail(
+      final isUserExist = await userRepository.checkIfUserExistByEmail(
         state.email,
       );
       if (isUserExist) {
@@ -30,7 +31,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         );
         return;
       }
-      await _authRepository.resetPassword(state.email);
+      await authRepository.resetPassword(state.email);
       emit(state.copyWith(formStatus: FormStatus.success));
     } on ResetPasswordException catch (exception) {
       emit(

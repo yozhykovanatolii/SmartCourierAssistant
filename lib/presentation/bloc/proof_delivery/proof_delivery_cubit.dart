@@ -4,19 +4,22 @@ import 'package:smart_courier_assistant/core/exception/orders_not_found_exceptio
 import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
-import 'package:smart_courier_assistant/data/repository/delivery_repository.dart';
-import 'package:smart_courier_assistant/data/repository/order_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/delivery_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/order_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/proof_delivery/proof_delivery_state.dart';
 
 class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {
-  final OrderRepository _orderRepository = OrderRepository();
-  final DeliveryRepository _deliveryRepository = DeliveryRepository();
+  final OrderRepository orderRepository;
+  final DeliveryRepository deliveryRepository;
 
-  ProofDeliveryCubit() : super(ProofDeliveryState.initial());
+  ProofDeliveryCubit(
+    this.orderRepository,
+    this.deliveryRepository,
+  ) : super(ProofDeliveryState.initial());
 
   Future<void> addOrderPhoto() async {
     try {
-      final photoUrl = await _orderRepository.getOrderPhoto();
+      final photoUrl = await orderRepository.getOrderPhoto();
       final updatedOrderPhotos = List<String>.from(state.orderPhotos)
         ..add(photoUrl);
       emit(state.copyWith(orderPhotos: updatedOrderPhotos));
@@ -57,7 +60,7 @@ class ProofDeliveryCubit extends Cubit<ProofDeliveryState> {
   Future<void> confirmDelivery(String orderId) async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
-      await _deliveryRepository.createProofOfDelivery(
+      await deliveryRepository.createProofOfDelivery(
         orderId,
         state.courierComment,
         state.orderPhotos,

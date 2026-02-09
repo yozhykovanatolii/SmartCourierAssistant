@@ -2,25 +2,33 @@ import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/order_firestore.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firestore/route_firestore.dart';
 import 'package:smart_courier_assistant/data/model/firestore/proof_delivery_model.dart';
+import 'package:smart_courier_assistant/domain/repository/delivery_repository.dart';
 
-class DeliveryRepository {
-  final UserAuth _userAuth = UserAuth();
-  final RouteFirestore _routeFirestore = RouteFirestore();
-  final OrderFirestore _orderFirestore = OrderFirestore();
+class DeliveryRepositoryImpl implements DeliveryRepository {
+  final UserAuth userAuth;
+  final RouteFirestore routeFirestore;
+  final OrderFirestore orderFirestore;
 
+  DeliveryRepositoryImpl(
+    this.userAuth,
+    this.routeFirestore,
+    this.orderFirestore,
+  );
+
+  @override
   Future<void> createProofOfDelivery(
     String orderId,
     String courierComment,
     List<String> orderPhotos,
   ) async {
-    final courierId = _userAuth.userId;
-    final routeModel = await _routeFirestore.getTodayRoute(courierId);
+    final courierId = userAuth.userId;
+    final routeModel = await routeFirestore.getTodayRoute(courierId);
     final proofDelivery = ProofDeliveryModel(
       courierComment: courierComment,
       orderPhotos: orderPhotos,
       confirmedAt: DateTime.now(),
     );
-    await _orderFirestore.updateOrderProofDelivery(
+    await orderFirestore.updateOrderProofDelivery(
       proofDelivery,
       routeModel.routeId,
       orderId,

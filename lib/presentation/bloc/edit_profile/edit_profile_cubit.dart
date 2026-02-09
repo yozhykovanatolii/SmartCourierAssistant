@@ -3,20 +3,21 @@ import 'package:smart_courier_assistant/core/exception/auth/user_not_found_excep
 import 'package:smart_courier_assistant/core/exception/permission_deny_exception.dart';
 import 'package:smart_courier_assistant/core/exception/photo_not_selected_exception.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
-import 'package:smart_courier_assistant/data/repository/auth_repository.dart';
-import 'package:smart_courier_assistant/data/repository/user_repository.dart';
 import 'package:smart_courier_assistant/domain/entity/user_entity.dart';
+import 'package:smart_courier_assistant/domain/repository/auth_repository.dart';
+import 'package:smart_courier_assistant/domain/repository/user_repository.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_state.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
-  final UserRepository _userRepository = UserRepository();
-  final AuthRepository _authRepository = AuthRepository();
+  final UserRepository userRepository;
+  final AuthRepository authRepository;
 
-  EditProfileCubit() : super(EditProfileState.initial());
+  EditProfileCubit(this.userRepository, this.authRepository)
+    : super(EditProfileState.initial());
 
   Future<void> editUserAvatar() async {
     try {
-      final userAvatarUrl = await _userRepository.getUserImage();
+      final userAvatarUrl = await userRepository.getUserImage();
       final userEntity = state.userEntity;
       emit(
         state.copyWith(userEntity: userEntity.copyWith(avatar: userAvatarUrl)),
@@ -61,12 +62,12 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     emit(state.copyWith(userEntity: user));
   }
 
-  Future<void> logOut() async => await _authRepository.logOut();
+  Future<void> logOut() async => await authRepository.logOut();
 
   Future<void> updateProfile() async {
     emit(state.copyWith(formStatus: FormStatus.loading));
     try {
-      await _userRepository.updateUserData(state.userEntity);
+      await userRepository.updateUserData(state.userEntity);
       emit(state.copyWith(formStatus: FormStatus.success));
     } on UserNotFoundException catch (exception) {
       emit(

@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:smart_courier_assistant/data/datasource/remote/api/recommendation_gpt_client.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/api/route_direction_client.dart';
 import 'package:smart_courier_assistant/data/datasource/remote/firebase/firebase_auth/user_auth.dart';
@@ -11,26 +13,37 @@ import 'package:smart_courier_assistant/data/model/api/route_analysis_model.dart
 import 'package:smart_courier_assistant/data/model/firestore/route_model.dart';
 import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
+import 'package:smart_courier_assistant/domain/repository/route_repository.dart';
 
-class RouteRepository {
-  final RouteFirestore _routeFirestore = RouteFirestore();
-  final RouteDirectionClient _directionClient = RouteDirectionClient();
-  final RecommendationGptClient _gptClient = RecommendationGptClient();
-  final OrderFirestore _orderFirestore = OrderFirestore();
-  final UserAuth _userAuth = UserAuth();
+class RouteRepositoryImpl implements RouteRepository {
+  final RouteFirestore routeFirestore;
+  final RouteDirectionClient directionClient;
+  final RecommendationGptClient gptClient;
+  final OrderFirestore orderFirestore;
+  final UserAuth userAuth;
 
+  RouteRepositoryImpl({
+    required this.routeFirestore,
+    required this.directionClient,
+    required this.gptClient,
+    required this.orderFirestore,
+    required this.userAuth,
+  });
+
+  @override
   Future<String> createRoute() async {
     RouteModel routeModel = RouteModel.initial();
-    final courierId = _userAuth.userId;
-    final routeId = await _routeFirestore.getTodayRouteId(courierId);
+    final courierId = userAuth.userId;
+    final routeId = await routeFirestore.getTodayRouteId(courierId);
     if (routeId == null) {
       routeModel = routeModel.copyWith(courierId: courierId);
-      await _routeFirestore.createRoute(routeModel);
+      await routeFirestore.createRoute(routeModel);
       return routeModel.routeId;
     }
     return routeId;
   }
 
+  @override
   Future<List<LatLng>> buildRoutePolyline(
     List<OrderEntity> orders,
     double startLat,
@@ -39,18 +52,19 @@ class RouteRepository {
     final ordersModel = orders
         .map((order) => OrderMapper.fromEntity(order))
         .toList();
-    return await _directionClient.getRoutePolyline(
+    return await directionClient.getRoutePolyline(
       ordersModel,
       startLat,
       startLng,
     );
   }
 
+  @override
   Future<List<RouteEntity>> getAllCourierRoutes() async {
-    final courierId = _userAuth.userId;
-    final routesModel = await _routeFirestore.getAllCourierRoutes(courierId);
+    final courierId = userAuth.userId;
+    final routesModel = await routeFirestore.getAllCourierRoutes(courierId);
     final futures = routesModel.map((routeModel) async {
-      final ordersModel = await _orderFirestore.getAllUserOrders(
+      final ordersModel = await orderFirestore.getAllUserOrders(
         routeModel.routeId,
       );
       return RouteMapper.toEntity(routeModel, ordersModel);
@@ -58,12 +72,14 @@ class RouteRepository {
     return await Future.wait(futures);
   }
 
+  @override
   Future<String> getCurrentRouteRecommendation() async {
-    final courierId = _userAuth.userId;
-    final routeModel = await _routeFirestore.getTodayRoute(courierId);
+    final courierId = userAuth.userId;
+    final routeModel = await routeFirestore.getTodayRoute(courierId);
     return routeModel.recommendation;
   }
 
+  @override
   Future<String> getRouteRecommendationByAI(
     List<OrderEntity> ordersEntity,
   ) async {
@@ -83,11 +99,11 @@ class RouteRepository {
       currentTime:
           '${currentTimeDateTime.hour}:${currentTimeDateTime.minute.toString().padLeft(2, '0')}',
     );
-    final courierId = _userAuth.userId;
-    final routeId = await _routeFirestore.getTodayRouteId(courierId);
-    final recommendation = await _gptClient.getRouteRecommendation(analysis);
+    final courierId = userAuth.userId;
+    final routeId = await routeFirestore.getTodayRouteId(courierId);
+    final recommendation = await gptClient.getRouteRecommendation(analysis);
     if (routeId != null && recommendation != null) {
-      await _routeFirestore.saveRouteRecommendation(recommendation, routeId);
+      await routeFirestore.saveRouteRecommendation(recommendation, routeId);
     }
     return recommendation ?? '';
   }
