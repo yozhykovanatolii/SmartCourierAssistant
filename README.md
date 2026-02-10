@@ -1,5 +1,14 @@
 # smart_courier_assistant
 
+## ✨ Features
+
+- 🔐 **Authentication & Profile** – Courier registration, login, password reset, Google sign-in, profile management (name, phone, avatar)  
+- 📦 **Order Management** – Add/edit/delete orders, track delivery statuses (In Transit, Delivered), contact clients via calls or messengers  
+- 📍 **Routes & ETA** – Delivery route map, route optimization via routing API, ETA with color indicators: 🟢 on time, 🟡 at risk, 🔴 delayed  
+- 📜 **Route History & Recommendations** – View past routes, get personalized route recommendations in case of ETA risk by AI  
+- 📸 **Proof of Delivery (POD)** – Capture delivery confirmation via photo of the order and note  
+- 🎨 **UI/UX** – Light/dark theme, multi-language support  
+
 ## 🛠 Tech Stack
 
 **Core Framework**
