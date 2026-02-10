@@ -1,16 +1,46 @@
 # smart_courier_assistant
 
-A new Flutter project.
+## 🛠 Tech Stack
 
-## Getting Started
+**Core Framework**
+- **Flutter** – Cross-platform UI framework  
+- **Dart** – Programming language  
+- **flutter_dotenv** – Environment variables  
 
-This project is a starting point for a Flutter application.
+**State Management**
+- **BLoC**
+- **Cubit**
 
-A few resources to get you started if this is your first Flutter project:
+**Dependency Injection**
+- **GetIt** – Service locator and dependency injection
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Backend & Cloud Services**
+- **Firebase**
+  - **Firebase Auth** – User authentication
+  - **Cloud Firestore** – Real-time NoSQL database
+- **Google Sign-In** – OAuth authentication
+- **Supabase** – File storage for photos and user's avatar
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Navigation**
+- **GoRouter** – Navigation and routing
+
+**Maps & Geolocation**
+- **Google Maps Flutter** – Interactive maps
+- **Geolocator** – Location services
+- **Geocoding** – Address <-> coordinates conversion
+- **Permission Handler** – Permission management
+
+**UI Components**
+- **Another Flutter Splash Screen** – Custom splash screen
+- **Iconsax** – Modern icon pack
+
+**Media & Storage**
+- **Image Picker** – Image selection from gallery
+- **Shared Preferences** – Local data persistence
+
+**Utilities**
+- **UUID** – Unique ID generation
+- **HTTP** – Networking
+- **PDF & Printing** – PDF generation and printing
+
+
