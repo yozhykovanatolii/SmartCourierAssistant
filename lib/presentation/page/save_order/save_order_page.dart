@@ -4,6 +4,7 @@ import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/domain/entity/order_entity.dart';
 import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/save_order/save_order_state.dart';
 import 'package:smart_courier_assistant/presentation/page/save_order/widget/address_text_field.dart';
@@ -72,6 +73,7 @@ class _SaveOrderPageState extends State<SaveOrderPage> {
             context: context,
             message: S.of(context).successSavingAnOrder,
           );
+          context.read<OrderCubit>().fetchOrders();
           Navigator.of(context).pop();
         }
       },

@@ -68,7 +68,6 @@ class OrderRepositoryImpl implements OrderRepository {
     final ordersModel = await orderFirestore.getAllUserOrders(
       routeModel.routeId,
     );
-    print('Success orders: ${ordersModel.length}');
     return ordersModel
         .map((orderModel) => OrderMapper.toEntity(orderModel))
         .toList();

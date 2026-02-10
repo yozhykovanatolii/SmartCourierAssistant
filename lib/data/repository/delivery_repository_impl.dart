@@ -22,7 +22,8 @@ class DeliveryRepositoryImpl implements DeliveryRepository {
     List<String> orderPhotos,
   ) async {
     final courierId = userAuth.userId;
-    final routeModel = await routeFirestore.getTodayRoute(courierId);
+    final routeId = await routeFirestore.getTodayRouteId(courierId);
+    if (routeId == null) return;
     final proofDelivery = ProofDeliveryModel(
       courierComment: courierComment,
       orderPhotos: orderPhotos,
@@ -30,7 +31,7 @@ class DeliveryRepositoryImpl implements DeliveryRepository {
     );
     await orderFirestore.updateOrderProofDelivery(
       proofDelivery,
-      routeModel.routeId,
+      routeId,
       orderId,
     );
   }
