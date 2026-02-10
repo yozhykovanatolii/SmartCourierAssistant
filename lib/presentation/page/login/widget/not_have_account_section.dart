@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/core/localization/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/register/register_page.dart';
 
 class NotHaveAccountSection extends StatelessWidget {

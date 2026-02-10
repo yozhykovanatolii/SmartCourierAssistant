@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/core/localization/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/page/languages/widget/language_list_tile.dart';
 
 class LanguagesPage extends StatelessWidget {

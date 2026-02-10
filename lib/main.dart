@@ -8,7 +8,7 @@ import 'package:smart_courier_assistant/core/constants/app_constant.dart';
 import 'package:smart_courier_assistant/core/di/dependencies.dart';
 import 'package:smart_courier_assistant/core/navigation/app_router.dart';
 import 'package:smart_courier_assistant/core/theme/app_theme.dart';
-import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/core/localization/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_event.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';

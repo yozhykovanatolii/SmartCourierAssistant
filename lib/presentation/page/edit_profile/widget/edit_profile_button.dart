@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/widget/common_button.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
-import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/core/localization/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/edit_profile/edit_profile_cubit.dart';
 
 class EditProfileButton extends StatelessWidget {

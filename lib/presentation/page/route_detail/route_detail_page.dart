@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
 import 'package:smart_courier_assistant/core/widget/common_progress_indicator.dart';
 import 'package:smart_courier_assistant/domain/entity/route_entity.dart';
-import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/core/localization/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_bloc.dart';
 import 'package:smart_courier_assistant/presentation/bloc/app/app_state.dart';
 import 'package:smart_courier_assistant/presentation/bloc/order/order_cubit.dart';

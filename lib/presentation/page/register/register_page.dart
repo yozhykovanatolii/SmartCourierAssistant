@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_courier_assistant/core/navigation/app_routes.dart';
 import 'package:smart_courier_assistant/core/state/form_status.dart';
 import 'package:smart_courier_assistant/core/util/ui/ui_helper.dart';
-import 'package:smart_courier_assistant/generated/l10n.dart';
+import 'package:smart_courier_assistant/core/localization/generated/l10n.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_cubit.dart';
 import 'package:smart_courier_assistant/presentation/bloc/register/register_state.dart';
 import 'package:smart_courier_assistant/presentation/page/register/widget/register_email_text_field.dart';
